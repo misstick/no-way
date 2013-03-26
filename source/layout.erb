@@ -7,36 +7,75 @@
     <!-- Use title if it's in the page YAML frontmatter -->
     <title><%= data.page.title || "The Middleman" %></title>
 
+
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,200italic,400italic,700' rel='stylesheet' type='text/css'>
+
     <%= stylesheet_link_tag "normalize", "all" %>
     <%= javascript_include_tag  "all" %>
   </head>
   <body>
 
-    <div id="main" role="main">
-      <%= yield %>
+    <div class="page">
+
+      <header>
+        <a href="/" id="logo">no<small>way</small></a>
+
+        <nav>
+          <ul>
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="#" title="Voir les créations">Blog</a></li>
+          </ul>
+        </nav>
+
+        <aside>
+          <ol>
+            <% blog.tags.each do |tag, articles| %>
+              <li><%= link_to tag, tag_path(tag) %> (<%= articles.size %>)</a></li>
+            <% end %>
+          </ol>
+          <ol>
+            <% blog.articles.group_by {|a| a.date.year }.each do |year, articles| %>
+              <li><%= link_to year, blog_year_path(year) %> (<%= articles.size %>)</a></li>
+            <% end %>
+          </ol>
+        </aside>
+      </header>
+
+      <section id="main" role="main">
+        <%= yield %>
+      </section>
+
+
+      <aside>
+      <% if paginate %>
+        <ul class="paginate-menu">
+            <% if prev_page %>
+              <li id="goto_prev"><%= link_to 'Previous page', prev_page %></li>
+            <% end %>
+            <% if page_number != num_pages %>
+              <li>Page: <%= page_number %> sur <%= num_pages %></li>
+            <% end %>
+            <% if next_page %>
+              <li id="goto_next"><%= link_to 'Next page', next_page %></li>
+            <% end %>
+          </ul>
+      <% end %>
+
+        <h2>Recent Articles</h2>
+        <ol>
+          <% blog.articles[0...10].each do |article| %>
+            <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
+          <% end %>
+        </ol>
+      </aside>
+
+      <footer>
+        <ul>
+            <li class="copyright">© 2010-2013</li>
+            <li><strong>No Way</strong></li>
+            <li>Noëlie Amiot</li>
+        </ul>
+      </footer>
     </div>
-
-    <aside>
-      <h2>Recent Articles</h2>
-      <ol>
-        <% blog.articles[0...10].each do |article| %>
-          <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
-        <% end %>
-      </ol>
-
-      <h2>Tags</h2>
-      <ol>
-        <% blog.tags.each do |tag, articles| %>
-          <li><%= link_to tag, tag_path(tag) %> (<%= articles.size %>)</a></li>
-        <% end %>
-      </ol>
-
-      <h2>By Year</h2>
-      <ol>
-        <% blog.articles.group_by {|a| a.date.year }.each do |year, articles| %>
-          <li><%= link_to year, blog_year_path(year) %> (<%= articles.size %>)</a></li>
-        <% end %>
-      </ol>
-    </aside>
   </body>
 </html>
