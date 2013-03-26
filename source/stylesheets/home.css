@@ -1,0 +1,26 @@
+#homePage .post {
+	width: 33%;
+	float: left;
+}
+#homePage .post figure {
+	width: 100%;
+	background: aqua;
+	height: 200px;
+	overflow: hidden;
+}
+#homePage figure img{
+	display: block;
+	width: 100%;
+	background: #eee;
+
+	/* TEST */
+	margin: -3em;
+	width: 200%;
+}
+#homePage .content .post:first-child {
+	width: 100%;
+}
+#homePage .post:first-child img{
+	width: 100%;
+	margin: 0;
+}

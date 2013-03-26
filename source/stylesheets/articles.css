@@ -1,0 +1,42 @@
+.gotoPreviousPage {
+	margin-left: -10px;
+	text-align: right;
+}
+.gotoNextPage {
+	margin-right: -10px;
+	float: right;
+}
+
+/* Article */
+.bloctitle {
+	clear: both;
+	overflow: hidden;
+	color: #000;
+}
+.bloctitle > * {
+	padding: 0;
+}
+.post {
+	position: relative;
+}
+.postmetadata {
+	color: #000;
+}
+.resume-content,
+.resume-content:hover {
+	color: #666!important;
+}
+.resume-content {
+	text-decoration: none;
+	padding-bottom: 1em!important;
+}
+.resume-content:hover {
+	background: transparent!important;
+	text-decoration: underline;
+}
+.post_content img {
+	display: block;
+}
+#main .resume-content p {
+	display: inline;
+}

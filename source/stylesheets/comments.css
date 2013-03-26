@@ -1,0 +1,139 @@
+/* Formulaire de commentaire */
+form p small {
+	clear: both;
+	display: block;
+	padding-top: 0.5em;
+}
+form label small {
+	display: inline;
+	width: auto;
+	float: none;
+	clear: none;
+}
+form input[type=text],
+form input[type=file],
+form p textarea {
+	padding: 1px 2px;
+}
+form .required label small {
+	font-size: 1em;
+}
+form .required label small,
+form small.required  {
+	color: #000!important;
+}
+
+/* Formulaire de commentaires */
+input[type='submit'],
+input[type='reset']
+{
+	background-color: transparent;
+	color: #666;
+	font-weight:bold;
+	font-size: 1.5em !important;
+}
+input[type='submit']:hover,
+input[type='reset']:hover,
+input[type='submit']:focus,
+input[type='reset']:focus {
+	background-color: #f30;
+	color: #fff;
+}
+
+.comment-body {
+		position: relative;
+}
+.commentlist {
+/*    padding-bottom: 1em;*/
+}
+.commentlist .list-item {
+	font-size: 11px;
+}
+.comment-message {
+	font-family: georgia;
+	font-size: 1.3em;
+	color: #666;
+	margin: 0 -0.5em 0;
+	padding: 0;
+	overflow: auto;
+}
+.comment-meta {
+	font-size: 11px;
+	padding: 0!important;
+}
+.comment-meta a {
+		color: #666;
+}
+.comment-data {
+	clear: both;
+	display: block;
+}
+.comment-author,
+.comment-author cite,
+.comment-meta {
+		display: inline-block;
+}
+.msie .comment-author,
+.msie .comment-author cite,
+.msie .comment-meta {
+		display: inline;
+}
+.comment-text {
+	border-left: 5px solid #ccc;
+	background: #efefef;
+	margin: 0 0 1em;
+	padding: 0.5em 1em 0;
+	color: #666
+}
+.comment-author cite {
+	line-height: 1.6;
+	padding: 0;
+}
+.waitingModeration {
+	color: #666;
+	background: #eee;
+	padding: 0.5em;
+	margin: 0 -0.5em 1em;
+}
+.comment-author {
+	padding-bottom: 0.5em;
+}
+.comment-author .authorInfo {
+	font-size: 1.25em;
+}
+.comment-author .linkUrlData {
+	display: block;
+	line-height: 1.3;
+}
+.comment-author img {
+	vertical-align: top;
+	margin-top: 0.5em;
+	margin-right: 0.5em;
+}
+
+.comments-template input[type=text],
+.comments-template textarea {
+	background-color:#eee;
+	border: solid 2px #eee;
+	padding: 2px;
+}
+.comments-template small,
+.comments-template input[type=text],
+.comments-template textarea {
+/*    width: 482px;*/
+		display: block;
+}
+.comments-template small:focus,
+.comments-template input[type=text]:focus,
+.comments-template textarea:focus {
+	border-color: #eee;
+	background-color: #ddd;
+	color: #666;
+}
+.comments-template small.required {
+	margin-left: -20px;
+}
+.comments-template input.button {
+	float: right;
+}
+/**/
