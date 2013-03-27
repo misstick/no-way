@@ -1,0 +1,20 @@
+<footer>
+<div class="bloc">
+		<h2>Articles récents</h2>
+		<ol>
+			<% blog.articles[0...5].each do |article| %>
+				<li><%= link_to article.title, article %> <span><%= article.date.strftime('%d.%m.%y') %></span></li>
+			<% end %>
+		</ol>
+	</div>
+
+	<div class="bloc">
+		<h2>Qui suis-je ?</h2>
+		<p>Phasellus accumsan, nulla at laoreet molestie, lorem leo cursus velit, at ullamcorper mauris metus quis odio. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec vel tortor eros, tincidunt interdum ligula. Nullam sit amet ipsum nisi, commodo malesuada neque. <a href="#" title="Lire la page 'à propos'">Lire la suite</a></p>
+	</div>
+	<ul class="copyright">
+			<li>© 2010-2013</li>
+			<li><strong>No Way</strong></li>
+			<li>Noëlie Amiot</li>
+	</ul>
+</footer>
