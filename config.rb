@@ -5,7 +5,7 @@
 # Time.zone = "Paris"
 
 activate :blog do |blog|
-  # blog.prefix = "blog"
+  blog.prefix = "blog"
   blog.permalink = "blog/:year-:month-:day-:title.html"
   blog.sources = ":year-:month-:day-:title.html"
   blog.taglink = "categories/:tag.html"
@@ -26,6 +26,7 @@ activate :blog do |blog|
 end
 
 activate :directory_indexes
+page "blog/*", :layout => :article_layout
 page "/404.html", directory_index: false
 page "/feed.xml", :layout => false
 
