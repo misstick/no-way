@@ -1,4 +1,7 @@
 <% wrap_layout :layout do %>
-DETAIL
+		<h2><%= current_page.data.title %></h2>
 		<%= yield %>
+		<figure>
+			<img src="<%= current_page.data.picture %>" width="510" />
+		</figure>
 <% end %>
