@@ -6,9 +6,9 @@
 
 activate :blog do |blog|
   blog.prefix = "blog"
-  blog.permalink = "blog/:year-:month-:day-:title.html"
-  blog.sources = ":year-:month-:day-:title.html"
-  blog.taglink = "categories/:tag.html"
+  blog.permalink = ":year-:month-:day-:title.html"
+  blog.sources = "content/:year-:month-:day-:title.html"
+  blog.taglink = ":tag.html"
   # blog.layout = "blog_layout"
   # blog.summary_separator = /(READMORE)/
   blog.summary_length = 250
@@ -26,7 +26,8 @@ activate :blog do |blog|
 end
 
 activate :directory_indexes
-page "blog/*", :layout => :article_layout
+page "blog/*", :layout => :blog_layout
+page "blog/content/*", :layout => :detail_layout
 page "/404.html", directory_index: false
 page "/feed.xml", :layout => false
 

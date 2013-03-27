@@ -2,6 +2,9 @@
 pageable: true
 per_page: 5
 ---
+
+Blog.home
+
 <% if paginate %>
   <%= partial "paginate", :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
 <% end %>
