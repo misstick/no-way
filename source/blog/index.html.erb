@@ -12,6 +12,9 @@ per_page: 5
       <!-- use article.summary(250) if you have Nokogiri available to show just
            the first 250 characters -->
       <%= article.summary %>
+      <figure>
+        <img src="<%= article.data.picture %>" width="510" />
+      </figure>
     </article>
 <% end %>
 

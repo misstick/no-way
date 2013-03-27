@@ -2,6 +2,7 @@
 title: Coucou
 date: 2013-03-27 10:58 UTC
 tags:
+picture: http://no-way.fr/wp-content/images/modeles/capelineMarine-03.jpg
 ---
 
 Etiam nec sodales nunc. Maecenas ac elit nisi. Proin nec dolor vitae velit porta ullamcorper non nec massa. Nulla feugiat dui orci. Proin gravida placerat nisi viverra placerat. Quisque lacinia neque non eros condimentum sed imperdiet lorem molestie. Sed dui erat, vestibulum vel adipiscing eget, aliquam nec orci. Integer vitae magna id mi sagittis tincidunt. Quisque ac ipsum est, ac tincidunt libero. Praesent sed felis elit. In euismod tincidunt dignissim. In malesuada libero sed dolor molestie hendrerit. In hac habitasse platea dictumst. Donec fermentum semper vehicula. Suspendisse molestie lacinia quam in euismod. Suspendisse ac massa eget tellus congue vestibulum ut sed urna.

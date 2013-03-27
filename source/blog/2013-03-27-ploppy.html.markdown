@@ -2,6 +2,7 @@
 title: PLoppy
 date: 2013-03-27 10:58 UTC
 tags:
+picture: http://no-way.fr/wp-content/uploads/2012/04/capuccino02_medium2.jpg
 ---
 
 Praesent vel ligula eget ligula hendrerit ullamcorper at quis purus. Vestibulum et vulputate neque. Maecenas elementum laoreet sagittis. Donec placerat elit vel ipsum scelerisque lacinia. Fusce commodo fringilla nisi vitae tristique. Pellentesque ante ante, vulputate sed rutrum at, ultrices eget justo. Donec eget justo nec urna ultricies fermentum ut ac eros. Nam et ante erat. Nullam eleifend lacus at nisl scelerisque quis rutrum augue aliquet. Vestibulum eros nisi, mattis id pretium vitae, elementum et nulla. Mauris tempor, metus id feugiat facilisis, sem lorem venenatis nunc, ut rutrum augue elit varius nisi. Proin eu nunc ac justo posuere lacinia sit amet in velit. Nullam tincidunt fermentum pulvinar. In vitae ultrices ligula. Vivamus vitae magna eget quam lacinia commodo a commodo lacus.

@@ -2,6 +2,7 @@
 title: sdqdq
 date: 2013-03-27 10:59 UTC
 tags:
+picture: http://no-way.fr/wp-content/uploads/2012/04/cheshire04_medium.jpg
 ---
 
 Sed vestibulum lectus ut dolor sagittis sit amet luctus lorem fermentum. Donec diam sapien, ultricies ac laoreet eget, adipiscing vel nibh. Duis dui erat, pharetra at consectetur ac, porttitor id tortor. Aenean feugiat aliquam ipsum et rutrum. Quisque scelerisque, dolor id bibendum placerat, ante nibh porta eros, eget dictum dui lorem vitae nibh. Pellentesque luctus metus et mi aliquam dignissim id in libero. Fusce tempus ultrices iaculis. Nam aliquam fermentum odio, ut malesuada ligula varius at. Donec vestibulum, nibh at ullamcorper blandit, est nibh euismod sapien, non congue ipsum ipsum fringilla velit.

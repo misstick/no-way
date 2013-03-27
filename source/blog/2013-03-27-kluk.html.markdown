@@ -2,6 +2,7 @@
 title: kluk
 date: 2013-03-27 10:59 UTC
 tags:
+picture: http://no-way.fr/wp-content/uploads/2013/01/IMGP6231.jpg
 ---
 
 Integer dignissim, felis eget faucibus dapibus, nunc est adipiscing lectus, id interdum magna metus a risus. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer commodo urna in magna ultrices ac posuere arcu cursus. Proin feugiat diam et metus gravida aliquam. Nullam vel tempor tellus. In molestie tortor non dolor elementum sit amet tempus libero interdum. Sed lobortis gravida sapien, vel convallis lectus pulvinar sit amet.
