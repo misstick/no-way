@@ -2,20 +2,20 @@
 # Blog settings
 ###
 
-# Time.zone = "UTC"
+# Time.zone = "Paris"
 
 activate :blog do |blog|
   # blog.prefix = "blog"
-  # blog.permalink = ":year/:month/:day/:title.html"
-  # blog.sources = ":year-:month-:day-:title.html"
-  # blog.taglink = "tags/:tag.html"
-  # blog.layout = "layout"
-  blog.summary_separator = /(READMORE)/
-  # blog.summary_length = 250
+  blog.permalink = "blog/:year-:month-:day-:title.html"
+  blog.sources = ":year-:month-:day-:title.html"
+  blog.taglink = "categories/:tag.html"
+  # blog.layout = "blog_layout"
+  # blog.summary_separator = /(READMORE)/
+  blog.summary_length = 250
   # blog.year_link = ":year.html"
   # blog.month_link = ":year/:month.html"
   # blog.day_link = ":year/:month/:day.html"
-  # blog.default_extension = ".markdown"
+  blog.default_extension = ".markdown"
 
   blog.tag_template = "tag.html"
   blog.calendar_template = "calendar.html"
@@ -47,7 +47,7 @@ page "/feed.xml", :layout => false
 ###
 
 # Per-page layout changes:
-#
+
 # With no layout
 # page "/path/to/file.html", :layout => false
 #
