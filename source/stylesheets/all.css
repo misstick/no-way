@@ -131,22 +131,31 @@ header .active a  {
 }
 
 section[role=main] aside {
-  text-align: center;
+/*   text-align: center;
   width: 25%;
-  margin: 0 auto;
+  margin: 0 auto; */
+display: inline-block;
 }
 section[role=main] aside li {
   display: inline-block;
 }
-#goto_previous {
+/* #goto_previous {
   float: left;
 }
 #goto_next {
   float: right;
-}
+} */
 
 article .content{
   width: 50%;
+}
+figure {
+  clear: both;
+  overflow: hidden;
+}
+figure img {
+  display: block;
+  float: left;
 }
 
 /* Footer */

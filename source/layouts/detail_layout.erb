@@ -5,9 +5,9 @@
 		<h2><%= current_page.data.title %></h2>
 		<%= yield %>
 		<figure>
-		<% current_page.data.pictures do |src, i| %>
-			<img src="<%= src %>" width="510" />
-		<% end %>
+			<% current_page.data.pictures.each do |src, i| %>
+				<img src="<%= src %>" width="510" />
+			<% end %>
 		</figure>
 
 <%= partial "blog/paginate_article", :locals => { :article => current_page } %>

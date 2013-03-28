@@ -3,10 +3,7 @@ pageable: true
 per_page: 5
 ---
 
-Blog.home
-
 <%= partial "paginate", :locals => { :paginate => paginate, :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
-
 
 <% page_articles.each_with_index do |article, i| %>
     <article>
@@ -15,10 +12,9 @@ Blog.home
            the first 250 characters -->
       <%= article.summary %>
       <figure>
-      <% article.data.pictures do |src, i| %>
-        <img src="<%= src %>" width="510" />
-      <% end %>
+        <img src="<%= article.data.pictures[0] %>" width="510" />
       </figure>
+
     </article>
 <% end %>
 
