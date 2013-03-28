@@ -1,9 +1,7 @@
 ---
 pageable: true
-per_page: 5
+per_page: 1
 ---
-
-Blog.home
 
 <% if paginate %>
   <%= partial "paginate", :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
@@ -14,7 +12,7 @@ Blog.home
       <h2><%= link_to article.title, article %> <span><%= article.date.strftime('%d.%m.%y') %></span></h2>
       <!-- use article.summary(250) if you have Nokogiri available to show just
            the first 250 characters -->
-      <%= article.summary %>
+      <%= article.body %>
       <figure>
         <img src="<%= article.data.picture %>" width="510" />
       </figure>
