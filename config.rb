@@ -22,11 +22,12 @@ activate :blog do |blog|
 
   blog.paginate = true
   blog.per_page = 10
-  blog.page_link = "page/:num"
+  # blog.page_link = "page/:num/"
 end
 
 activate :directory_indexes
 page "blog/*", :layout => :blog_layout
+page "blog/content/*", :layout => :detail_layout
 page "/404.html", directory_index: false
 page "/feed.xml", :layout => false
 
