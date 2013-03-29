@@ -85,12 +85,6 @@ article {
   padding: 0 0 1em;
 }
 
-aside,
-section {
-  margin: 0 0 1em;
-}
-
-
 /* Menu "Pages" */
 header {
   position: fixed;
@@ -134,26 +128,21 @@ section[role=main] aside {
 /*   text-align: center;
   width: 25%;
   margin: 0 auto; */
-display: inline-block;
+  clear: both;
 }
 section[role=main] aside li {
   display: inline-block;
 }
-/* #goto_previous {
-  float: left;
+aside {
+  margin: 1em 0;
 }
-#goto_next {
-  float: right;
-} */
 
-article .content{
-  width: 50%;
+#article-content article {
 }
-figure {
-  clear: both;
+#article-content figure {
   overflow: hidden;
 }
-figure img {
+#article-content figure img {
   display: block;
   float: left;
 }

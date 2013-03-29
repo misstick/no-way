@@ -1,14 +1,17 @@
 <% wrap_layout :layout do %>
 
 <%= partial "blog/paginate_article", :locals => { :article => current_page } %>
-
 		<h2><%= current_page.data.title %></h2>
-		<%= yield %>
-		<figure>
-			<% current_page.data.pictures.each do |src, i| %>
-				<img src="<%= src %>" width="510" />
-			<% end %>
-		</figure>
+		<div id="article-content">
+			<article>
+				<%= yield %>
+			</article>
+			<figure>
+				<% current_page.data.pictures.each do |src, i| %>
+					<img src="<%= src %>" width="510" />
+				<% end %>
+			</figure>
+		</div>
 
 <%= partial "blog/paginate_article", :locals => { :article => current_page } %>
 
