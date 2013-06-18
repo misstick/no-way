@@ -161,6 +161,7 @@ section[role=main] aside {
   right: 0;
   font-size: 0.5em;
   padding: 0 1em;
+  overflow: hidden;
 }
 
 .paginate-menu li {
@@ -207,11 +208,10 @@ section aside a {
 }
 #article-content figure {
   overflow: hidden;
-  padding: 0 0 2em;
+  padding: 2em 0 2em;
 }
 #article-content figure img {
-  display: block;
-  float: left;
+  display: inline-block;
 }
 article h2 {
   padding: 0 0 0.75em;
@@ -245,6 +245,40 @@ footer p {
 }
 
 
+/* Contenu spécifiwue home */
+#home-content {
+  text-align: center;
+  padding-bottom: 2em;
+}
+#home-content article:first-of-type {
+  width: 100%;
+  padding: 2em;
+  margin: 0 0 2em;
+  border-radius: 0 103px 0 3em;
+  background: url(../images/pixel.png);
+}
+#home-content article:first-of-type h2,
+#home-content article:first-of-type p {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 1em 1em 0.5em;
+}
+#home-content article:first-of-type h2 {
+  padding: 0.5em 1em;
+}
+#home-content article:first-of-type p {
+  padding: 0 1em 1em;
+}
+#home-content article {
+  display: inline-block;
+  width: 50%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  vertical-align: top;
+  text-align: left;
+  padding: 0 2em 1em 0;
+  margin: 0 -1px;
+}
+
 @media screen and (max-width: 1000px) {
 
   .page {
@@ -261,10 +295,7 @@ footer p {
     overflow: hidden;
     width: 100%;
   }
-  section[role=main] h1,
-  section[role=main] aside {
-    margin: 0 0 1em;
-  }
+
 
   header {
     padding: 2em 0 1em 80px;
@@ -279,8 +310,8 @@ footer p {
     margin: 0.25em 1em;
     background: white;
   }
-  .page-number {
-    margin: 0;
+  .paginate-menu {
+    position: relative;
   }
   header nav,
   header aside,
@@ -290,23 +321,6 @@ footer p {
   header li {
     padding-left: 0.5em;
   }
-/*   header nav li:last-of-type a:after,
-  header aside a:after {
-    content: ' ';
-    display: inline-block;
-    padding: 0 0.4em;
-    font-size: 2em;
-    color: #ccc;
-  }
-  header li:last-of-type a:after {
-    display: none;
-  } */
-
-/*   #article-content h2,
-  .page-number {
-    padding-top: 2em;
-    display: inline-block;
-  } */
   section[role=main] {
     padding-top: 0;
   }
@@ -314,6 +328,23 @@ footer p {
   section[role=main] aside {
     left: 0;
   }
+  #article-content h2 {
+    padding-top: 0;
+  }
+  #article-content article {
+    padding: 0 2em;
+    margin-top: 0;
+  }
+  #article-content figure {
+    text-align: center;
+  }
+
+
+  #home-content article:first-of-type {
+    margin-top: 2em;
+  }
+
+
 
   .list-item figure {
     float: none;
@@ -322,7 +353,6 @@ footer p {
     overflow: hidden;
     margin-bottom: 1em;
   }
-
   .list-item figure img{
     margin-top: -60px;
   }
@@ -332,7 +362,7 @@ footer p {
 
   footer {
     background: url(../images/pixel.png);
-    margin: 3em -2em 0;
+    margin: 1em -2em 0;
     padding: 2em;
   }
 
