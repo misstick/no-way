@@ -128,6 +128,7 @@ header .active a  {
 section>h2 {
   padding: 0 0 1.5em;
 }
+section[role=main] h1,
 section[role=main] aside {
   clear: both;
   position: fixed;
