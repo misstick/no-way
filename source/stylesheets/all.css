@@ -21,12 +21,12 @@ a {
   color: #f30;
 }
 
-header,
+/* header,
 footer,
 .page [role=main] {
   position: relative;
   z-index: 1;
-}
+} */
 header,
 aside,
 footer {
@@ -99,10 +99,11 @@ header a {
   color: inherit;
   text-decoration: none;
 }
-header nav li {
+header li {
   font-size: 1.5em;
-  line-height: 1;
+  line-height: 1.4;
 }
+
 
 header nav,
 header aside {
@@ -121,35 +122,108 @@ header .active a  {
 /* Contenu principal */
 .page section[role=main] {
   color: #000;
+  min-width: 700px;
   min-height: 60%;
 }
-
+section>h2 {
+  padding: 0 0 1.5em;
+}
 section[role=main] aside {
-/*   text-align: center;
-  width: 25%;
-  margin: 0 auto; */
   clear: both;
+  position: fixed;
+  background: rgba(255,255,255,0.95);
+  top: 0;
+  right: 0;
+  box-sizing: border-box;
+  left: 25%;
+  text-align: center;
+
+  min-width: 520px;
+  min-height: 2em;
+
+  font-family: Georgia;
+  font-weight: normal;
+
+  font-size: 2em;
+  color: #f30;
 }
-section[role=main] aside li {
-  display: inline-block;
-}
-aside {
-  margin: 1em 0;
+.paginate-menu {
+  font-size: 0.5em;
+  padding: 0;
 }
 
+.paginate-menu li {
+  display: inline-block;
+  color: #000;
+}
+#goto_next {
+  position: absolute;
+  right: 0;
+  padding-right: 1em;
+}
+#goto_prev {
+  position: absolute;
+  left: 0;
+  float: left;
+}
+
+section aside li {
+  line-height: 4;
+}
+section aside a {
+  padding: 0 0.5em;
+  display: inline-block;
+  color: black;
+}
+
+.list-item {
+  overflow: hidden;
+  padding-bottom: 2em;
+}
+.list-item figure {
+  float: left;
+  margin-right: 2em;
+  max-width: 500px;
+  width: 40%;
+}
+.list-item figure img {
+  width: 100%;
+}
+.list-item p {
+  display: inline-block;
+  width: 50%;
+}
+
+#article-content h2 {
+  font-size: 1em;
+  padding: 1.5em 0 0.5em;
+  line-height: 1.25;
+}
 #article-content article {
+  margin-top: 2em;
 }
 #article-content figure {
+  text-align: center;
   overflow: hidden;
 }
 #article-content figure img {
   display: block;
   float: left;
 }
+#disqus_thread {
+  margin: 2em 0 0;
+  max-width: 800px;
+}
 
 /* Footer */
 footer {
 
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+footer .bloc{
+  padding-bottom: 2em;
 }
 .copyright {
   font-size: 0.9em;
@@ -165,4 +239,36 @@ footer h2 {
 }
 footer p {
   clear: both;
+}
+
+
+
+
+@media screen and (max-width: 1100px) {
+
+}
+@media screen and (min-width:1500px) {
+  body {
+  }
+  #article-content article {
+    width: 50%;
+  }
+  #article-content aside {
+    right: 40%
+  }
+  #article-content figure {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 40%;
+    overflow: auto;
+  }
+  #article-content img {
+    min-width: 50%;
+  }
+  #disqus_thread,
+  footer {
+    width: 50%;
+  }
 }
