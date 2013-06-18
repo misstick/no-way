@@ -53,7 +53,7 @@ header,
   line-height: 0.75;
   padding: 0.25em 0.2em 0.3em;
   margin-left: -11px;
-  margin-bottom: 0.75em;
+  margin-bottom: 1.5em;
   font-weight: normal;
   text-decoration: none;
   text-transform: uppercase;
@@ -95,7 +95,10 @@ header {
   bottom: 0;
   margin-left: -16em;
   width: 10em;
-  padding: 2em;
+  padding: 1em 2em;
+}
+header ul {
+  padding: 0;
 }
 header a {
   color: inherit;
