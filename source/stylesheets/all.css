@@ -105,9 +105,11 @@ header li {
 }
 
 
-header nav,
-header aside {
+header nav {
   margin-left: 11px;
+}
+header aside {
+  margin-left: -5px;
 }
 
 header .active {
