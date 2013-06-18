@@ -15,7 +15,7 @@ body {
   line-height: 1.7;
 /*   text-align: center; */
   color: #aaa;
-  background: #eee;
+  background: #fafafa;
 }
 a {
   color: #f30;
@@ -32,12 +32,15 @@ aside,
 footer {
   color: #888;
 }
+header,
+.page {
+  background: white;
+}
 .page {
   margin: 0 0 0 25%;
   min-height: 100%;
   text-align: left;
   padding: 100px 15% 0 2em;
-  background: white;
   position: relative;
 }
 /* Logo */
@@ -93,7 +96,6 @@ header {
   margin-left: -16em;
   width: 10em;
   padding: 2em;
-  background: white;
 }
 header a {
   color: inherit;
@@ -196,7 +198,6 @@ section aside a {
   display: inline-block;
   width: 50%;
 }
-
 #article-content h2 {
   font-size: 1em;
   padding: 1.5em 0 0.5em;
@@ -213,10 +214,14 @@ section aside a {
   display: block;
   float: left;
 }
-#disqus_thread {
+article h2 {
+  padding: 0 0 0.75em;
+  text-transform: capitalize;
+}
+/* #disqus_thread {
   margin: 2em 0 0;
   max-width: 800px;
-}
+} */
 
 /* Footer */
 footer {
@@ -264,11 +269,19 @@ footer p {
     top: 0;
     bottom: 0;
     right: 0;
+
     width: 40%;
+    padding: 2em;
+    box-sizing: border-box;
     overflow: auto;
+    background: url(../images/pixel.png);
   }
   #article-content img {
-    min-width: 50%;
+    width: 50%;
+    box-sizing: border-box;
+    border: solid 1em white;
+    margin-right: -0.5em;
+    margin-bottom: -0.5em;
   }
   #disqus_thread,
   footer {
