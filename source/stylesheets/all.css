@@ -206,11 +206,11 @@ section aside a {
 #article-content article {
   margin-top: 2em;
 }
-#article-content figure {
+figure.right-column {
   overflow: hidden;
   padding: 2em 0 2em;
 }
-#article-content figure img {
+figure.right-column img {
   display: inline-block;
 }
 article h2 {
@@ -249,24 +249,22 @@ footer p {
 #home-content {
   text-align: center;
   padding-bottom: 2em;
+  max-width: 700px;
 }
-#home-content article:first-of-type {
+#home-content article.first {
   width: 100%;
   padding: 2em;
-  margin: 0 0 2em;
+  margin: 0 2em 2em 0;
   border-radius: 0 103px 0 3em;
   background: url(../images/pixel.png);
+  max-width: 100%;
+  display: block;
 }
-#home-content article:first-of-type h2,
-#home-content article:first-of-type p {
+article.first .content {
+  max-height: 100%;
+
+  padding: 1em 1em 0;
   background: rgba(255, 255, 255, 0.5);
-  padding: 1em 1em 0.5em;
-}
-#home-content article:first-of-type h2 {
-  padding: 0.5em 1em;
-}
-#home-content article:first-of-type p {
-  padding: 0 1em 1em;
 }
 #home-content article {
   display: inline-block;
@@ -275,8 +273,13 @@ footer p {
   -moz-box-sizing: border-box;
   vertical-align: top;
   text-align: left;
-  padding: 0 2em 1em 0;
   margin: 0 -1px;
+  max-width: 350px;
+}
+article .content {
+  max-height: 12em;
+  overflow: hidden;
+  padding-right: 2em;
 }
 
 @media screen and (max-width: 1000px) {
@@ -335,7 +338,7 @@ footer p {
     padding: 0 2em;
     margin-top: 0;
   }
-  #article-content figure {
+  figure.right-column {
     text-align: center;
   }
 
@@ -393,7 +396,7 @@ footer p {
   #article-content aside {
     right: 40%
   }
-  #article-content figure {
+  figure.right-column {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -406,7 +409,7 @@ footer p {
     overflow: auto;
     background: url(../images/pixel.png);
   }
-  #article-content figure img {
+  figure.right-column img {
     width: 50%;
     box-sizing: border-box;
     -moz-box-sizing: border-box;

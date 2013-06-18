@@ -10,5 +10,5 @@ per_page: 12
     <li><%= link_to article.title, article %> <span><%= article.date.strftime('%d.%m.%y') %></span></li>
   <% end %>
 </ul>
-<figure></figure>
+<figure class="right-column"></figure>
 <%= partial 'blog/_paginate', :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
