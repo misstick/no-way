@@ -1,8 +1,20 @@
 <% wrap_layout :layout do %>
 
-<%= partial "blog/paginate_article", :locals => { :article => current_page } %>
-		<h2><%= current_page.data.title %></h2>
 		<div id="article-content">
+
+			<aside>
+				<ul class="paginate-menu">
+					<% if current_page.previous_article %>
+					<li id="goto_prev"><%= link_to '&laquo; ' + current_page.previous_article.title, current_page.previous_article %> précédent</li>
+					<% end %>
+
+					<% if current_page.next_article %>
+					<li id="goto_next">suivant <%= link_to current_page.next_article.title + " &raquo;", current_page.next_article %></li>
+					<% end %>
+					</ul>
+
+					<h2><%= current_page.data.title %></h2>
+			</aside>
 			<article>
 				<%= yield %>
 			</article>
@@ -13,6 +25,5 @@
 			</figure>
 		</div>
 
-<%= partial "blog/paginate_article", :locals => { :article => current_page } %>
 
 <% end %>
