@@ -12,7 +12,6 @@
 					<li id="goto_next">suivant <%= link_to current_page.next_article.title + " &raquo;", current_page.next_article %></li>
 					<% end %>
 					</ul>
-
 					<h2><%= current_page.data.title %></h2>
 			</aside>
 			<article>
@@ -20,7 +19,7 @@
 			</article>
 			<figure class="right-column">
 				<% current_page.data.pictures.each do |src, i| %>
-					<img src="<%= src %>" width="510" />
+					<img src="<%= src %>" />
 				<% end %>
 			</figure>
 		</div>
