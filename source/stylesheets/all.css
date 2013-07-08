@@ -14,7 +14,7 @@ body {
   font-family: 'Source Sans Pro';
   line-height: 1.7;
   color: #aaa;
-  background: #fafafa;
+  background: rgba(250,250,250, 0.8);
   min-width: 500px;
 }
 a {
@@ -96,6 +96,7 @@ header {
   margin-left: -16em;
   width: 10em;
   padding: 1em 2em;
+  box-shadow: -10px 30px 20px rgba(200, 200, 200, 0.1);
 }
 header ul {
   padding: 0;
@@ -200,11 +201,11 @@ section aside a {
 }
 #article-content h2 {
   font-size: 1em;
-  padding: 1.5em 0 0.5em;
+  padding: 2em 0 0.5em;
   line-height: 1.25;
 }
 #article-content article {
-  margin-top: 2em;
+  margin-top: 3em;
 }
 figure.right-column {
   overflow: hidden;
@@ -248,7 +249,7 @@ footer p {
 /* Contenu spécifiwue home */
 #home-content {
   text-align: center;
-  padding-bottom: 2em;
+  padding-bottom: 3em;
   max-width: 700px;
 }
 #home-content article.first {
@@ -256,7 +257,7 @@ footer p {
   padding: 2em;
   margin: 0 2em 2em 0;
   border-radius: 0 103px 0 3em;
-  background: url(../images/pixel.png);
+  background: url(../images/silver_scales.png);
   max-width: 100%;
   display: block;
 }
@@ -277,7 +278,7 @@ article.first .content {
   max-width: 350px;
 }
 article .content {
-  max-height: 12em;
+  max-height: 11em;
   overflow: hidden;
   padding-right: 2em;
 }
@@ -364,7 +365,7 @@ article .content {
   }
 
   footer {
-    background: url(../images/pixel.png);
+    background: url(../images/arches.png);
     margin: 1em -2em 0;
     padding: 2em;
   }
@@ -407,7 +408,8 @@ article .content {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     overflow: auto;
-    background: url(../images/pixel.png);
+
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjMiIGZpbGw9IiNmMzAiPjwvcmVjdD4KPHJlY3Qgd2lkdGg9IjMiIGhlaWdodD0iMSIgZmlsbD0iI2YzMCI+PC9yZWN0Pgo8IS0tcGF0aCBkPSdNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWicgc3Ryb2tlPScjZmZmJyBzdHJva2Utd2lkdGg9JzInLy0tPgo8L3N2Zz4=");
   }
   figure.right-column img {
     width: 50%;
