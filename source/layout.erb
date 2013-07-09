@@ -19,19 +19,17 @@
 
 			<header>
 				<nav>
-					<ul>
-						<li><a href="/" id="logo">no<small>way</small></a></li>
-						<li><a href="/blog">blog</a></li>
-					</ul>
+					<a href="/" id="logo">no<span>..</span><small>way</small></a>
 				</nav>
 
 				<aside>
 					<ol>
+						<li><a href="/blog">blog</a></li>
 						<% blog.tags.each do |tag, articles| %>
-							<li># <%= link_to tag, tag_path(tag) %></a></li>
+							<li class="tag-name"><%= link_to tag, tag_path(tag) %></a></li>
 						<% end %>
 						<% blog.articles.group_by {|a| a.date.year }.each do |year, articles| %>
-							<li># <%= link_to year, blog_year_path(year) %></a></li>
+							<li class="tag-name"><%= link_to year, blog_year_path(year) %></a></li>
 						<% end %>
 					</ol>
 				</aside>

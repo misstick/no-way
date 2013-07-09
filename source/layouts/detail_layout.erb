@@ -5,11 +5,11 @@
 			<aside>
 				<ul class="paginate-menu">
 					<% if current_page.previous_article %>
-					<li id="goto_prev"><%= link_to '&laquo; ' + current_page.previous_article.title, current_page.previous_article %> précédent</li>
+					<li id="goto_prev"><%= link_to '&laquo; ' + current_page.previous_article.title, current_page.previous_article %></li>
 					<% end %>
 
 					<% if current_page.next_article %>
-					<li id="goto_next">suivant <%= link_to current_page.next_article.title + " &raquo;", current_page.next_article %></li>
+					<li id="goto_next"><%= link_to current_page.next_article.title + " &raquo;", current_page.next_article %></li>
 					<% end %>
 					</ul>
 					<h2><%= current_page.data.title %></h2>
