@@ -55,6 +55,7 @@ footer {
   line-height: 0.6;
   font-weight: normal;
   text-decoration: none;
+  padding: 0 0.25em;
 }
 #logo small {
   display: block;
@@ -160,7 +161,7 @@ section[role=main] aside {
 
 .paginate-menu {
   font-size: 0.5em;
-  padding: 0 5% 0 20%;
+  padding: 0 5% 0 200px;
 }
 .paginate-menu li {
   display: inline-block;
@@ -184,15 +185,25 @@ section aside a {
 
 
 #home-content,
-#page-content,
+section[role=main]>.list-container,
 #article-content article {
-  margin: 6em 10% 2em 25%;
+  margin: 6em 10% 2em 250px;
 }
 
+.list-container {
+/*   column-width: 200px;
+  -moz-column-width: 200px;
+  -webkit-column-width: 200px;
+  column-height: 200px;
+  -moz-column-height: 200px;
+  -webkit-column-height: 200px;
+  column-gap:40px;
+  -moz-column-gap:40px;
+  -webkit-column-gap:40px; */
+}
 
 .list-item {
-  overflow: hidden;
-  padding-bottom: 2em;
+
 }
 .list-item figure {
   float: left;
@@ -297,7 +308,7 @@ article .content {
 }
 
 article {
-  column-width: 200px;
+/*   column-width: 200px;
   -moz-column-width: 200px;
   -webkit-column-width: 200px;
   column-height: 200px;
@@ -305,7 +316,7 @@ article {
   -webkit-column-height: 200px;
   column-gap:40px;
   -moz-column-gap:40px;
-  -webkit-column-gap:40px;
+  -webkit-column-gap:40px; */
 }
 
 @media screen and (max-width: 800px) {
@@ -324,6 +335,16 @@ article {
     overflow: hidden;
     width: 100%;
   }
+
+
+  .paginate-menu {
+    padding: 0 5%;
+  }
+    #home-content,
+    #page-content,
+    #article-content article {
+      margin: 6em 5% 2em;
+    }
 
 
   header {
@@ -417,14 +438,12 @@ article {
 }
 @media screen and (min-width: 1000px) {
   .right-column {
-
     overflow: auto;
-
-    padding: 1.5em;
+    padding: 2em 2em 2em 150px;
     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjMiIGZpbGw9IiNmMzAiPjwvcmVjdD4KPHJlY3Qgd2lkdGg9IjMiIGhlaWdodD0iMSIgZmlsbD0iI2YzMCI+PC9yZWN0Pgo8IS0tcGF0aCBkPSdNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWicgc3Ryb2tlPScjZmZmJyBzdHJva2Utd2lkdGg9JzInLy0tPgo8L3N2Zz4=");
   }
   .right-column img {
-/*     width: 50%;*/
+    width: 50%;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     border: solid 1em white;
