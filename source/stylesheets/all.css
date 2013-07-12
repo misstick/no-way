@@ -247,7 +247,6 @@ article h2 {
 /* Mur d'images */
 
 #article-content figure {
-  overflow: hidden;
   padding: 2em 0 2em;
 }
 

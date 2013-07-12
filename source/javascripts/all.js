@@ -84,12 +84,18 @@
 			this.el.removeAttr("style");
 		},
 
-
 		nextAll: function(el, value) {
-			var elements = null;
-			var next = $(el).nextAll(this.path_referer()).get(0);
-			if (next) elements = [next];
-			return elements;
+			var result = [];
+			var next = $(el).next();
+			var index = _.indexOf(this.el.children(), el);
+			var len = this.el.children().length
+			while (value > 0 && index < (len - 1)) {
+				result.push(next.get(0));
+				value -= next.width();
+				next = next.next();
+				++index;
+			}
+			return (!result.length) ? null : result;
 		},
 
 		render: function() {
@@ -112,8 +118,7 @@
 				if (blank) {
 
 					var el = _.last(line);
-					var elements = this.nextAll(el);
-
+					var elements = this.nextAll(el, blank);
 					if (elements) {
 						// Move into DOM & array
 						var elements_width = 0;
