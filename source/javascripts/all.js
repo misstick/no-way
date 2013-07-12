@@ -170,7 +170,7 @@
 
 		preload_data: function() {
 			var index_ref;
-			var max = Math.ceil(window.innerHeight / 2);
+			var max = Math.ceil(window.innerHeight);
 			this.pictures.each(function(index, el){
 				var _coords = this.coords($(el));
 
@@ -228,7 +228,7 @@
 					return;
 				}
 				// Resize Portait
-				$(el).width(this._coords.width);
+				$(el).width(Math.round(_coords.width * this._coords.height / _coords.height));
 				$(el).height(this._coords.height);
 
 			}.bind(this));
