@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fr">
+	<meta charset="UTF-8">
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="../noway/source/javascripts/underscore.js"></script>
+
+	<body>
+		<style>
+			body {
+				padding: 0;
+				margin: 0;
+			}
+			figure {
+				overflow: hidden;
+				position: relative;
+				width: 100%;
+				padding: 0;
+				margin: 0;
+				background: yellow;
+			}
+			figure img {
+				background: gray;
+				text-align: center;
+			}
+			figure img,
+			figure .bloc {
+				display: block;
+				float: left;
+			}
+
+			figure .bloc img {
+				width: 100%;
+				height: 50%;
+			}
+			figure .bloc.one-child img {
+				height: 100%;
+			}
+		</style>
+
+		<figure id="plop">
+
+				<img class="portrait" width="200" height="300" alt="1" />
+
+				<img class="landscape" width="300" height="200" alt="2" />
+				<img class="landscape" width="300" height="200" alt="3" />
+
+				<img class="landscape" width="300" height="200" alt="4" />
+				<img class="landscape" width="300" height="200" alt="5" />
+
+				<img class="portrait" width="200" height="300" alt="6" />
+
+				<img class="landscape" width="300" height="200" alt="7" />
+				<img class="landscape" width="300" height="200" alt="8" />
+
+				<img class="landscape" width="300" height="200" alt="9" />
+
+				<img class="portrait" width="200" height="300" alt="10" />
+				<img class="portrait" width="200" height="300" alt="11" />
+
+				<img class="landscape" width="300" height="200" alt="12" />
+
+				<img class="portrait" width="200" height="300" alt="13" />
+		</figure>
+
+		<script>
+
+			(function() {
+
+				var PictureWall = function(el, options) {
+					if (!options) options = {};
+					this.el = el;
+
+					var ref = ".portrait";
+					var coords = this.coords($(ref, this.el).first());
+					this.item = {
+						path: ".portrait",
+						coords: coords
+					};
+
+					this.className = {
+						container: "bloc",
+						single: "one-child"
+					};
+
+
+
+					this.cleanMarkup();
+					this.render();
+					var _func = this.render.bind(this);
+					$(window).on("resize", _.debounce(_func, 100));
+
+				}
+				PictureWall.prototype = {
+
+					coords: function(el) {
+						return {
+							width: el.get(0).offsetWidth,
+							height: el.get(0).offsetHeight
+						}
+					},
+
+					set_grid: function() {
+						this.el.children().each(function(index, el) {
+							line = (el.offsetTop / this.item.coords.height);
+							if (!this.grid[line]) this.grid[line] = [];
+							this.grid[line].push(el);
+						}.bind(this));
+					},
+
+					line_width: function(line) {
+						var last = _.last(line)
+						return last.offsetLeft + last.offsetWidth;
+					},
+
+					stop: function() {
+						this._index = 0;
+						this.grid = [];
+						this.el.removeAttr("style");
+					},
+
+					render: function() {
+						this.stop();
+						this.set_grid();
+
+						var blank_min = Math.ceil(this.item.coords.width / 3);
+						var coords = this.coords(this.el);
+
+						while(this._index < this.grid.length - 1) {
+							var line = this.grid[this._index];
+							var width = this.line_width(line);
+
+							// Do not move if space is too short
+							var blank = Math.ceil(coords.width - width);
+							if (blank >= blank_min) {
+								var el = _.last(line);
+								var next = $(el).nextAll(this.item.path).get(0);
+								if (next) {
+									// Move into DOM & array
+									$(el).after(next);
+
+									// Update Parent Size
+									// FIX : STocker la taille dans un cookie
+									// pour la réexploiterr
+									var size = $(next).width() + width;
+									if (size > coords.width) this.el.width(size);
+
+									// Update Context
+									this.set_grid();
+								}
+							}
+							++this._index;
+						}
+					},
+
+					// resize: function() {
+					// 	var max = 0;
+					// 	_.each(this.grid, function(line, index) {
+					// 		var width = this.line_width(line)
+					// 		if (!max || max < width) max = width;
+					// 	})
+					// 	this.el.width(max)
+					// },
+
+					cleanMarkup: function() {
+						var bloc = null;
+						var line_height = this.item.coords.height;
+						$("#plop img").each(function(index, el){
+							var _coords = this.coords($(el));
+							if ($(el).hasClass("landscape")) {
+								var previous = $(el).prev();
+								if (!previous.hasClass(this.className.container) || previous.children().length >= 2) {
+									$(el).before('<div class="' + this.className.container + ' ' + this.className.single + '"></div>');
+									previous = $(el).prev();
+								}
+								// Resize Pictures
+								var height = line_height / 2;
+								var width = _coords.width * line_height / _coords.height
+								if (previous.children().length) {
+									width = width / 2;
+									previous.removeClass(this.className.single);
+								}
+								previous.height(line_height);
+								previous.width(width);
+
+								// Move Picture
+								previous.append(el);
+							}
+						}.bind(this));
+
+					}
+
+
+
+				}
+
+				var myWall = new PictureWall($("#plop"));
+			})()
+
+		</script>
+	</body>
+
+</html>
