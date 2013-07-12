@@ -2,7 +2,7 @@
 <html lang="fr">
 	<meta charset="UTF-8">
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="../noway/source/javascripts/underscore.js"></script>
+	<script src="../../source/javascripts/underscore.js"></script>
 
 	<body>
 		<style>
@@ -63,6 +63,10 @@
 		</figure>
 
 		<script>
+
+
+			// FIX : STocker la taille dans un cookie (ou +)
+			// Stocker l'url de la page
 
 			(function() {
 
@@ -139,7 +143,6 @@
 									$(el).after(next);
 
 									// Update Parent Size
-									// FIX : STocker la taille dans un cookie
 									// pour la réexploiterr
 									var size = $(next).width() + width;
 									if (size > coords.width) this.el.width(size);
