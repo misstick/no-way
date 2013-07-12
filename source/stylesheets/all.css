@@ -197,6 +197,7 @@ section[role=main]>.list-container,
   margin: 6em 10% 2em 250px;
 }
 
+/* Pages de liste */
 .list-container {
 /*   column-width: 200px;
   -moz-column-width: 200px;
@@ -222,6 +223,8 @@ section[role=main]>.list-container,
   width: 100%;
   display: block;
 }
+
+/* Page Detail */
 article {
   font-size: 18px;
   line-height: 1.6;
@@ -231,23 +234,6 @@ article {
   padding-top: 0.4em;
   line-height: 1.25;
 }
-.right-column {
-  overflow: hidden;
-  padding: 2em 0 2em;
-}
-.right-column img {
-/*   display: inline-block;
-  vertical-align: top; */
-  float: left;
-  width: 600px;
-  max-height: 900px;
-  min-height: 450px;
-}
-/* .right-column img.landscape {
-  column-span: 2;
-  -webkit-column-span: 2;
-  -moz-column-span: 2;
-} */
 article h2 {
   padding: 0 0 0.75em;
   text-transform: capitalize;
@@ -257,10 +243,39 @@ article h2 {
   display: block;
   font-size: 0.75em;
 }
-/* #disqus_thread {
-  margin: 2em 0 0;
-  max-width: 800px;
-} */
+
+/* Mur d'images */
+
+.wall {
+  overflow: hidden;
+  padding: 2em 0 2em;
+}
+
+.wall {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: yellow;
+}
+.wall img {
+  background: gray;
+  text-align: center;
+}
+.wall img,
+.wall .bloc {
+  display: block;
+  float: left;
+}
+.wall .bloc img {
+  width: 100%;
+  height: 50%;
+}
+.wall .bloc.one-child img {
+  height: 100%;
+}
+
 
 /* Footer */
 footer .bloc{
@@ -400,7 +415,7 @@ article {
     padding: 0 2em;
     margin-top: 0;
   }
-  .right-column {
+  .wall {
     text-align: center;
   }
 
@@ -451,12 +466,12 @@ article {
 
 }
 @media screen and (min-width: 1000px) {
-  .right-column {
+  .wall {
     overflow: auto;
     padding: 2em 2em 2em 150px;
     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjMiIGZpbGw9IiNmMzAiPjwvcmVjdD4KPHJlY3Qgd2lkdGg9IjMiIGhlaWdodD0iMSIgZmlsbD0iI2YzMCI+PC9yZWN0Pgo8IS0tcGF0aCBkPSdNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWicgc3Ryb2tlPScjZmZmJyBzdHJva2Utd2lkdGg9JzInLy0tPgo8L3N2Zz4=");
   }
-  .right-column img {
+  .wall img {
 /*     border: solid 1em white;
     margin-right: -0.5em;
     margin-bottom: -0.5em; */
@@ -491,7 +506,7 @@ article {
   #article-content aside {
     right: 40%
   }
-  .right-column {
+  .wall {
     position: fixed;
     top: 0;
     bottom: 0;

@@ -39,6 +39,11 @@
 	// Set pictures close together
 	// Save picture positions
 	//
+
+
+	// FIX : STocker la taille dans un cookie (ou +)
+	// Stocker l'url de la page
+
 	var PictureWall = function(el, options) {
 		if (!options) options = {};
 		this.el = el;
@@ -56,7 +61,6 @@
 		this.cleanMarkup();
 		var _func = this.render.bind(this);
 		$(window).on("resize", _.debounce(_func, 100));
-
 	}
 
 	PictureWall.prototype = {
@@ -70,7 +74,7 @@
 
 		set_grid: function() {
 			this.el.children().each(function(index, el) {
-				line = (el.offsetTop / this.item.coords.height);
+				line = Math.round(el.offsetTop / this.item.coords.height);
 				if (!this.grid[line]) this.grid[line] = [];
 				this.grid[line].push(el);
 			}.bind(this));
@@ -90,32 +94,33 @@
 		render: function() {
 			this.stop();
 			this.set_grid();
-
+			
 			var blank_min = Math.ceil(this.item.coords.width / 3);
 			var coords = this.coords(this.el);
-
 			while(this._index < this.grid.length - 1) {
 				var line = this.grid[this._index];
 				var width = this.line_width(line);
-
+			
 				// Do not move if space is too short
 				var blank = Math.ceil(coords.width - width);
+				// console.log(line, blank, blank_min)
 				if (blank >= blank_min) {
 					var el = _.last(line);
 					var next = $(el).nextAll(this.item.path).get(0);
 					if (next) {
 						// Move into DOM & array
 						$(el).after(next);
-
+			
 						// Update Parent Size
 						// pour la réexploiterr
 						var size = $(next).width() + width;
 						if (size > coords.width) this.el.width(size);
-
+			
 						// Update Context
 						this.set_grid();
 					}
 				}
+				// Goto Next Line
 				++this._index;
 			}
 		},
@@ -132,7 +137,7 @@
 		cleanMarkup: function() {
 			var bloc = null;
 			var line_height = this.item.coords.height;
-			$("#plop img").each(function(index, el){
+			$("img", this.el).each(function(index, el){
 				var _coords = this.coords($(el));
 				if ($(el).hasClass("landscape")) {
 					var previous = $(el).prev();

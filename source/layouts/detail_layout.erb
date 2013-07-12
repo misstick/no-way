@@ -17,11 +17,35 @@
 			<article>
 				<%= yield %>
 			</article>
-			<figure class="right-column">
-				<% current_page.data.pictures.each do |src, i| %>
-					<img src="<%= src %>" />
-				<% end %>
+
+			<figure id="pictures-wall" class="wall">
+				<img class="portrait" width="200" height="300" alt="1" />
+
+				<img class="landscape" width="300" height="200" alt="2" />
+				<img class="landscape" width="300" height="200" alt="3" />
+
+				<img class="landscape" width="300" height="200" alt="4" />
+				<img class="landscape" width="300" height="200" alt="5" />
+
+				<img class="portrait" width="200" height="300" alt="6" />
+
+				<img class="landscape" width="300" height="200" alt="7" />
+				<img class="landscape" width="300" height="200" alt="8" />
+
+				<img class="landscape" width="300" height="200" alt="9" />
+
+				<img class="portrait" width="200" height="300" alt="10" />
+				<img class="portrait" width="200" height="300" alt="11" />
+
+				<img class="landscape" width="300" height="200" alt="12" />
+
+				<img class="portrait" width="200" height="300" alt="13" />
 			</figure>
+
+			<script>
+				var myWall = new Views.PictureWall($("#pictures-wall"));
+				myWall.render();
+			</script>
 		</div>
 
 
