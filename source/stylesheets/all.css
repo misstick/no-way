@@ -246,7 +246,7 @@ article h2 {
 
 /* Mur d'images */
 
-.wall {
+#article-content figure {
   overflow: hidden;
   padding: 2em 0 2em;
 }
@@ -415,7 +415,7 @@ article {
     padding: 0 2em;
     margin-top: 0;
   }
-  .wall {
+  #article-content figure {
     text-align: center;
   }
 
@@ -466,7 +466,7 @@ article {
 
 }
 @media screen and (min-width: 1000px) {
-  .wall {
+  #article-content figure {
     overflow: auto;
     padding: 2em 2em 2em 150px;
     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjMiIGZpbGw9IiNmMzAiPjwvcmVjdD4KPHJlY3Qgd2lkdGg9IjMiIGhlaWdodD0iMSIgZmlsbD0iI2YzMCI+PC9yZWN0Pgo8IS0tcGF0aCBkPSdNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWicgc3Ryb2tlPScjZmZmJyBzdHJva2Utd2lkdGg9JzInLy0tPgo8L3N2Zz4=");

@@ -73,6 +73,7 @@
 		},
 
 		set_grid: function() {
+			this.grid = [];
 			this.el.children().each(function(index, el) {
 				line = Math.round(el.offsetTop / this.item.coords.height);
 				if (!this.grid[line]) this.grid[line] = [];
@@ -81,41 +82,45 @@
 		},
 
 		line_width: function(line) {
-			var last = _.last(line)
+			var last = _.last(line);
 			return last.offsetLeft + last.offsetWidth;
 		},
 
 		stop: function() {
 			this._index = 0;
-			this.grid = [];
 			this.el.removeAttr("style");
 		},
 
 		render: function() {
 			this.stop();
+
+			// Set the initial content to have the same result
+			// when page will be re-loaded
+			this.el.html(this._content);
 			this.set_grid();
-			
-			var blank_min = Math.ceil(this.item.coords.width / 3);
-			var coords = this.coords(this.el);
+
+			var blank_min = 0;
 			while(this._index < this.grid.length - 1) {
+				var coords = this.coords(this.el);
 				var line = this.grid[this._index];
 				var width = this.line_width(line);
-			
-				// Do not move if space is too short
+
+				// Do not move
+				// if no white space
 				var blank = Math.ceil(coords.width - width);
-				// console.log(line, blank, blank_min)
-				if (blank >= blank_min) {
+				if (blank && blank >= blank_min) {
 					var el = _.last(line);
 					var next = $(el).nextAll(this.item.path).get(0);
 					if (next) {
 						// Move into DOM & array
 						$(el).after(next);
-			
+
 						// Update Parent Size
-						// pour la réexploiterr
 						var size = $(next).width() + width;
-						if (size > coords.width) this.el.width(size);
-			
+						if (size > coords.width) {
+							this.el.width(size);
+						}
+
 						// Update Context
 						this.set_grid();
 					}
@@ -124,15 +129,6 @@
 				++this._index;
 			}
 		},
-
-		// resize: function() {
-		// 	var max = 0;
-		// 	_.each(this.grid, function(line, index) {
-		// 		var width = this.line_width(line)
-		// 		if (!max || max < width) max = width;
-		// 	})
-		// 	this.el.width(max)
-		// },
 
 		cleanMarkup: function() {
 			var bloc = null;
@@ -159,6 +155,7 @@
 					previous.append(el);
 				}
 			}.bind(this));
+			this._content = this.el.html();
 		}
 	}
 
