@@ -2,7 +2,7 @@
 title: kimono comics
 date: 2013-02-12
 tags: kimono, manteau
-pictures: ["http://no-way.fr/wp-content/uploads/2013/01/IMGP6132.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6150.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6142.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6111.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6151.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6136.jpg"]
+pictures: [ "http://no-way.fr/wp-content/uploads/2013/01/IMGP6150.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6136.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6151.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6132.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6142.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6111.jpg"]
 ---
 
 <p>Voici le premier manteau que j’ai réalisé à la sauce No-way.</p>
