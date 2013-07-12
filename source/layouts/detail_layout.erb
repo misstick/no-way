@@ -20,25 +20,16 @@
 
 			<figure>
 				<div id="pictures-wall" class="wall">
-					<img width="400" height="600" alt="1" />
-					<img width="300" height="250" alt="2" />
-					<img width="1200" height="600" alt="3" />
-					<img width="800" height="500" alt="4" />
-					<img width="500" height="200" alt="5" />
-					<img width="200" height="300" alt="6" />
-					<img width="300" height="200" alt="7" />
-					<img width="600" height="400" alt="8" />
-					<img width="300" height="200" alt="9" />
-					<img width="600" height="900" alt="10" />
-					<img width="200" height="300" alt="11" />
-					<img width="1200" height="800" alt="12" />
-					<img width="500" height="600" alt="13" />
+				<% current_page.data.pictures.each do |src, i| %>
+					<img src="<%= src %>" />
+				<% end %>
 				</div>
 			</figure>
-
 			<script>
-				var myWall = new Views.PictureWall($("#pictures-wall"));
-				myWall.render();
+				$(document).ready(function() {
+
+					var myWall = new Views.PictureWall($("#pictures-wall"));
+				})
 			</script>
 		</div>
 

@@ -47,16 +47,20 @@
 	var PictureWall = function(el, options) {
 		if (!options) options = {};
 		this.el = el;
+		this.pictures = $("img", this.el);
 
 		// Init
-		this.cleanMarkup();
 		var _func = this.render.bind(this);
 		$(window).on("resize", _.debounce(_func, 100));
+		$(this.el).on("resize", this.resize.bind(this));
+		this.load();
 	}
 
 	PictureWall.prototype = {
 
 		format: ["portrait", "landscape"],
+
+		line_height: null,
 
 		coords: function(el) {
 			return {
@@ -98,9 +102,15 @@
 			return (!result.length) ? null : result;
 		},
 
+		load: function() {
+			var loader = _.after(this.pictures.length, this.preload_data.bind(this))
+			this.pictures.each(function(index, el){
+				el.onload = loader;
+			}.bind(this));
+		},
+
 		render: function() {
 			this.stop();
-
 			// Set the initial content to have the same result
 			// when page will be re-loaded
 			this.el.html(this._content);
@@ -112,6 +122,7 @@
 				var line = this.grid[this._index];
 				var width = this.width(line);
 
+
 				// Do not move
 				// if no white space
 				var blank = Math.ceil(coords.width - width);
@@ -120,6 +131,7 @@
 					var el = _.last(line);
 					var elements = this.nextAll(el, blank);
 					if (elements) {
+
 						// Move into DOM & array
 						var elements_width = 0;
 						for (var i=elements.length; i > 0; i--) {
@@ -129,7 +141,7 @@
 						}
 
 						// Update Parent Size
-						var size = elements_width + width;
+						var size = Math.ceil(elements_width + width);
 						if (size > coords.width) this.el.width(size);
 
 						// Update Context
@@ -156,17 +168,10 @@
 			return "[data-format=" + this.format[0] + "]"
 		},
 
-		cleanMarkup: function() {
-			var bloc = null;
-			var line_height;
-			var className = {
-				container: "bloc",
-				single: "one-child"
-			};
-
+		preload_data: function() {
 			var index_ref;
-			var pictures = $("img", this.el);
-			pictures.each(function(index, el){
+			var max = Math.ceil(window.innerHeight / 2);
+			this.pictures.each(function(index, el){
 				var _coords = this.coords($(el));
 
 				// Tag each Picture
@@ -175,17 +180,30 @@
 				// Get The minimal Height
 				// to define line_height
 				if (format === this.format[0]) {
-					if (!line_height || line_height > _coords.height) {
+					if (!this.line_height || this.line_height > _coords.height) {
 						index_ref = index;
-						line_height = _coords.height;
+						this.line_height = _coords.height;
 					}
 				}
 			}.bind(this));
 
-			pictures.get(index_ref);
-			this._coords = this.coords($(pictures.get(index_ref)))
+			var el = $(this.pictures.get(index_ref));
+			if (this.line_height > max) {
+				this.line_height = max;
+				el.width(this.line_height * el.width() / el.height())
+			}
 
-			pictures.each(function(index, el){
+			this._coords = this.coords(el);
+			$(this.el).trigger("resize");
+		},
+
+		resize: function() {
+			var bloc = null;
+			var className = {
+				container: "bloc",
+				single: "one-child"
+			};
+			this.pictures.each(function(index, el){
 				var _coords = this.coords($(el));
 				var format = this.get_format(el);
 
@@ -196,14 +214,14 @@
 						previous = $(el).prev();
 					}
 					// Resize Landscape
-					var height = line_height / 2;
-					var width = _coords.width * line_height / _coords.height
+					var height = this.line_height / 2;
+					var width = _coords.width * this.line_height / _coords.height
 					if (previous.children().length) {
 						width = width / 2;
 						previous.removeClass(className.single);
 					}
-					previous.height(line_height);
-					previous.width(width);
+					previous.height(this.line_height);
+					previous.width(Math.round(width));
 
 					// Move Picture
 					previous.append(el);
