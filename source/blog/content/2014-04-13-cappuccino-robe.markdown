@@ -1,7 +1,7 @@
 ---
 title: cappuccino robe
 date: 2014-04-13
-tags: robe
+tags: Robe
 pictures: ["http://no-way.fr/wp-content/uploads/2012/04/capuccino01_medium2.jpg", "http://no-way.fr/wp-content/uploads/2012/04/IMG_1895.jpg", "http://no-way.fr/wp-content/uploads/2012/04/capuccino05_medium2.jpg", "http://no-way.fr/wp-content/uploads/2012/04/capuccino04_medium2.jpg", "http://no-way.fr/wp-content/uploads/2012/04/capuccino02_medium2.jpg"]
 ---
 

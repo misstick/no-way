@@ -1,7 +1,7 @@
 ---
 title: kimono comics
 date: 2013-02-12
-tags: kimono, manteau
+tags: Manteau
 pictures: [ "http://no-way.fr/wp-content/uploads/2013/01/IMGP6150.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6136.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6151.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6132.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6142.jpg", "http://no-way.fr/wp-content/uploads/2013/01/IMGP6111.jpg"]
 ---
 

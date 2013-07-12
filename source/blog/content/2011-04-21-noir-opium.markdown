@@ -1,7 +1,7 @@
 ---
 title: Noir d’opium
 date: 2011-04-21
-tags: Kimono
+tags: Gilet
 pictures: ["http://no-way.fr/wp-content/images/modeles/opium02.jpg", "http://no-way.fr/wp-content/images/modeles/opium01.jpg", "http://no-way.fr/wp-content/images/modeles/opium04.jpg", "http://no-way.fr/wp-content/images/modeles/opium03.jpg"]
 ---
 
