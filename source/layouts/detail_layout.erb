@@ -27,19 +27,8 @@
 			</figure>
 			<script>
 				$(document).ready(function() {
-
 					var myWall = new Views.PictureWall($("#pictures-wall"));
 				})
 			</script>
 		</div>
-
-
-		<footer>
-			<h2>Articles récents</h2>
-			<ol>
-				<% blog.articles[0...5].each do |article| %>
-					<li><%= link_to article.title, article %> <span><%= article.date.strftime('%d.%m.%y') %></span></li>
-				<% end %>
-			</ol>
-		</footer>
 <% end %>
