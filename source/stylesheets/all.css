@@ -202,7 +202,10 @@ section aside a {
 #home-content,
 section[role=main]>.list-container,
 #article-content article {
-  padding: 6em 10% 2em 250px;
+  margin: 6em 10% 2em 250px;
+  min-height: 30%;
+  max-width: 2000px;
+  overflow: auto;
 }
 
 /* Pages de liste */
@@ -253,7 +256,7 @@ article h2 {
 
 #article-content figure {
   padding: 2em 0 2em;
-  text-align: right;
+  text-align: center;
 }
 
 .wall {
@@ -267,6 +270,7 @@ article h2 {
 
 .wall>div {
   overflow: hidden;
+  background: black;
 }
 .wall img {
   background: gray;
@@ -282,7 +286,6 @@ article h2 {
   height: 50%;
 }
 .wall .portrait img {
-  height: 100%;
   width: 100%;
 }
 .wall [data-rows="2"] img {
@@ -371,9 +374,8 @@ article {
 
 #article-content figure {
   overflow: auto;
-  padding: 2em 0 2.5em 220px;
   padding: 0;
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjMiIGZpbGw9IiNmMzAiPjwvcmVjdD4KPHJlY3Qgd2lkdGg9IjMiIGhlaWdodD0iMSIgZmlsbD0iI2YzMCI+PC9yZWN0Pgo8IS0tcGF0aCBkPSdNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWicgc3Ryb2tlPScjZmZmJyBzdHJva2Utd2lkdGg9JzInLy0tPgo8L3N2Zz4=");
+;
 }
 
 @media screen and (max-width: 800px) {

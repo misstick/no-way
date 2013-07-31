@@ -89,7 +89,7 @@
 
 			var index = 0;
 			var _resize = function(grid) {
-				if (index >= grid.length || grid.length <= 1) {
+				if (index >= 10|| grid.length <= 1) {
 					// All picture do not have the same width
 					// Remove last blank
 					var width = 0;
@@ -97,7 +97,7 @@
 					_.each(line0, function(el) {
 						width += $(el).width();
 					})
-					this.el.width(width)
+					this.el.width(width);
 					return;
 				}
 
@@ -110,9 +110,12 @@
 				// Resize Container
 				var width = columns * this._coords.width;
 				this.el.width(width + $(last.shift()).width());
+
 				// Remove Next Elements
-				++index;
-				_resize(this.grid());
+				if (last.length) {
+					++index;
+					_resize(this.grid());
+				}
 
 			}.bind(this);
 
