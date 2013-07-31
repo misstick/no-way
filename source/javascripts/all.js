@@ -150,7 +150,7 @@
 			// Previous Test didnt Work
 			if (index0 == undefined) {
 				_.filter(this.pictures, function(el, index) {
-					var test = $(el).data("format") === this.format[0];
+					var test = this.get_format(el) === this.format[0];
 					if (test) index0 = index;
 					return test;
 				}.bind(this));
