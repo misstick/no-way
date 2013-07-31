@@ -5,7 +5,7 @@ per_page: 12
 <h1><%= tagname %></h1>
 
 <%= partial 'blog/_paginate', :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
-<ul class="list-container">
+<ul id="tag-content" class="list-container">
   <% page_articles.each_with_index do |article, i| %>
     <li><%= link_to article.title, article %> <span><%= article.date.strftime('%d.%m.%y') %></span></li>
   <% end %>
