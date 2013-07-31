@@ -60,8 +60,6 @@
 
 		format: ["portrait", "landscape"],
 
-		line_height: null,
-
 		coords: function(el) {
 			return {
 				width: el.get(0).offsetWidth,
@@ -138,8 +136,8 @@
 		},
 
 		format_html: function() {
-			var index_ref;
-			var max = Math.ceil(window.innerHeight);
+			var index0;
+			var coords0 = this.coords(this.pictures.first());
 			this.pictures.each(function(index, el){
 				var _coords = this.coords($(el));
 				// Tag each Picture
@@ -147,17 +145,12 @@
 				// Get The minimal Height
 				// to define line_height
 				if (format === this.format[0]) {
-					if (!this.line_height || this.line_height > _coords.height) {
-						index_ref = index;
-						this.line_height = _coords.height;
+					if (coords0.height > _coords.height) {
+						index0 = index;
 					}
 				}
 			}.bind(this));
-			var el = $(this.pictures.get(index_ref));
-			if (this.line_height > max) {
-				this.line_height = max;
-				el.width(this.line_height * el.width() / el.height())
-			}
+			var el = $(this.pictures.get(index0));
 			this._coords = this.coords(el);
 			$(this.el).trigger("format:end");
 		},
@@ -170,6 +163,8 @@
 			};
 			this.pictures.each(function(index, el){
 				var _coords = this.coords($(el));
+				if (_.isEqual(this._coords, _coords)) return;
+				
 				var format = this.get_format(el);
 				if (format === this.format[1]) {
 					var previous = $(el).prevAll("." + className.single);
@@ -179,14 +174,10 @@
 						previous = $(el).prev();
 					}
 					// Resize Landscape
-					var height = this.line_height / 2;
-					var width = _coords.width * this.line_height / _coords.height
 					if (previous.children().length) {
-						width = width / 2;
 						previous.removeClass(className.single);
 					}
-					previous.height(this._coords.height);
-					previous.width(this._coords.width);
+					previous.css(this._coords);
 
 					// Move Picture
 					previous.append(el);
@@ -194,10 +185,10 @@
 				}
 
 				// Resize Portait
-				if (_coords.height != this._coords.height) {
-					$(el).width(Math.round(_coords.width * this._coords.height / _coords.height));
-					$(el).height(this._coords.height);
-				}
+				$(el).before('<div class="' + this.format[0] + '"></div>');
+				var previous = $(el).prev();
+				previous.append(el);
+				previous.css(this._coords);
 
 			}.bind(this));
 			this._content = this.el.html();
