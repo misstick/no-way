@@ -87,23 +87,29 @@
 
 		resize: function() {
 
+			// All picture do not have the same width
+			// Remove last blank
+			var complete = function(grid) {
+				console.log("complete")
+				var width = 0;
+				var line0 = grid.shift();
+				_.each(line0, function(el) {
+					width += $(el).width();
+				})
+				this.el.width(width);
+			}.bind(this);
+
 			var index = 0;
 			var _resize = function(grid) {
 				if (index >= 10|| grid.length <= 1) {
-					// All picture do not have the same width
-					// Remove last blank
-					var width = 0;
-					var line0 = grid.shift();
-					_.each(line0, function(el) {
-						width += $(el).width();
-					})
-					this.el.width(width);
+					complete(grid);
 					return;
 				}
 
 				var last = _.last(grid);
 				var columns = Math.ceil(this.el.width() / this._coords.width);
 				if (last.length === columns) {
+					complete(grid);
 					return;
 				}
 
@@ -112,10 +118,8 @@
 				this.el.width(width + $(last.shift()).width());
 
 				// Remove Next Elements
-				if (last.length) {
-					++index;
-					_resize(this.grid());
-				}
+				++index;
+				_resize(this.grid());
 
 			}.bind(this);
 
