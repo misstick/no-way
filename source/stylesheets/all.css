@@ -260,8 +260,7 @@ article h2 {
   margin: 0;
 }
 
-.wall .bloc,
-.wall .portrait {
+.wall>div {
   overflow: hidden;
 }
 .wall img {
@@ -269,8 +268,7 @@ article h2 {
   text-align: center;
 }
 .wall img,
-.wall .bloc,
-.wall .portrait {
+.wall>div {
   display: block;
   float: left;
 }
@@ -278,11 +276,10 @@ article h2 {
   width: 100%;
   height: 50%;
 }
-.wall .bloc.one-child img {
-  height: 100%;
+.wall [data-span="2"] img {
+  height: 50%;
   width: auto;
 }
-
 
 /* Footer */
 footer {

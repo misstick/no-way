@@ -157,38 +157,37 @@
 
 		render: function() {
 			var bloc = null;
-			var className = {
-				container: "bloc",
-				single: "one-child"
-			};
+
+
 			this.pictures.each(function(index, el){
 				var _coords = this.coords($(el));
-				if (_.isEqual(this._coords, _coords)) return;
-				
-				var format = this.get_format(el);
-				if (format === this.format[1]) {
-					var previous = $(el).prevAll("." + className.single);
-					if (!previous.get(0)) previous = $(el).prev();
-					if (!previous.hasClass(className.container) || previous.children().length >= 2) {
-						$(el).before('<div class="' + className.container + ' ' + className.single + '"></div>');
-						previous = $(el).prev();
-					}
-					// Resize Landscape
-					if (previous.children().length) {
-						previous.removeClass(className.single);
-					}
-					previous.css(this._coords);
-
-					// Move Picture
-					previous.append(el);
+				if (_.isEqual(this._coords, _coords)) {
 					return;
 				}
+				var format = this.get_format(el);
+				var coords = this._coords;
+				var previous;
+				if (format === this.format[1]) {
+					// Change width,
+					// if picture isnt larger enought
+					var width = Math.round(_coords.width * (this._coords.height / 2) / _coords.height);
+					if (width < this._coords.width) coords.width = width;
 
-				// Resize Portait
-				$(el).before('<div class="' + this.format[0] + '"></div>');
-				var previous = $(el).prev();
+					// Create .bloc
+					previous = $(el).prevAll("[data-span=2]").first();
+					if (!previous.get(0) || $("img", previous).size() >= 2) {
+						$(el).before('<div data-span="2">');
+						previous = $(el).prev();
+					}
+
+				}	else {
+					$(el).before('<div>');
+					previous = $(el).prev();
+				}
+
+				// Move Picture
 				previous.append(el);
-				previous.css(this._coords);
+				previous.css(coords);
 
 			}.bind(this));
 			this._content = this.el.html();
