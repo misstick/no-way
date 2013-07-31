@@ -134,6 +134,7 @@
 		format_html: function() {
 			var index0;
 			var coords0 = this.coords(this.pictures.first());
+
 			this.pictures.each(function(index, el){
 				var _coords = this.coords($(el));
 				// Tag each Picture
@@ -156,8 +157,17 @@
 				}.bind(this));
 			}
 
+			// Add min-coords
+			var min_height = window.innerHeight / 1.5;
 			var el = $(this.pictures.get(index0));
-			this._coords = this.coords(el);
+			var coords = this.coords(el);
+			if (coords.height < min_height) {
+				coords.width = coords.width * min_height / coords.height;
+				coords.height = min_height;
+			}
+
+			var el = $(this.pictures.get(index0));
+			this._coords = coords;
 			$(this.el).trigger("format:end");
 		},
 

@@ -49,7 +49,7 @@ footer {
 } */
 .page {
   /* margin: 0 0 0 25%; */
-  min-height: 100%;
+  height: 100%;
   text-align: left;
   position: relative;
 }
@@ -147,7 +147,7 @@ header .active a  {
 /* Contenu principal */
 .page section[role=main] {
   color: #000;
-  min-height: 200px;
+  height: 100%;
 }
 section>h2 {
   padding: 0 0 1.5em;
@@ -196,10 +196,13 @@ section aside a {
 }
 
 
+#article-content {
+  height: 100%;
+}
 #home-content,
 section[role=main]>.list-container,
 #article-content article {
-  margin: 6em 10% 2em 250px;
+  padding: 6em 10% 2em 250px;
 }
 
 /* Pages de liste */
