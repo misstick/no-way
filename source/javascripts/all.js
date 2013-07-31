@@ -90,6 +90,14 @@
 			var index = 0;
 			var _resize = function(grid) {
 				if (index >= grid.length || grid.length <= 1) {
+					// All picture do not have the same width
+					// Remove last blank
+					var width = 0;
+					var line0 = grid.shift();
+					_.each(line0, function(el) {
+						width += $(el).width()
+					})
+					this.el.width(width)
 					return;
 				}
 
@@ -102,7 +110,6 @@
 				// Resize Container
 				var width = columns * this._coords.width;
 				this.el.width(width + $(last.shift()).width());
-				console.log(index)
 				// Remove Next Elements
 				++index;
 				_resize(this.grid());
