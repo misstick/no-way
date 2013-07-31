@@ -2,7 +2,7 @@
 title: Collier tropical
 date: 2011-11-25
 tags: Collier
-pictures: ["http://no-way.fr/wp-content/images/modeles/collier-1.jpg", "http://no-way.fr/wp-content/images/modeles/collier-2.jpg", "http://no-way.fr/wp-content/images/modeles/collier-3.jpg", "http://no-way.fr/wp-content/images/modeles/collier-4.jpg"]
+pictures: ["http://no-way.fr/wp-content/images/modeles/collier-1.jpg", "http://no-way.fr/wp-content/images/modeles/collier-2.jpg", "http://no-way.fr/wp-content/images/modeles/collier-4.jpg"]
 ---
 
 Ambiance tropicale pour ce collier réalisé au printemps 2011.

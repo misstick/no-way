@@ -74,15 +74,43 @@
 			}.bind(this));
 		},
 
+		grid: function() {
+			var grid = [];
+			var coords = this._coords;
+			this.el.children().each(function(index, el) {
+				line = Math.round(el.offsetTop / coords.height);
+				if (!grid[line]) grid[line] = [];
+				grid[line].push(el);
+			});
+			return grid;
+		},
+
 		resize: function() {
-			console.log("resize ALL")
-			/*
-			this.stop();
-			// Set the initial content to have the same result
-			// when page will be re-loaded
-			this.el.html(this._content);
-			this.set_grid();
-			*/
+
+			var index = 0;
+			var _resize = function(grid) {
+				if (index >= grid.length || grid.length <= 1) {
+					return;
+				}
+
+				var last = _.last(grid);
+				var columns = Math.ceil(this.el.width() / this._coords.width);
+				if (last.length === columns) {
+					return;
+				}
+
+				// Resize Container
+				var width = columns * this._coords.width;
+				this.el.width(width + $(last.shift()).width());
+				console.log(index)
+				// Remove Next Elements
+				++index;
+				_resize(this.grid());
+
+			}.bind(this);
+
+			_resize(this.grid())
+
 		},
 
 		set_format: function(el, coords) {
@@ -160,6 +188,7 @@
 				$(el).width(width * 2);
 			}.bind(this));
 
+			$(this.el).trigger("resize");
 		}
 	}
 
