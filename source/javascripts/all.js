@@ -50,6 +50,8 @@
 		this.pictures = $("img", this.el);
 
 		// Init
+		var _func = this.resize.bind(this)
+		$(window).on("resize", _.debounce(_func, 100));
 		$(this.el).on("format:end", this.render.bind(this));
 		this.load();
 	}
@@ -109,16 +111,16 @@
 			}.bind(this));
 		},
 
-/*
-		render: function() {
-
+		resize: function() {
+			console.log("resize ALL")
+			/*
 			this.stop();
 			// Set the initial content to have the same result
 			// when page will be re-loaded
 			this.el.html(this._content);
 			this.set_grid();
+			*/
 		},
-*/
 
 		set_format: function(el, coords) {
 			if (!coords) coords = this.coords($(el));
@@ -190,11 +192,12 @@
 					previous.append(el);
 					return;
 				}
-				/*
+
 				// Resize Portait
-				$(el).width(Math.round(_coords.width * this._coords.height / _coords.height));
-				$(el).height(this._coords.height);
-				*/
+				if (_coords.height != this._coords.height) {
+					$(el).width(Math.round(_coords.width * this._coords.height / _coords.height));
+					$(el).height(this._coords.height);
+				}
 
 			}.bind(this));
 			this._content = this.el.html();

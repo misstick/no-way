@@ -277,7 +277,10 @@ article h2 {
   height: 50%;
 }
 .wall .bloc.one-child img {
+/*
   height: 100%;
+  width: auto;
+  */
 }
 
 
