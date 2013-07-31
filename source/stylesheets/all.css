@@ -281,6 +281,10 @@ article h2 {
   width: 100%;
   height: 50%;
 }
+.wall .portrait img {
+  height: 100%;
+  width: 100%;
+}
 .wall [data-rows="2"] img {
   height: 50%;
   width: auto;

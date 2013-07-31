@@ -95,7 +95,7 @@
 					var width = 0;
 					var line0 = grid.shift();
 					_.each(line0, function(el) {
-						width += $(el).width()
+						width += $(el).width();
 					})
 					this.el.width(width)
 					return;
@@ -157,12 +157,16 @@
 				}.bind(this));
 			}
 
+			if (index0 == undefined) {
+				index0 = 0;
+			}
+
 			// Add min-coords
-			var min_height = window.innerHeight / 1.5;
+			var min_height = Math.round(window.innerHeight / 1.5);
 			var el = $(this.pictures.get(index0));
 			var coords = this.coords(el);
 			if (coords.height < min_height) {
-				coords.width = coords.width * min_height / coords.height;
+				coords.width = Math.round(coords.width * min_height / coords.height);
 				coords.height = min_height;
 			}
 
@@ -192,7 +196,7 @@
 						previous = $(el).prev();
 					}
 				}	else {
-					$(el).before('<div>');
+					$(el).before('<div class="portrait">');
 					previous = $(el).prev();
 				}
 				// Move Picture
