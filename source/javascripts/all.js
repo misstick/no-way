@@ -67,41 +67,6 @@
 			}
 		},
 
-		/*
-		set_grid: function() {
-			this.grid = [];
-			this.el.children().each(function(index, el) {
-				line = Math.round(el.offsetTop / this._coords.height);
-				if (!this.grid[line]) this.grid[line] = [];
-				this.grid[line].push(el);
-			}.bind(this));
-		},
-		*/
-
-		width: function(line) {
-			var last = _.last(line);
-			return last.offsetLeft + last.offsetWidth;
-		},
-
-		stop: function() {
-			this._index = 0;
-			this.el.removeAttr("style");
-		},
-
-		nextAll: function(el, value) {
-			var result = [];
-			var next = $(el).next();
-			var index = _.indexOf(this.el.children(), el);
-			var len = this.el.children().length
-			while (value > 0 && index < (len - 1)) {
-				result.push(next.get(0));
-				value -= next.width();
-				next = next.next();
-				++index;
-			}
-			return (!result.length) ? null : result;
-		},
-
 		load: function() {
 			var loader = _.after(this.pictures.length, this.format_html.bind(this))
 			this.pictures.each(function(index, el){
@@ -156,8 +121,6 @@
 		},
 
 		render: function() {
-			var bloc = null;
-
 
 			this.pictures.each(function(index, el){
 				var _coords = this.coords($(el));
@@ -172,25 +135,31 @@
 					// if picture isnt larger enought
 					var width = Math.round(_coords.width * (this._coords.height / 2) / _coords.height);
 					if (width < this._coords.width) coords.width = width;
-
 					// Create .bloc
-					previous = $(el).prevAll("[data-span=2]").first();
+					previous = $(el).prevAll("[data-rows=2]").first();
 					if (!previous.get(0) || $("img", previous).size() >= 2) {
-						$(el).before('<div data-span="2">');
+						$(el).before('<div data-rows="2">');
 						previous = $(el).prev();
 					}
-
 				}	else {
 					$(el).before('<div>');
 					previous = $(el).prev();
 				}
-
 				// Move Picture
 				previous.append(el);
 				previous.css(coords);
 
 			}.bind(this));
-			this._content = this.el.html();
+
+			// Multi-Rows if a container isnt filled
+			this.el.children("[data-rows=2]").each(function(index, el) {
+				if ($(el).children().size() >= 2) return;
+				$(el).attr("data-rows", "1");
+				$(el).attr("data-columns", "2");
+				var width = $(el).width();
+				$(el).width(width * 2);
+			}.bind(this));
+
 		}
 	}
 
