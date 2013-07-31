@@ -131,10 +131,6 @@
 			return $(el).attr("data-format");
 		},
 
-		path_referer: function() {
-			return "[data-format=" + this.format[0] + "]"
-		},
-
 		format_html: function() {
 			var index0;
 			var coords0 = this.coords(this.pictures.first());
@@ -150,13 +146,22 @@
 					}
 				}
 			}.bind(this));
+
+			// Previous Test didnt Work
+			if (index0 == undefined) {
+				_.filter(this.pictures, function(el, index) {
+					var test = $(el).data("format") === this.format[0];
+					if (test) index0 = index;
+					return test;
+				}.bind(this));
+			}
+
 			var el = $(this.pictures.get(index0));
 			this._coords = this.coords(el);
 			$(this.el).trigger("format:end");
 		},
 
 		render: function() {
-
 			this.pictures.each(function(index, el){
 				var _coords = this.coords($(el));
 				if (_.isEqual(this._coords, _coords)) {
