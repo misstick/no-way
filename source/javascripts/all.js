@@ -86,11 +86,9 @@
 		},
 
 		resize: function() {
-
-			// All picture do not have the same width
+			// All pictures dont have the same width
 			// Remove last blank
 			var complete = function(grid) {
-				console.log("complete")
 				var width = 0;
 				var line0 = grid.shift();
 				_.each(line0, function(el) {
@@ -169,56 +167,79 @@
 			}
 
 			// Add min-coords
-			var min_height = Math.round(window.innerHeight / 1.5);
 			var el = $(this.pictures.get(index0));
 			var coords = this.coords(el);
-			if (coords.height < min_height) {
-				coords.width = Math.round(coords.width * min_height / coords.height);
-				coords.height = min_height;
-			}
+
+			// var min_height = Math.round(window.innerHeight / 1.5);
+			// if (coords.height < min_height) {
+			// 	coords.width = Math.round(coords.width * min_height / coords.height);
+			// 	coords.height = min_height;
+			// }
 
 			var el = $(this.pictures.get(index0));
 			this._coords = coords;
 			$(this.el).trigger("format:end");
 		},
 
+		replaceImage: function(el, options) {
+			if (!options) options = {};
+			var style = options.coords || {};
+			_.extend(style, {
+				"background-repeat": "no-repeat",
+				"background-position": "50% 50%",
+				"background-image": "url('" + $(el).attr("src") + "')"
+			});
+
+			var coords = this.coords($(el));
+			var width = Math.round(coords.width * (this._coords.height / 2) / coords.height);
+			style["background-size"] = (width < this._coords.width) ? "100% auto" : "auto 100%";
+
+			$(el.parentNode).append("<div class='image'>");
+			var img = $(".image").last();
+			img.css(style);
+			$(el).remove()
+
+			return img.get(0);
+		},
+
 		render: function() {
 			this.pictures.each(function(index, el){
-				var _coords = this.coords($(el));
-				if (_.isEqual(this._coords, _coords)) {
-					return;
-				}
 				var format = this.get_format(el);
 				var coords = this._coords;
-				var previous;
+
 				if (format === this.format[1]) {
-					// Change width,
-					// if picture isnt larger enought
-					var width = Math.round(_coords.width * (this._coords.height / 2) / _coords.height);
-					if (width < this._coords.width) coords.width = width;
 					// Create .bloc
-					previous = $(el).prevAll("[data-rows=2]").first();
-					if (!previous.get(0) || $("img", previous).size() >= 2) {
-						$(el).before('<div data-rows="2">');
-						previous = $(el).prev();
+					var container = $(el).prevAll("." + format).first();
+					if (!container.get(0) || container.children().size() >= 2) {
+						$(el).before('<div class="' + format + '">');
 					}
 				}	else {
-					$(el).before('<div class="portrait">');
-					previous = $(el).prev();
+					$(el).before('<div class="' + format + '">');
 				}
 				// Move Picture
+				var previous = $(el).prevAll("." + format).first();
+				var el = this.replaceImage(el, {coords: coords, format: format});
 				previous.append(el);
-				previous.css(coords);
 
 			}.bind(this));
 
-			// Multi-Rows if a container isnt filled
-			this.el.children("[data-rows=2]").each(function(index, el) {
-				if ($(el).children().size() >= 2) return;
-				$(el).attr("data-rows", "1");
-				$(el).attr("data-columns", "2");
-				var width = $(el).width();
-				$(el).width(width * 2);
+			// Clean picture size
+			this.el.children(".landscape").each(function(index, el) {
+				var pictures = $(el).children();
+				if (pictures.size() >= 2) {
+					pictures.each(function(index, item) {
+						$(item).css({
+							height: $(item).height() / 2
+						});
+					})
+					return;
+				}
+				// Colspan=2
+				var picture = pictures.first();
+				picture.css({
+					width: $(el).width() * 2,
+					height: $(el).height()
+				});
 			}.bind(this));
 
 			$(this.el).trigger("resize");
