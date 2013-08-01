@@ -1,5 +1,5 @@
 (function() {
-	
+
 	window.Views = {}
 
 	//
@@ -18,6 +18,9 @@
 		this.el = el;
 		this.pictures = $("img", this.el);
 
+
+		this.el.addClass("js")
+
 		// Init
 		var _func = this.resize.bind(this)
 		$(window).on("resize", _.debounce(_func, 100));
@@ -28,6 +31,8 @@
 	PictureWall.prototype = {
 
 		format: ["portrait", "landscape"],
+
+		_clean: true,
 
 		coords: function(el) {
 			return {
@@ -72,26 +77,21 @@
 					complete(grid);
 					return;
 				}
-
 				var last = _.last(grid);
 				var columns = Math.ceil(this.el.width() / this._coords.width);
 				if (last.length === columns) {
 					complete(grid);
 					return;
 				}
-
 				// Resize Container
 				var width = columns * this._coords.width;
 				this.el.width(width + $(last.shift()).width());
-
 				// Remove Next Elements
 				++index;
 				_resize(this.grid());
-
 			}.bind(this);
 
 			_resize(this.grid())
-
 		},
 
 		set_format: function(el, coords) {
@@ -110,13 +110,13 @@
 			var coords0 = this.coords(this.pictures.first());
 
 			this.pictures.each(function(index, el){
-				var _coords = this.coords($(el));
+				var coords = this.coords($(el));
 				// Tag each Picture
-				var format = this.set_format(el, _coords);
+				var format = this.set_format(el, coords);
 				// Get The minimal Height
 				// to define line_height
 				if (format === this.format[0]) {
-					if (coords0.height > _coords.height) {
+					if (coords0.height > coords.height) {
 						index0 = index;
 					}
 				}
@@ -133,6 +133,7 @@
 
 			if (index0 == undefined) {
 				index0 = 0;
+				this._clean = false;
 			}
 
 			// Add min-coords
@@ -147,17 +148,21 @@
 
 			var el = $(this.pictures.get(index0));
 			this._coords = coords;
-			$(this.el).trigger("format:end");
+			var success = function() {
+				$(this.el).trigger("resize");
+			}.bind(this);
+			$(this.el).trigger("format:end", {success: success});
 		},
 
 		replaceImage: function(el, options) {
 			if (!options) options = {};
-			var style = options.coords || {};
-			_.extend(style, {
+			var style = {
+				"width": options.coords.width,
+				"height": options.coords.height,
 				"background-repeat": "no-repeat",
 				"background-position": "50% 50%",
 				"background-image": "url('" + $(el).attr("src") + "')"
-			});
+			};
 
 			var coords = this.coords($(el));
 			var width = Math.round(coords.width * (this._coords.height / 2) / coords.height);
@@ -171,7 +176,8 @@
 			return img.get(0);
 		},
 
-		render: function() {
+		render: function(event, options) {
+			if (!options) options = {};
 			this.pictures.each(function(index, el){
 				var format = this.get_format(el);
 				var coords = this._coords;
@@ -193,26 +199,29 @@
 			}.bind(this));
 
 			// Clean picture size
-			this.el.children(".landscape").each(function(index, el) {
-				var pictures = $(el).children();
-				if (pictures.size() >= 2) {
-					pictures.each(function(index, item) {
-						$(item).css({
-							height: $(item).height() / 2
-						});
-					})
-					return;
-				}
-				// Colspan=2
-				var picture = pictures.first();
-				picture.css({
-					width: $(el).width() * 2,
-					height: $(el).height()
-				});
-			}.bind(this));
+			if (this._clean) {
+				this.el.children(".landscape").each(function(index, el) {
+					var pictures = $(el).children();
+					if (pictures.size() >= 2) {
+						pictures.each(function(index, item) {
+							$(item).css({
+								height: $(item).height() / 2
+							});
+						}.bind(this));
+						return;
+					}
+					// Colspan=2
+					var picture = pictures.first();
+					picture.css({
+						width: $(el).width() * 2,
+						height: $(el).height()
+					});
+				}.bind(this));
+			}
 
-			$(this.el).trigger("resize");
+			if (options.success) options.success();
 		}
+
 	}
 
 	window.Views.PictureWall = PictureWall;
