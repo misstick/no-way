@@ -2,8 +2,8 @@
 <% if paginate %>
 <aside>
 	<ul class="paginate-menu">
-		<li id="goto_prev"><% if prev_page %><%= link_to '&laquo; page précédente', prev_page %><% else %>&laquo; page précédente<% end %></li>
-		<li id="goto_next"><% if next_page %><%= link_to 'page suivante &raquo;', next_page %><% else %>page suivante &raquo;<% end %></li>
+		<li id="goto_prev"><% if prev_page %><%= link_to '&laquo; <span>page précédente</span>', prev_page %><% else %><span>&laquo; page précédente</span><% end %></li>
+		<li id="goto_next"><% if next_page %><%= link_to '<span>page suivante</span> &raquo;', next_page %><% else %><span>page suivante &raquo;</span><% end %></li>
 	</ul>
 	<span class="page-number"><%= page_number %> / <%= num_pages %></span>
 </aside>
