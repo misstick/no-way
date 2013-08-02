@@ -49,6 +49,7 @@ footer {
   text-align: left;
   position: relative;
   background: white;
+  min-width: 900px;
 }
 /* Logo */
 #logo {
@@ -151,20 +152,10 @@ header .active a  {
 section>h2 {
   padding: 0 0 1.5em;
 }
-section[role=main] h1,
 section[role=main] aside {
-  clear: both;
   position: fixed;
   z-index: 9;
   top: 0;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  text-align: center;
-  font-family: Georgia;
-  font-weight: normal;
-  font-size: 1.8em;
-  color: #f30;
 }
 
 section[role=main] aside {
@@ -173,7 +164,6 @@ section[role=main] aside {
 }
 
 .paginate-menu {
-  font-size: 0.5em;
   padding: 0;
 }
 .paginate-menu li {
@@ -188,25 +178,28 @@ section[role=main] aside {
 #goto_prev {
   left: 0;
 }
-.page-number {
-  background: white;
-}
 section aside a {
   padding: 0 0.5em;
   display: inline-block;
   color: black;
 }
 
-
-#article-content article{
-  max-width: 800px;
+.list-container,
+#article-content {
   margin: 175px auto 0;
 }
+#article-content article{
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 600px;
+}
 /* Hide top text*/
-#article-content article:before {
+#blog-content:before,
+#article-content:before {
   content: "";
   display: block;
   position: fixed;
+  z-index: 1;
   top: 0;
   width: 100%;
   height: 300px;
@@ -224,17 +217,8 @@ section aside a {
     color-stop(0.25, rgba(255,255,255, 0)),
     color-stop(0.75, rgb(255,255,255))
   );
-
 }
 
-#article-content h2 {
-  font-size: 1em;
-  line-height: 1.25;
-  background: white;
-  display: inline-block;
-
-  margin: 0.8em 250px 0.5em;
-}
 #home-content,
 section[role=main]>.list-container,
 #article-content article {
@@ -242,12 +226,26 @@ section[role=main]>.list-container,
 }
 
 /* Pages de liste */
-#blog-content {
-  text-align: center;
-  color: #f30;
-  margin-top: 4em;
-  margin-right: 0;
+
+.list-container {
   margin-left: 174px;
+  text-align: center;
+}
+#article-content h2,
+.page-number,
+section[role=main] h1 {
+  margin: 0.8em 0 0.5em 174px;
+  font-size: 1.8em;
+  line-height: 1.25;
+  background: white;
+  text-align: center;
+  font-family: Georgia;
+  font-weight: normal;
+  color: #f30;
+  display: block;
+}
+#blog-content {
+  color: #f30;
 }
 
 #blog-content h2 {
@@ -297,6 +295,17 @@ article h2 {
   text-transform: capitalize;
   line-height: 1.2;
 }
+article.first h2 {
+  padding: 0 0 0.5em;
+}
+article.first .content {
+  max-height: 100%;
+}
+article .content {
+  max-height: 11em;
+  overflow: hidden;
+  padding-right: 2em;
+}
 .date {
   display: block;
   font-size: 0.75em;
@@ -307,6 +316,7 @@ article h2 {
 #article-content figure {
   overflow: auto;
   padding: 0;
+  background: black;
 }
 
 .wall {
@@ -354,55 +364,6 @@ footer p {
 }
 
 
-/* Contenu spécifiwue home */
-#home-content {
-  text-align: center;
-  padding-bottom: 3em;
-  max-width: 700px;
-}
-#home-content article.first {
-  width: 100%;
-  max-width: 100%;
-  display: block;
-/*   padding: 1em;
-  margin: 0 1em 1em 0;
-  background: yellow; */
-}
-article.first h2 {
-  padding: 0 0 0.5em;
-}
-article.first .content {
-  max-height: 100%;
-/*   padding: 1em 1em 0;
-  background: rgba(255, 255, 255, 0.5);
- */}
-#home-content article {
-  display: inline-block;
-  width: 50%;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  vertical-align: top;
-  text-align: left;
-  margin: 0 -1px;
-  max-width: 350px;
-}
-article .content {
-  max-height: 11em;
-  overflow: hidden;
-  padding-right: 2em;
-}
-
-article {
-/*   column-width: 200px;
-  -moz-column-width: 200px;
-  -webkit-column-width: 200px;
-  column-height: 200px;
-  -moz-column-height: 200px;
-  -webkit-column-height: 200px;
-  column-gap:40px;
-  -moz-column-gap:40px;
-  -webkit-column-gap:40px; */
-}
 @media screen and (max-width: 1225px) {
 
   .page {
@@ -463,7 +424,9 @@ article {
   section[role=main]>.list-container  {
     text-align: center;
   }
-
+  #article-content {
+    text-align: left;
+  }
   #article-content figure {
     position: relative;
   }
@@ -478,7 +441,16 @@ article {
   #article-content h2 {
     padding-top: 0;
   }
-  #article-content article:before {
+
+  #blog-content,
+  #article-content {
+    margin-top: 2em;
+  }
+  #blog-content {
+    margin-left: 0;
+  }
+  #blog-content:before,
+  #article-content:before {
     display: none;
   }
   #home-content article:first-of-type {
