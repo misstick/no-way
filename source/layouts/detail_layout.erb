@@ -27,7 +27,9 @@
 			</figure>
 			<script>
 				$(document).ready(function() {
-					var myWall = new Views.PictureWall($("#pictures-wall"));
+					var myWall = new Views.PictureWall($("#pictures-wall"), {
+						item: "img"
+					});
 				})
 			</script>
 		</div>

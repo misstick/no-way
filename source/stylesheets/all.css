@@ -148,17 +148,15 @@ header .active a  {
   color: #000;
   overflow: auto;
   min-height: 500px;
+  text-align: center;
 }
 section>h2 {
   padding: 0 0 1.5em;
 }
 section[role=main] aside {
   position: fixed;
-  z-index: 9;
+  z-index: 100;
   top: 0;
-}
-
-section[role=main] aside {
   left: 200px;
   right: 10%;
 }
@@ -183,28 +181,32 @@ section aside a {
   display: inline-block;
   color: black;
 }
-
 .list-container,
 #article-content {
   margin: 175px auto 0;
 }
+.list-container .list-item,
+.list-container article,
 #article-content article{
   max-width: 800px;
   margin: 0 auto;
+}
+#article-content article{
   min-height: 600px;
 }
+
 /* Hide top text*/
-#blog-content:before,
+.list-container aside:before,
 #article-content:before {
   content: "";
   display: block;
   position: fixed;
   z-index: 1;
   top: 0;
-  width: 100%;
+  left: 0;
+  right: 0;
   height: 300px;
-
-  /* FIX: fair eun dégardé du blanc au transparent*/
+  pointer-events: none;
   background-image: linear-gradient(bottom, rgba(255,255,255, 0) 25%, rgb(255,255,255) 50%);
   background-image: -o-linear-gradient(bottom, rgba(255,255,255, 0) 25%, rgb(255,255,255) 75%);
   background-image: -moz-linear-gradient(bottom, rgba(255,255,255, 0) 25%, rgb(255,255,255) 75%);
@@ -218,49 +220,64 @@ section aside a {
     color-stop(0.75, rgb(255,255,255))
   );
 }
+#blog-content:before {
+  display: none;
+}
 
-#home-content,
-section[role=main]>.list-container,
-#article-content article {
-  overflow: auto;
+#home-content {
+  margin-left: 174px;
 }
 
 /* Pages de liste */
 
-.list-container {
-  margin-left: 174px;
-  text-align: center;
-}
 #article-content h2,
 .page-number,
 section[role=main] h1 {
-  margin: 0.8em 0 0.5em 174px;
+  margin: 0.8em 174px 0.5em;
   font-size: 1.8em;
   line-height: 1.25;
-  background: white;
   text-align: center;
   font-family: Georgia;
   font-weight: normal;
   color: #f30;
-  display: block;
-}
-#blog-content {
-  color: #f30;
+  display: inline-block;
+  position: relative;
 }
 
+.page-number,
+.paginate-menu li,
+#article-content h2,
+section[role=main] h1 {
+  background: white;
+}
+
+.page-number,
+.paginate-menu li,
+#article-content h2,
+section[role=main] h1 {
+  z-index: 3;
+}
+#blog-content {
+/*   color: #f30; */
+  overflow: auto;
+  margin: 0 auto;
+  position: relative;
+}
+#blog-content aside:before {
+  display: none;
+}
 #blog-content h2 {
- position: absolute;
-  border: 0;
-  bottom: 0;
+/*
   left: 0;
   z-index: 0;
   right: 0;
+border: dashed 1px #f30; */
   padding: 1em 1em 2em;
   background: white;
-  border: dashed 1px #f30;
   font-size: 1.3em;
-
-/*   border: dashed 1px #f30; */
+  position: absolute;
+  border: 0;
+  bottom: 0;
 }
 #blog-content h2 a {
   display: block;
@@ -289,6 +306,8 @@ height: 100%;
 article {
   font-size: 18px;
   line-height: 1.6;
+
+  text-align: left;
 }
 article h2 {
   padding: 0 0 0.75em;
@@ -317,6 +336,8 @@ article .content {
   overflow: auto;
   padding: 0;
   background: black;
+  position: relative;
+  z-index: 2;
 }
 
 .wall {
@@ -345,6 +366,7 @@ footer {
   position: fixed;
   bottom: 0;
   right: 0;
+  z-index: 12;
 }
 .copyright {
   font-size: 0.9em;

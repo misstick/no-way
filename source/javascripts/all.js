@@ -16,8 +16,7 @@
 	var PictureWall = function(el, options) {
 		if (!options) options = {};
 		this.el = el;
-		this.pictures = $("img", this.el);
-
+		this.items = $(options.item || "img", this.el);
 
 		this.el.addClass("js")
 
@@ -41,9 +40,18 @@
 			}
 		},
 
+		img: function(el) {
+			var tagname = el.tagName.toLowerCase();
+			if (tagname != "img") {
+				el = $("img", el).get(0);
+			}
+			return el;
+		},
+
 		load: function() {
-			var loader = _.after(this.pictures.length, this.format_html.bind(this))
-			this.pictures.each(function(index, el){
+			var loader = _.after(this.items.length, this.format_html.bind(this))
+			this.items.each(function(index, el){
+				el = this.img(el);
 				el.onload = loader;
 			}.bind(this));
 		},
@@ -62,6 +70,7 @@
 		resize: function() {
 			// All pictures dont have the same width
 			// Remove last blank
+			// Set container width the same as linewidth
 			var complete = function(grid) {
 				var width = 0;
 				var line0 = grid.shift();
@@ -107,9 +116,9 @@
 
 		format_html: function() {
 			var index0;
-			var coords0 = this.coords(this.pictures.first());
+			var coords0 = this.coords(this.items.first());
 
-			this.pictures.each(function(index, el){
+			this.items.each(function(index, el){
 				var coords = this.coords($(el));
 				// Tag each Picture
 				var format = this.set_format(el, coords);
@@ -124,7 +133,7 @@
 
 			// Previous Test didnt Work
 			if (index0 == undefined) {
-				_.filter(this.pictures, function(el, index) {
+				_.find(this.items, function(el, index) {
 					var test = this.get_format(el) === this.format[0];
 					if (test) index0 = index;
 					return test;
@@ -137,8 +146,9 @@
 			}
 
 			// Add min-coords
-			var el = $(this.pictures.get(index0));
+			var el = $(this.items.get(index0));
 			var coords = this.coords(el);
+
 
 			// var min_height = Math.round(window.innerHeight / 1.5);
 			// if (coords.height < min_height) {
@@ -146,7 +156,6 @@
 			// 	coords.height = min_height;
 			// }
 
-			var el = $(this.pictures.get(index0));
 			this._coords = coords;
 			var success = function() {
 				$(this.el).trigger("resize");
@@ -178,10 +187,11 @@
 
 		render: function(event, options) {
 			if (!options) options = {};
-			this.pictures.each(function(index, el){
+			this.items.each(function(index, el){
+				var img = this.img(el);
+				if (img !== el) return;
 				var format = this.get_format(el);
 				var coords = this._coords;
-
 				if (format === this.format[1]) {
 					// Create .bloc
 					var container = $(el).prevAll("." + format).first();
