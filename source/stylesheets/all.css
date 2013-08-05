@@ -48,7 +48,6 @@ footer {
 .page {
   text-align: left;
   position: relative;
-  background: white;
   min-width: 900px;
 }
 /* Logo */
@@ -61,7 +60,6 @@ footer {
   font-weight: normal;
   text-decoration: none;
   padding: 0 0.25em;
-  background: white;
 }
 #logo small {
   display: block;
@@ -126,7 +124,6 @@ header .tag-name a:before {
 }
 
 header aside a {
-  background: rgba(255, 255, 255, 1);
   display: inline-block;
 }
 
@@ -148,7 +145,7 @@ header .active a  {
   color: #000;
   overflow: auto;
   min-height: 500px;
-  text-align: center;
+  text-align: right;
 }
 section>h2 {
   padding: 0 0 1.5em;
@@ -159,6 +156,7 @@ section[role=main] aside {
   top: 0;
   left: 200px;
   right: 10%;
+  text-align: center;
 }
 
 .paginate-menu {
@@ -183,7 +181,11 @@ section aside a {
 }
 .list-container,
 #article-content {
-  margin: 175px auto 0;
+  padding-top: 175px;
+  margin: 0 auto;
+}
+#article-content {
+  background: white;
 }
 .list-container .list-item,
 .list-container article,
@@ -205,7 +207,7 @@ section aside a {
   top: 0;
   left: 0;
   right: 0;
-  height: 300px;
+  height: 200px;
   pointer-events: none;
   background-image: linear-gradient(bottom, rgba(255,255,255, 0) 25%, rgb(255,255,255) 50%);
   background-image: -o-linear-gradient(bottom, rgba(255,255,255, 0) 25%, rgb(255,255,255) 75%);
@@ -244,11 +246,13 @@ section[role=main] h1 {
   position: relative;
 }
 
+#logo,
 .page-number,
+header aside a,
 .paginate-menu li,
 #article-content h2,
 section[role=main] h1 {
-  background: white;
+  background: white
 }
 
 .page-number,
@@ -260,8 +264,10 @@ section[role=main] h1 {
 #blog-content {
 /*   color: #f30; */
   overflow: auto;
-  margin: 0 auto;
+  margin: 0;
   position: relative;
+  max-width: 2000px;
+  display: inline-block;
 }
 #blog-content aside:before {
   display: none;
@@ -276,7 +282,7 @@ section[role=main] h1 {
   bottom: 0;
   background: rgba(0,0,255,0.2);
   color: white;
-  text-align: right;
+  text-align: center;
 }
 #blog-content h2 a {
   display: block;
@@ -284,8 +290,8 @@ section[role=main] h1 {
 
 #blog-content .list-item {
   position: relative;
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
   float: left;
   padding: 0;
 }
