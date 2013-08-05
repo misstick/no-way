@@ -267,15 +267,11 @@ section[role=main] h1 {
   display: none;
 }
 #blog-content h2 {
-/*
-  left: 0;
-  z-index: 0;
-  right: 0;
-border: dashed 1px #f30; */
   padding: 1em;
   font-size: 1em;
   position: absolute;
   border: 0;
+  left: 0;
   right: 0;
   bottom: 0;
   background: rgba(0,0,255,0.2);

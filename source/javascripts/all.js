@@ -211,7 +211,6 @@
 		background_size: function(el) {
 			var coords = this.item_size(el);
 			var coords0 = this.coords($(el));
-			// console.log(coords, el)
 
 			if (coords.width >= coords0.width) {
 				var height = Math.round(coords0.width * coords.height / coords.width);
@@ -225,7 +224,7 @@
 					return width + "px " + coords0.height + "px";
 				}
 			}
-			return coords;
+			return coords.width + "px " + coords.height + "px";
 		},
 
 		render: function(event, options) {
