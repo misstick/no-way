@@ -95,7 +95,7 @@ article {
 header {
   position: fixed;
   top: 0;
-  bottom: 0;
+  left: 0;
   width: 10em;
   z-index: 10;
 }
@@ -174,8 +174,7 @@ section[role=main] aside {
   left: 0;
 }
 section aside a {
-  padding: 0 0.5em;
-  display: inline-block;
+  display: inline;
   color: black;
 }
 .list-container,
@@ -398,30 +397,18 @@ footer p {
     margin: 0;
     padding-top: 0;
     background: white;
-  }
-  header,
-  section[role=main] h1,
-  section[role=main] aside {
-    position: static;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    width: 100%;
-  }
-  header {
-    padding: 0 2em;
-    text-align: center;
-  }
-  header nav {
-    padding: 2em 0;
+    min-width: 100%;
   }
   header aside {
     padding: 0;
+    right: 0;
+    position: fixed;
+    top: 0;
   }
-  header li {
-    display: inline-block;
+  section[role=main] aside {
+    left: 0;
+    right: 0;
   }
-
   .paginate-menu {
     padding: 0;
     position: fixed;
@@ -445,70 +432,38 @@ footer p {
   }
 
   .list-container aside:before,
-  #article-content:before {
-    display: none;
-  }
-
-  #home-content,
-  section[role=main]>.list-container {
-    margin: 2em;
-    padding: 0;
-  }
-  section[role=main]>.list-container  {
-    text-align: center;
+  #article-content:before,
+  #blog-content:before {
+    height: 200px;
   }
   #article-content {
-    text-align: left;
-  }
-  #article-content figure {
-    position: relative;
-  }
-
-  section[role=main] {
     padding-top: 0;
-  }
-  section[role=main] h1,
-  section[role=main] aside {
-    left: 0;
   }
   #article-content h2 {
-    padding-top: 0;
-  }
-
-  #blog-content,
-  #article-content {
-    margin-top: 2em;
-  }
-  #blog-content {
-    margin-left: 0;
-  }
-  #blog-content:before,
-  #article-content:before {
-    display: none;
-  }
-  #home-content article:first-of-type {
-    margin-top: 2em;
+    margin: 0.5em 4em;
+    max-height: 76px;
+    overflow: hidden;
   }
 
 }
-@media screen and (min-width: 1000px) {
-
+@media screen and (max-width: 640px) {
+  
+  #article-content article,
+  .list-container {
+    margin: 2em;
+    min-height: auto;
+    padding: 5em 0 0;
+  }
+  .page section[role=main] {
+    min-height: 100%;
+  }
+  .wall{
+    width: auto!important;
+  }
+  .wall>div {
+    float: none;
+  }
+  #article-content figure {
+    background: none;
+  }
 }
-
-/* @media screen and (min-width: 1600px) {
-  #article-content article {
-    width: 50%;
-  }
-  section[role=main] h1,
-  #article-content aside {
-    right: 40%
-  }
-  .wall {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 40%;
-  }
-
-} */
