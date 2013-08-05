@@ -16,7 +16,8 @@
 	var PictureWall = function(el, options) {
 		if (!options) options = {};
 		this.el = el;
-		this.items = $(options.item || "img", this.el);
+
+		if (options.item) this.item = options.item;
 
 		this.el.addClass("js")
 
@@ -29,6 +30,8 @@
 
 	PictureWall.prototype = {
 
+		item: "img",
+
 		format: ["portrait", "landscape"],
 
 		_clean: true,
@@ -40,25 +43,32 @@
 			}
 		},
 
-		img: function(el) {
-			var tagname = el.tagName.toLowerCase();
-			if (tagname != "img") {
-				el = $("img", el).get(0);
+		get_pictures: function(el) {
+			if (el.get !== undefined ) el = el.get(0);
+			var tagName = el.tagName.toLowerCase();
+			if (tagName != "img") {
+				var test = $("img", el);
+				return (!test.get(0)) ? $(".image", el) : test;
 			}
-			return el;
+			return $(el);
+		},
+
+		items: function() {
+			return $(this.item, this.el);
 		},
 
 		load: function() {
-			var loader = _.after(this.items.length, this.format_html.bind(this))
-			this.items.each(function(index, el){
-				el = this.img(el);
-				el.onload = loader;
+			var items = this.items();
+			var loader = _.after(items.length, this.format_html.bind(this))
+			items.each(function(index, el){
+				el = this.get_pictures($(el));
+				el.get(0).onload = loader;
 			}.bind(this));
 		},
 
 		grid: function() {
 			var grid = [];
-			var coords = this._coords;
+			var coords = this._ref;
 			this.el.children().each(function(index, el) {
 				line = Math.round(el.offsetTop / coords.height);
 				if (!grid[line]) grid[line] = [];
@@ -68,9 +78,8 @@
 		},
 
 		resize: function() {
-			// All pictures dont have the same width
-			// Remove last blank
-			// Set container width the same as linewidth
+			// Container.width should have
+			// the same value than Line.width
 			var complete = function(grid) {
 				var width = 0;
 				var line0 = grid.shift();
@@ -87,13 +96,14 @@
 					return;
 				}
 				var last = _.last(grid);
-				var columns = Math.ceil(this.el.width() / this._coords.width);
+				var columns = Math.ceil(this.el.width() / this._ref.width);
 				if (last.length === columns) {
 					complete(grid);
 					return;
 				}
-				// Resize Container
-				var width = columns * this._coords.width;
+				// Container Width must be
+				// an Integer multiple of item width
+				var width = columns * this._ref.width;
 				this.el.width(width + $(last.shift()).width());
 				// Remove Next Elements
 				++index;
@@ -116,9 +126,10 @@
 
 		format_html: function() {
 			var index0;
-			var coords0 = this.coords(this.items.first());
+			var items = this.items();
+			var coords0 = this.coords(items.first());
 
-			this.items.each(function(index, el){
+			items.each(function(index, el){
 				var coords = this.coords($(el));
 				// Tag each Picture
 				var format = this.set_format(el, coords);
@@ -133,7 +144,7 @@
 
 			// Previous Test didnt Work
 			if (index0 == undefined) {
-				_.find(this.items, function(el, index) {
+				_.find(items, function(el, index) {
 					var test = this.get_format(el) === this.format[0];
 					if (test) index0 = index;
 					return test;
@@ -146,24 +157,18 @@
 			}
 
 			// Add min-coords
-			var el = $(this.items.get(index0));
+			var el = $(items.get(index0));
 			var coords = this.coords(el);
 
-
-			// var min_height = Math.round(window.innerHeight / 1.5);
-			// if (coords.height < min_height) {
-			// 	coords.width = Math.round(coords.width * min_height / coords.height);
-			// 	coords.height = min_height;
-			// }
-
-			this._coords = coords;
+			this._ref = coords;
 			var success = function() {
 				$(this.el).trigger("resize");
 			}.bind(this);
+
 			$(this.el).trigger("format:end", {success: success});
 		},
 
-		replaceImage: function(el, options) {
+		replace_picture: function(el, options) {
 			if (!options) options = {};
 			var style = {
 				"width": options.coords.width,
@@ -173,61 +178,136 @@
 				"background-image": "url('" + $(el).attr("src") + "')"
 			};
 
+			// Create a new container
+			// if el is a picture
+			var parent = $(el.parentNode);
+			if (parent.attr("data-format") !== undefined || parent.get(0) === this.el.get(0)) {
+				parent.append("<div class='image'>");
+				parent = $(".image").last();
+			} else {
+				parent.addClass("image")
+			}
+			parent.css(style);
+
+			// Save initaila-size
 			var coords = this.coords($(el));
-			var width = Math.round(coords.width * (this._coords.height / 2) / coords.height);
-			style["background-size"] = (width < this._coords.width) ? "100% auto" : "auto 100%";
-
-			$(el.parentNode).append("<div class='image'>");
-			var img = $(".image").last();
-			img.css(style);
+			$(parent).attr("data-size", coords.width + "|" + coords.height);
 			$(el).remove()
+			return parent.get(0);
+		},
 
-			return img.get(0);
+		item_size: function (el) {
+			var value = $(el).attr("data-size");
+			if (value) {
+				value = value.split("|");
+				return {
+					width: value[0],
+					height: value[1]
+				}
+			}
+			return this.coords($(el));
+		},
+
+		background_size: function(el) {
+			var coords = this.item_size(el);
+			var coords0 = this.coords($(el));
+			// console.log(coords, el)
+
+			if (coords.width >= coords0.width) {
+				var height = Math.round(coords0.width * coords.height / coords.width);
+				if (height >= coords0.height) {
+					return coords0.width + "px " + height + "px";
+				}
+			}
+			if (coords.height < coords0.height) {
+				var width = Math.round(coords.width * coords0.height / coords.height);
+				if (width >= coords0.width) {
+					return width + "px " + coords0.height + "px";
+				}
+			}
+			return coords;
 		},
 
 		render: function(event, options) {
 			if (!options) options = {};
-			this.items.each(function(index, el){
-				var img = this.img(el);
-				if (img !== el) return;
+
+			if (!this._defaultHTML) this._defaultHTML = this.el.html();
+			else this.el.html(this._defaultHTML);
+
+			var items = this.items();
+			items.each(function(index, el){
+				var img = this.get_pictures(el).get(0);
 				var format = this.get_format(el);
-				var coords = this._coords;
-				if (format === this.format[1]) {
-					// Create .bloc
-					var container = $(el).prevAll("." + format).first();
-					if (!container.get(0) || container.children().size() >= 2) {
+				var coords = this._ref;
+				var previous;
+
+				// Create a container
+				// If el is a simple picture
+				if (img === el) {
+					if (format === this.format[1]) {
+						// Create .bloc
+						var container = $(el).prevAll("." + format).first();
+						if (!container.get(0) || container.children().size() >= 2) {
+							$(el).before('<div class="' + format + '">');
+						}
+					}	else {
 						$(el).before('<div class="' + format + '">');
 					}
-				}	else {
-					$(el).before('<div class="' + format + '">');
+					previous = $(el).prevAll("." + format).first();
 				}
+				// Add a background to container:
+				// To align picture on axes: x, y
+				var picture = this.replace_picture(img, {
+					coords: coords
+				});
+
 				// Move Picture
-				var previous = $(el).prevAll("." + format).first();
-				var el = this.replaceImage(el, {coords: coords, format: format});
-				previous.append(el);
+				if (previous) {
+					previous.append(picture);
+					previous.attr("data-item", true);
+				} else {
+					$(el).attr("data-item", true);
+				}
 
 			}.bind(this));
 
-			// Clean picture size
-			if (this._clean) {
-				this.el.children(".landscape").each(function(index, el) {
-					var pictures = $(el).children();
-					if (pictures.size() >= 2) {
-						pictures.each(function(index, item) {
-							$(item).css({
-								height: $(item).height() / 2
+			$("[data-item=true]", this.el).each(function(index, el){
+				var pictures = this.get_pictures(el);
+
+				// Clean LandscapeItem Size
+				// case0: 2 pictures in 1 columns
+				// case1: 1 pictures int 2 columns
+				//
+				// FIX: gérer mieux l'exception
+				// lorsque ttes les image sont la même taille
+				// Ne pas les regrouper
+				// et donc ne pas toucher à leur taille
+				//
+				if (this._clean) {
+					if ($(el).hasClass(this.format[1])) {
+						if (pictures.size() >= 2) {
+							pictures.each(function(index, item) {
+								$(item).css({
+									height: $(item).height() / 2
+								});
+							}.bind(this));
+						} else {
+							// Colspan=2
+							var picture = pictures.first();
+							picture.css({
+								width: $(el).width() * 2,
+								height: $(el).height()
 							});
-						}.bind(this));
-						return;
+						}
 					}
-					// Colspan=2
-					var picture = pictures.first();
-					picture.css({
-						width: $(el).width() * 2,
-						height: $(el).height()
-					});
+				}
+				// Resize Background
+				pictures.each(function(index0, img) {
+					var size = this.background_size(img);
+					$(img).css({ "background-size": size});
 				}.bind(this));
-			}
+
+			}.bind(this));
 
 			if (options.success) options.success();
 		}
