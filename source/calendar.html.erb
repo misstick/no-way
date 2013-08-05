@@ -1,23 +1,26 @@
 ---
 pageable: true
 ---
-<h1>Articles de
-  <% case page_type
-     when 'day' %>
-    <%= Date.new(year, month, day).strftime('%b %e %Y') %>
-  <% when 'month' %>
-    <%= Date.new(year, month, 1).strftime('%b %Y') %>
-  <% when 'year' %>
-    <%= year %>
-  <% end %>
-</h1>
+<div id="calendar-content" class="list-container">
+  <aside>
+    <h1>Articles de
+      <% case page_type
+         when 'day' %>
+        <%= Date.new(year, month, day).strftime('%b %e %Y') %>
+      <% when 'month' %>
+        <%= Date.new(year, month, 1).strftime('%b %Y') %>
+      <% when 'year' %>
+        <%= year %>
+      <% end %>
+    </h1>
+  </aside>
 
-<%= partial 'blog/_paginate', :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
+  <%= partial 'blog/_paginate', :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
 
-<ul id="calendar-content" class="list-container">
-  <% page_articles.each_with_index do |article, i| %>
-    <li><%= link_to article.title, article %> <span><%= article.date.strftime('%d.%m.%y') %></span></li>
-  <% end %>
-</ul>
-<figure class="right-column"></figure>
-<%= partial 'blog/_paginate', :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
+  <ul>
+    <% page_articles.each_with_index do |article, i| %>
+      <li class="list-item"><%= link_to article.title, article %> <span><%= article.date.strftime('%d.%m.%y') %></span></li>
+    <% end %>
+  </ul>
+  <figure class="right-column"></figure>
+</div>

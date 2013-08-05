@@ -2,13 +2,16 @@
 pageable: true
 per_page: 12
 ---
-<h1><%= tagname %></h1>
+<div id="tag-content" class="list-container">
+  <aside>
+    <h1><%= tagname %></h1>
+  </aside>
 
-<%= partial 'blog/_paginate', :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
-<ul id="tag-content" class="list-container">
-  <% page_articles.each_with_index do |article, i| %>
-    <li><%= link_to article.title, article %> <span><%= article.date.strftime('%d.%m.%y') %></span></li>
-  <% end %>
-</ul>
-<figure class="right-column"></figure>
-<%= partial 'blog/_paginate', :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
+  <%= partial 'blog/_paginate', :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
+  <ul>
+    <% page_articles.each_with_index do |article, i| %>
+      <li class="list-item"><%= link_to article.title, article %> <span><%= article.date.strftime('%d.%m.%y') %></span></li>
+    <% end %>
+  </ul>
+  <figure class="right-column"></figure>
+</div>
