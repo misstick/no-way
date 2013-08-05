@@ -78,6 +78,9 @@
 		},
 
 		resize: function() {
+			// Remove Previous resize
+			this.el.css("width", "auto");
+
 			// Container.width should have
 			// the same value than Line.width
 			var complete = function(grid) {
@@ -91,6 +94,7 @@
 
 			var index = 0;
 			var _resize = function(grid) {
+
 				if (index >= 10|| grid.length <= 1) {
 					complete(grid);
 					return;
@@ -162,7 +166,7 @@
 
 			this._ref = coords;
 			var success = function() {
-				$(this.el).trigger("resize");
+				this.resize()
 			}.bind(this);
 
 			$(this.el).trigger("format:end", {success: success});
@@ -229,9 +233,6 @@
 
 		render: function(event, options) {
 			if (!options) options = {};
-
-			if (!this._defaultHTML) this._defaultHTML = this.el.html();
-			else this.el.html(this._defaultHTML);
 
 			var items = this.items();
 			items.each(function(index, el){
