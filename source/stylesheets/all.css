@@ -140,7 +140,7 @@ header .active a  {
 }
 
 /* Contenu principal */
-.page section[role=main] {
+section[role=main] {
   color: #000;
   overflow: auto;
   min-height: 500px;
@@ -391,7 +391,7 @@ footer p {
 }
 
 
-@media screen and (max-width: 1225px) {
+@media screen and (max-width: 1024px) {
 
   .page {
     margin: 0;
@@ -404,6 +404,14 @@ footer p {
     right: 0;
     position: fixed;
     top: 0;
+  }
+  .page {
+    min-height: 80%;
+  }
+  .list-container, 
+  #article-content,
+  section[role=main] {
+    min-height: auto;
   }
   section[role=main] aside {
     left: 0;
@@ -436,6 +444,13 @@ footer p {
   #blog-content:before {
     height: 200px;
   }
+  
+  #article-content article,
+  .list-container {
+    margin: 2em 5em 2em 3em;
+    min-height: auto;
+    padding: 5em 0 0;
+  }
   #article-content {
     padding-top: 0;
   }
@@ -444,19 +459,11 @@ footer p {
     max-height: 76px;
     overflow: hidden;
   }
+  
 
 }
 @media screen and (max-width: 640px) {
   
-  #article-content article,
-  .list-container {
-    margin: 2em;
-    min-height: auto;
-    padding: 5em 0 0;
-  }
-  .page section[role=main] {
-    min-height: 100%;
-  }
   .wall{
     width: auto!important;
   }
