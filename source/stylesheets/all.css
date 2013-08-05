@@ -276,19 +276,19 @@ section[role=main] h1 {
   display: none;
 }
 #blog-content h2 {
-  padding: 1em;
+  padding: 0;
   font-size: 1em;
   position: absolute;
-  border: 0;
-  left: 0;
   right: 0;
-  bottom: 0;
-  background: rgba(0,0,255,0.2);
+  border: 0;
   color: white;
-  text-align: center;
+  margin: 1em;
+  text-align: right;
 }
-#blog-content h2 a {
-  display: block;
+#blog-content h2 a,
+#blog-content h2 span {
+  
+  background: rgba(0,0,0,1);
 }
 
 #blog-content .list-item {
