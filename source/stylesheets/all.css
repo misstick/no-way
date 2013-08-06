@@ -31,7 +31,16 @@ footer {
   line-height: 0.6;
   font-weight: normal;
   text-decoration: none;
+  position: relative;
+  text-indent: 5px;
+  margin-top: -6px;
 }
+/* #logo:after {
+  content: "..";
+  position: absolute;
+  left: 25px;
+  top: -24px;
+} */
 
 h1,
 h2,
@@ -431,6 +440,7 @@ footer p {
     float: right;
     border-radius: 0;
     display: block;
+    padding: 0 0.25em;
   }
   header .btn-navbar,
   header .btn-navbar:focus {
