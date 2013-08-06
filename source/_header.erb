@@ -9,6 +9,7 @@
 	<aside>
 		<button type="button" class="btn btn-navbar" data-toggle="dropdown"></button>
 		<ol id="main-menu"  class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			<li><a href="/">Accueil</a></li>
 			<% blog.tags.each do |tag, articles| %>
 				<li class="tag-name"><%= link_to tag, tag_path(tag) %></a></li>
 			<% end %>
