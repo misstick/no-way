@@ -12,7 +12,7 @@
 					<li id="goto_next"><%= link_to "<span>" + current_page.next_article.title + "</span> &raquo;", current_page.next_article %></li>
 					<% end %>
 					</ul>
-					<h2><%= current_page.data.title %></h2>
+					<h2><span><%= current_page.data.title %></span></h2>
 			</aside>
 			<article>
 				<%= yield %>

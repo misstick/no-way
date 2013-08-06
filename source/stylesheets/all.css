@@ -226,7 +226,7 @@ section[role=main] h1 {
 .page-number,
 header aside a,
 .paginate-menu li,
-#article-content h2,
+#article-content h2 span,
 section[role=main] h1 {
   background: white
 }
@@ -375,6 +375,7 @@ footer p {
     position: fixed;
     top: 0;
   }
+
   .page {
     min-height: 80%;
   }
@@ -385,25 +386,25 @@ footer p {
   }
   section[role=main] aside {
     left: 0;
-    right: 0;
+    right: 42px; /* #main-menu Width */
   }
   .paginate-menu {
-    padding: 0;
-    position: fixed;
-    top: 50%;
-    left: 0;
-    right: 0;
-    z-index: 9;
+    float: right;
   }
-  .paginate-menu a {
+  .paginate-menu li {
+    position: static;
     display: block;
-    background: rgba(255, 255, 255, 0.5);
-
+    background: #f30;
+    margin-left: 1px;
+    width: 42px;
     font-size: 3em;
     text-decoration: none;
-    line-height: 1;
-    padding: 0.25em 0.25em 0.4em;
-
+    float: left;
+    height: 42px;
+    line-height: 33px;
+  }
+  .paginate-menu a {
+    color: white;
   }
   .paginate-menu span{
     display: none;
@@ -426,10 +427,12 @@ footer p {
   }
   #article-content h2 {
     margin: 0.5em 4em;
-    max-height: 76px;
+    max-height: 62px;
     overflow: hidden;
+    position: absolute;
+    left: 0;
+    right: 84px;
   }
-
   #blog-content h2 {
     top: 10%;
   }
@@ -462,13 +465,18 @@ footer p {
     margin: 0;
     display: none;
   }
+
+  .open .btn,
+  .open #main-menu {
+    background: rgba(255, 110, 0, 0.8);
+  }
   .open #main-menu {
     display: block;
   }
   #main-menu a {
     background: none;
     color: white;
-    padding: 0.25em 0.5em;
+    padding: 0.25em 1em;
     display: block;
   }
   #main-menu a:hover {
