@@ -75,16 +75,28 @@ header li {
   font-size: 1.2em;
   line-height: 1.4;
 }
-header aside ol {
+#main-menu {
   margin: 0;
   padding: 2em;
+  display: block;
+  background: none;
+  box-shadow: none;
+  border: 0;
 }
-header aside li {
+#main-menu li {
   position: relative;
   list-style: none;
 }
-header aside a {
+#main-menu a {
   display: inline-block;
+  padding: 0;
+}
+#main-menu a:hover {
+  background: white;
+  text-decoration: underline;
+}
+aside .btn {
+  display: none;
 }
 
 /* Contenu principal */
@@ -340,7 +352,8 @@ footer p {
 }
 
 
-@media screen and (max-width: 1024px) {
+/* =tablet ------------------------------------------------------------------ */
+@media screen and (max-width: 1010px) {
 
   .page {
     margin: 0;
@@ -418,6 +431,7 @@ footer p {
     cursor: pointer;
     float: right;
     border-radius: 0;
+    display: block;
   }
   header .btn-navbar,
   header .btn-navbar:focus {
@@ -426,28 +440,35 @@ footer p {
   header .btn-navbar:before {
     content: "\2630";
   }
-  header .dropdown-menu {
+  #main-menu {
     left: auto;
     right: 0;
     background: #f30;
     padding: 0.5em 0 1em;
     border-radius: 0;
     margin: 0;
+    display: none;
   }
-  header .tag-name {
+  .open #main-menu {
+    display: block;
+  }
+  #main-menu .tag-name {
     background: rgba(0, 0, 0, 0.1);
     border-top: solid 1px red;
   }
-  header .dropdown-menu a {
+  #main-menu a {
     background: none;
     color: white;
+    padding: 0.25em 0.5em;
+    display: block;
   }
-  header .dropdown-menu a:hover {
+  #main-menu a:hover {
     background: white;
     color: #f30;
   }
 }
-@media screen and (max-width: 640px) {
+/* =mobile ------------------------------------------------------------------ */
+@media screen and (max-width: 730px) {
 
   .wall{
     width: auto!important;
@@ -458,4 +479,8 @@ footer p {
   #article-content figure {
     background: none;
   }
+}
+
+/* =wide_screens ------------------------------------------------------------ */
+@media screen and (min-width: 1160px){ /* WIDE SCREENS */
 }
