@@ -1,0 +1,19 @@
+.icon-paragraph-justify,.icon-twitter,.icon-feed,.icon-pinterest {
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	background-image: url(sprites.png);
+	background-repeat: no-repeat;
+}
+.icon-paragraph-justify {
+	background-position: 0 0;
+}
+.icon-twitter {
+	background-position: -64px 0;
+}
+.icon-feed {
+	background-position: -128px 0;
+}
+.icon-pinterest {
+	background-position: -192px 0;
+}
