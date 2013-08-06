@@ -410,39 +410,41 @@ footer p {
   }
 
   /* Menu Rubriques */
-
-  .menu-collapse {
-    display: none;
-  }
-  .menu-collapse.active {
-    display: block;
-  }
-  aside .label-collapse {
+  header .btn-navbar {
     background: #f30;
     color: white;
     z-index: 10;
-    padding: 0.3em 0.5em 0.5em;
     font-size: 2em;
     cursor: pointer;
-    line-height: 1;
     float: right;
+    border-radius: 0;
   }
-  aside .label-collapse:before {
+  header .btn-navbar,
+  header .btn-navbar:focus {
+    outline: none;
+  }
+  header .btn-navbar:before {
     content: "\2630";
   }
-  aside .menu-collapse {
-    clear: both;
-    padding: 1em 0;
+  header .dropdown-menu {
+    left: auto;
+    right: 0;
     background: #f30;
+    padding: 0.5em 0 1em;
+    border-radius: 0;
+    margin: 0;
   }
-
-  .menu-collapse li {
-    padding: 0;
+  header .tag-name {
+    background: rgba(0, 0, 0, 0.1);
+    border-top: solid 1px red;
   }
-  .menu-collapse  a {
+  header .dropdown-menu a {
     background: none;
-    padding: 0 1em 0.5em;
     color: white;
+  }
+  header .dropdown-menu a:hover {
+    background: white;
+    color: #f30;
   }
 }
 @media screen and (max-width: 640px) {
