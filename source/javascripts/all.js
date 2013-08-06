@@ -19,8 +19,6 @@
 
 		if (options.item) this.item = options.item;
 
-		this.el.addClass("js")
-
 		// Init
 		var _func = this.resize.bind(this)
 		$(window).on("resize", _.debounce(_func, 100));
@@ -31,6 +29,8 @@
 	PictureWall.prototype = {
 
 		item: "img",
+
+		min_width: "730", // Mobile Resolution
 
 		format: ["portrait", "landscape"],
 
@@ -58,12 +58,29 @@
 		},
 
 		load: function() {
+			var loaded = false;
 			var items = this.items();
-			var loader = _.after(items.length, this.format_html.bind(this))
+			var complete = function() {
+				if (this.is_mobile() && this.item === "img") {
+					$(this.el).removeClass("load");
+					return;
+				}
+				loaded = true;
+				this.format_html();
+				$(this.el).removeClass("load");
+			}.bind(this);
+			var loader = _.after(items.length, complete);
+
+			// Listen to picture.load
+			this.el.addClass("load");
 			items.each(function(index, el){
 				el = this.get_pictures($(el));
 				el.get(0).onload = loader;
 			}.bind(this));
+
+			setTimeout(function() {
+				if (!loaded) complete();
+			}.bind(this), 1000);
 		},
 
 		grid: function() {
@@ -77,7 +94,13 @@
 			return grid;
 		},
 
+		is_mobile: function() {
+			return window.innerWidth <= this.min_width;
+		},
+
 		resize: function() {
+			if (this.is_mobile()) return;
+
 			// Remove Previous resize
 			this.el.css("width", "auto");
 
@@ -129,6 +152,8 @@
 		},
 
 		format_html: function() {
+
+
 			var index0;
 			var items = this.items();
 			var coords0 = this.coords(items.first());
@@ -205,8 +230,8 @@
 			if (value) {
 				value = value.split("|");
 				return {
-					width: value[0],
-					height: value[1]
+					width: value[0] * 1,
+					height: value[1] * 1
 				}
 			}
 			return this.coords($(el));
@@ -216,12 +241,12 @@
 			var coords = this.item_size(el);
 			var coords0 = this.coords($(el));
 
-			if (coords.width >= coords0.width) {
-				var height = Math.round(coords0.width * coords.height / coords.width);
-				if (height >= coords0.height) {
-					return coords0.width + "px " + height + "px";
-				}
+			// Picture isnt large enought
+			if (coords.width < coords0.width) {
+				var width = Math.round(coords.width * coords0.height / coords.height);
+				return (width < coords0.width) ? "100% auto" : "auto 100%";
 			}
+			// Picture height isnt tall enought
 			if (coords.height < coords0.height) {
 				var width = Math.round(coords.width * coords0.height / coords.height);
 				if (width >= coords0.width) {
@@ -301,6 +326,7 @@
 						}
 					}
 				}
+
 				// Resize Background
 				pictures.each(function(index0, img) {
 					var size = this.background_size(img);
