@@ -1,44 +1,15 @@
 @charset "utf-8";
 
-* {
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-html,
-body {
-  width: 100%;
-  height: 100%;
-}
 body {
   font-family: 'Source Sans Pro';
   line-height: 1.7;
   color: #aaa;
-/*   background: rgba(250,250,250, 0.8); */
   min-width: 500px;
 background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjMiIGZpbGw9IiNmMzAiPjwvcmVjdD4KPHJlY3Qgd2lkdGg9IjMiIGhlaWdodD0iMSIgZmlsbD0iI2YzMCI+PC9yZWN0Pgo8IS0tcGF0aCBkPSdNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWicgc3Ryb2tlPScjZmZmJyBzdHJva2Utd2lkdGg9JzInLy0tPgo8L3N2Zz4=");
 
 }
 a {
   color: #f30;
-}
-
-/* header,
-footer,
-.page [role=main] {
-  position: relative;
-  z-index: 1;
-} */
-header,
-aside,
-section,
-article,
-figure,
-footer,
-img {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
 }
 header,
 aside,
@@ -75,14 +46,11 @@ h3 a,
 h4 a {
   color: inherit;
 }
-li {
-  list-style: none;
+.list-container {
+  padding: 0;
 }
-ol,
-ul,
-p,
-article {
-  padding: 0 0 1em;
+.list-item {
+  list-style: none;
 }
 
 /* Menu "Pages" */
@@ -91,10 +59,12 @@ header {
   top: 0;
   left: 0;
   width: 10em;
-  z-index: 10;
+  z-index: 100;
 }
-header ul {
-  padding: 0;
+header a:hover,
+header a:focus,
+header .active a  {
+  color: #f30!important;
 }
 header a {
   color: inherit;
@@ -105,32 +75,16 @@ header li {
   font-size: 1.2em;
   line-height: 1.4;
 }
-
+header aside ol {
+  margin: 0;
+  padding: 2em;
+}
 header aside li {
-  padding-left: 1em;
   position: relative;
+  list-style: none;
 }
-header .tag-name a:before {
-/*   content: '#';
-  position: absolute;
-  left: 0; */
-}
-
 header aside a {
   display: inline-block;
-}
-
-header aside {
-  padding-top: 2em;
-}
-
-header .active {
-  background: white;
-}
-header a:hover,
-header a:focus,
-header .active a  {
-    color: #f30!important;
 }
 
 /* Contenu principal */
@@ -145,21 +99,22 @@ section>h2 {
 }
 section[role=main] aside {
   position: fixed;
-  z-index: 100;
+  z-index: 10;
   top: 0;
-  left: 200px;
-  right: 10%;
+  left: 150px;
+  right: 150px;
   text-align: center;
 }
 
 .paginate-menu {
   padding: 0;
+  margin: 0;
 }
 .paginate-menu li {
   display: block;
   color: #000;
   position: absolute;
-  top: 30px;
+  top: 20px;
 }
 #goto_next {
   right: 0;
@@ -173,7 +128,7 @@ section aside a {
 }
 .list-container,
 #article-content {
-  padding-top: 175px;
+  padding-top: 140px;
   margin: 0 auto;
   background: white;
   position: relative;
@@ -188,9 +143,10 @@ section aside a {
 }
 #article-content article{
   min-height: 400px;
+  padding-bottom: 100px;
 }
 #home-content {
-  padding-top: 100px;
+  padding: 100px 0;
 }
 .list-container {
   text-align: center;
@@ -225,11 +181,10 @@ section aside a {
 }
 
 /* Pages de liste */
-
-#article-content h2,
 .page-number,
+#article-content h2,
 section[role=main] h1 {
-  margin: 0.8em 174px 0.5em;
+  margin: 15px 174px 0.5em;
   font-size: 1.8em;
   line-height: 1.25;
   text-align: center;
@@ -261,7 +216,6 @@ section[role=main] h1 {
   margin: 0;
   position: relative;
   max-width: 2000px;
-  display: inline-block;
   padding: 0;
 }
 #blog-content aside:before {
@@ -279,8 +233,10 @@ section[role=main] h1 {
 }
 #blog-content h2 a,
 #blog-content h2 span {
-
   background: rgba(0,0,0,1);
+}
+#blog-content h2 a:hover {
+  color: #f30;
 }
 
 #blog-content .list-item {
@@ -310,9 +266,7 @@ article {
   text-align: left;
 }
 article h2 {
-  padding: 0 0 0.75em;
   text-transform: capitalize;
-  line-height: 1.2;
 }
 article.first h2 {
   padding: 0 0 0.5em;
@@ -370,6 +324,7 @@ footer {
 .copyright {
   font-size: 0.9em;
   padding: 0;
+  margin: 0;
 }
 .copyright li {
   display: inline-block;
@@ -441,7 +396,7 @@ footer p {
 
   #article-content article,
   .list-container {
-    margin: 2em 5em 2em 3em;
+    margin: 2em 7em;
     min-height: auto;
     padding: 5em 0 0;
   }
@@ -455,35 +410,38 @@ footer p {
   }
 
   /* Menu Rubriques */
-  header aside:before {
-    position: fixed;
-    right: 0;
-    top: 0;
-    display: block;
-    background: #f30;
-    color: white;
-    content: "\2630";
-    z-index: 10;
-    padding: 0.1em 0.5em;
-    font-size: 2em;
-    cursor: pointer;
-  }
 
-  header aside ol {
+  .menu-collapse {
     display: none;
   }
-  header aside.active ol {
+  .menu-collapse.active {
     display: block;
-    margin: 60px 0 0;
-    background: white;
-    padding: 0.5em 1em 1em;
+  }
+  aside .label-collapse {
+    background: #f30;
+    color: white;
+    z-index: 10;
+    padding: 0.3em 0.5em 0.5em;
+    font-size: 2em;
+    cursor: pointer;
+    line-height: 1;
+    float: right;
+  }
+  aside .label-collapse:before {
+    content: "\2630";
+  }
+  aside .menu-collapse {
+    clear: both;
+    padding: 1em 0;
     background: #f30;
   }
-  header aside li {
+
+  .menu-collapse li {
     padding: 0;
   }
-  header aside a {
+  .menu-collapse  a {
     background: none;
+    padding: 0 1em 0.5em;
     color: white;
   }
 }

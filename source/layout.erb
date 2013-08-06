@@ -10,18 +10,16 @@
 		<!-- Use title if it's in the page YAML frontmatter -->
 		<title><%= data.page.title || "The Middleman" %></title>
 		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,200italic,400italic,700' rel='stylesheet' type='text/css'>
-		<%= stylesheet_link_tag "normalize", "all" %>
-
+		<%= stylesheet_link_tag "bootstrap.min", "all" %>
 		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-		<%= javascript_include_tag  "underscore" %>
-		<%= javascript_include_tag  "all" %>
+		<%= javascript_include_tag  "underscore", "bootstrap.min", "all" %>
 	</head>
 	<body>
 
 		<div class="page">
-			
+
 			<%= partial "header" %>
-			
+
 			<section id="main" role="main">
 				<%= yield %>
 			</section>
