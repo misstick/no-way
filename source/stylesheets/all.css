@@ -431,7 +431,7 @@ footer p {
     overflow: hidden;
     position: absolute;
     left: 0;
-    right: 84px;
+    right: 0;
   }
   #blog-content h2 {
     top: 10%;
