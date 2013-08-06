@@ -19,18 +19,11 @@
 			</article>
 
 			<figure>
-				<div id="pictures-wall" class="wall">
+				<div id="pictures-wall" class="wall" data-type="gallery">
 				<% current_page.data.pictures.each do |src, i| %>
 					<img src="<%= src %>" />
 				<% end %>
 				</div>
 			</figure>
-			<script>
-				$(document).ready(function() {
-					var myWall = new Views.PictureWall($("#pictures-wall"), {
-						item: "img"
-					});
-				})
-			</script>
 		</div>
 <% end %>

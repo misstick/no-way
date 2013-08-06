@@ -314,7 +314,15 @@
 
 	}
 
-	window.Views.PictureWall = PictureWall;
+	$(document).ready(function() {
+		var gallery = [];
+		$("[data-type=gallery]").each(function(index, item) {
+			gallery.push(new PictureWall($(item), {
+				item: $(item).attr("data-item") || "img"
+			}));
+		})
+		window.Views.Gallery = gallery;
 
+	})
 })()
 
