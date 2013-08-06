@@ -461,10 +461,6 @@ footer p {
   .open #main-menu {
     display: block;
   }
-  #main-menu .tag-name {
-    background: rgba(0, 0, 0, 0.1);
-    border-top: solid 1px red;
-  }
   #main-menu a {
     background: none;
     color: white;
