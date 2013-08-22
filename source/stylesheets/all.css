@@ -362,6 +362,11 @@ footer p {
   font-size: 1.2em;
 }
 
+.fb-like iframe .pluginCountBox,
+.fb-like iframe .pluginCountBoxNub {
+  display: none!important;
+}
+
 /* =tablet ------------------------------------------------------------------ */
 @media screen and (max-width: 1024px) {
 
@@ -460,8 +465,9 @@ footer p {
   #share-menu {
     background: aqua;
     position: fixed;
-    bottom: 0;
     left: 0;
+    top: 90px;
+    padding: 0;
   }
   .dropdown-menu {
     left: auto;
