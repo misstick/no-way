@@ -13,9 +13,10 @@ pageable: true
         <%= year %>
       <% end %>
     </h1>
+
+    <%= partial 'blog/_paginate', :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
   </aside>
 
-  <%= partial 'blog/_paginate', :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
 
   <ul class="list-container">
     <% page_articles.each_with_index do |article, i| %>

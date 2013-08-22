@@ -91,23 +91,24 @@ header li {
   font-size: 1.2em;
   line-height: 1.4;
 }
-#main-menu {
+.dropdown-menu {
   margin: 0;
   padding: 2em;
   display: block;
   background: none;
   box-shadow: none;
   border: 0;
+  position: relative;
 }
-#main-menu li {
+.dropdown-menu li {
   position: relative;
   list-style: none;
 }
-#main-menu a {
+.dropdown-menu>li>a {
   display: inline-block;
   padding: 0;
 }
-#main-menu a:hover {
+.dropdown-menu a:hover {
   background: white;
   text-decoration: underline;
 }
@@ -444,7 +445,6 @@ footer p {
     z-index: 10;
     font-size: 2em;
     cursor: pointer;
-    float: right;
     border-radius: 0;
     display: block;
     padding: 0 0.25em;
@@ -456,7 +456,14 @@ footer p {
   header .btn-navbar:before {
     content: "\2630";
   }
-  #main-menu {
+
+  #share-menu {
+    background: aqua;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+  .dropdown-menu {
     left: auto;
     right: 0;
     background: #f30;
@@ -467,19 +474,20 @@ footer p {
   }
 
   .open .btn,
-  .open #main-menu {
+  .open .dropdown-menu {
     background: rgba(255, 110, 0, 0.8);
   }
-  .open #main-menu {
+  .open .dropdown-menu {
     display: block;
+    position: absolute;
   }
-  #main-menu a {
+  .dropdown-menu>li>a {
     background: none;
     color: white;
     padding: 0.25em 1em;
     display: block;
   }
-  #main-menu a:hover {
+  .dropdown-menu>li>a:hover {
     background: white;
     color: #f30;
   }

@@ -7,22 +7,25 @@
 	</nav>
 
 	<aside>
-		<button type="button" class="btn btn-navbar" data-toggle="dropdown"></button>
-		<ol id="main-menu"  class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			<li><a href="/">Accueil</a></li>
-			<% blog.tags.each do |tag, articles| %>
-				<li class="tag-name"><%= link_to tag, tag_path(tag) %></a></li>
-			<% end %>
-			<% blog.articles.group_by {|a| a.date.year }.each do |year, articles| %>
-				<li class="tag-name"><%= link_to year, blog_year_path(year) %></a></li>
-			<% end %>
-		</ol>
+		<div id="main-menu">
+			<button type="button" class="btn btn-navbar" data-toggle="dropdown"></button>
+			<ol class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				<li><a href="/">Accueil</a></li>
+				<% blog.tags.each do |tag, articles| %>
+					<li class="tag-name"><%= link_to tag, tag_path(tag) %></a></li>
+				<% end %>
+				<% blog.articles.group_by {|a| a.date.year }.each do |year, articles| %>
+					<li class="tag-name"><%= link_to year, blog_year_path(year) %></a></li>
+				<% end %>
+			</ol>
+		</div>
+
+
 
 		<ul id="share-menu">
 			<li class="list-item">
 				<a href="https://twitter.com/share" class="twitter-share-button" data-related="no_way" data-lang="en" data-size="large" data-count="none">Tweet</a>
 			</li>
-
 		</ul>
 	</aside>
 </header>
