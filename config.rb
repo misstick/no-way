@@ -2,7 +2,7 @@
 # Blog settings
 ###
 
-# Time.zone = "Paris"
+Time.zone = "Paris"
 
 activate :blog do |blog|
   blog.prefix = "blog"
