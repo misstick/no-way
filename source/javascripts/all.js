@@ -59,7 +59,7 @@
 			var loaded = false;
 			var items = this.items();
 			var complete = function() {
-				if (this.is_mobile()) {
+				if (this.is_mobile() || loaded) {
 					$(this.el).removeClass("load");
 					return;
 				}
@@ -151,8 +151,6 @@
 		},
 
 		format_html: function() {
-
-
 			var index0;
 			var items = this.items();
 			var coords0 = this.coords(items.first());
@@ -343,15 +341,16 @@
 	}
 
 	$(document).ready(function() {
-
+		var pintit = false;
 		var pintit_display = function() {
-
+			if (pintit) return;
+			pintit = true;
 			var create_link = function(data) {
 				if (!data.text) data.text = $("title").html()
 				data.text +=  ", www.no-way.fr";
 				return '<a href="//pinterest.com/pin/create/button/?url=' + encodeURIComponent(data.url) + '&media=' + encodeURIComponent(data.img) + '&description=' + encodeURIComponent(data.text) + '" target="_blank"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>'
 			}
-
+			
 			// Create PinIt Button
 			$(".image").each(function(index, item) {
 				$(item).append(create_link({
@@ -360,15 +359,15 @@
 					text: $(item).data("title")
 				}));
 			});
-
+		
 		}
-
+		
 		$("[data-type=gallery]").each(function(index, item) {
 			// Create Gallery
 			var view = new PictureWall($(item));
 			$(item).data("Gallery", view);
 			$(item).on("gallery:resize", pintit_display);
-	});
+		});
 
 	});
 })()

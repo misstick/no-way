@@ -260,6 +260,7 @@ section[role=main] h1 {
   padding: 0;
   font-size: 1em;
   position: absolute;
+  z-index: 2;
   right: 0;
   border: 0;
   color: white;
@@ -339,11 +340,13 @@ article .content {
 }
 .image a {
   position: absolute;
-  top: 0;
-  right: 0;
+left: 50%;
+top: 50%;
   padding: 1em;
+  margin: -1em;
   visibility: hidden;
 }
+.list-item:hover a,
 .image:hover a {
   visibility: visible;
 }
