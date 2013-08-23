@@ -92,7 +92,7 @@ header li {
   line-height: 1.4;
 }
 #main-menu {
-  overflow: auto;
+  overflow: hidden;
 }
 #share-menu {
   margin: -1em 2em 0;

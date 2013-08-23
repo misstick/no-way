@@ -14,9 +14,6 @@
 				<% blog.tags.each do |tag, articles| %>
 					<li class="tag-name"><%= link_to tag, tag_path(tag) %></a></li>
 				<% end %>
-				<% blog.articles.group_by {|a| a.date.year }.each do |year, articles| %>
-					<li class="tag-name"><%= link_to year, blog_year_path(year) %></a></li>
-				<% end %>
 			</ol>
 		</div>
 
