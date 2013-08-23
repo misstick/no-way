@@ -350,6 +350,9 @@ top: 50%;
 .image:hover a {
   visibility: visible;
 }
+.clickable {
+  cursor: pointer;
+}
 
 /* Footer */
 footer {

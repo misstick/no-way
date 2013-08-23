@@ -341,6 +341,9 @@
 	}
 
 	$(document).ready(function() {
+		//
+		// PINTEREST
+		//
 		var pintit = false;
 		var pintit_display = function() {
 			if (pintit) return;
@@ -359,16 +362,32 @@
 					text: $(item).data("title")
 				}));
 			});
-		
 		}
-		
+		//
+		// GALLERY
+		//
 		$("[data-type=gallery]").each(function(index, item) {
 			// Create Gallery
 			var view = new PictureWall($(item));
 			$(item).data("Gallery", view);
 			$(item).on("gallery:resize", pintit_display);
 		});
-
+		
+		//
+		// Home Links
+		//
+		var goto_article = function(event) {
+			var el = event.currentTarget;
+			window.location = $(el).data("href")
+			
+		}
+		$("#blog-content h2 a").each(function(index, item) {
+			var parent = $(item).parents(".list-item").first();
+			parent.addClass("clickable");
+			parent.data("href", $(item).attr("href"));
+			parent.on("click", goto_article)
+			
+		})
 	});
 })()
 
