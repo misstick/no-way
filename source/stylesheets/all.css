@@ -91,6 +91,13 @@ header li {
   font-size: 1.2em;
   line-height: 1.4;
 }
+#main-menu {
+  overflow: auto;
+}
+#share-menu {
+  margin: -1em 2em 0;
+  padding: 0;
+}
 .dropdown-menu {
   margin: 0;
   padding: 2em;
@@ -326,6 +333,19 @@ article .content {
   overflow: hidden;
   display: block;
   float: left;
+}
+.image {
+  position: relative;
+}
+.image a {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1em;
+  visibility: hidden;
+}
+.image:hover a {
+  visibility: visible;
 }
 
 /* Footer */

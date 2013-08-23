@@ -17,8 +17,6 @@
 		if (!options) options = {};
 		this.el = el;
 
-		if (options.item) this.item = options.item;
-
 		// Init
 		var _func = this.resize.bind(this)
 		$(window).on("resize", _.debounce(_func, 100));
@@ -54,14 +52,14 @@
 		},
 
 		items: function() {
-			return $(this.item, this.el);
+			return this.el.children();
 		},
 
 		load: function() {
 			var loaded = false;
 			var items = this.items();
 			var complete = function() {
-				if (this.is_mobile() && this.item === "img") {
+				if (this.is_mobile()) {
 					$(this.el).removeClass("load");
 					return;
 				}
@@ -75,7 +73,7 @@
 			this.el.addClass("load");
 			items.each(function(index, el){
 				el = this.get_pictures($(el));
-				el.get(0).onload = loader;
+				if (el.get(0)) el.get(0).onload = loader;
 			}.bind(this));
 
 			setTimeout(function() {
@@ -113,6 +111,7 @@
 					width += $(el).width();
 				})
 				this.el.width(width);
+				$(this.el).trigger("gallery:resize");
 			}.bind(this);
 
 			var index = 0;
@@ -198,6 +197,7 @@
 		},
 
 		replace_picture: function(el, options) {
+
 			if (!options) options = {};
 			var style = {
 				"width": options.coords.width,
@@ -217,11 +217,13 @@
 				parent.addClass("image")
 			}
 			parent.css(style);
+			parent.data("src", $(el).attr("src"))
 
 			// Save initaila-size
 			var coords = this.coords($(el));
 			$(parent).attr("data-size", coords.width + "|" + coords.height);
-			$(el).remove()
+
+			$(el).remove();
 			return parent.get(0);
 		},
 
@@ -341,14 +343,40 @@
 	}
 
 	$(document).ready(function() {
-		var gallery = [];
-		$("[data-type=gallery]").each(function(index, item) {
-			gallery.push(new PictureWall($(item), {
-				item: $(item).attr("data-item") || "img"
-			}));
-		})
-		window.Views.Gallery = gallery;
 
-	})
+		var pintit_display = function() {
+
+			var urlEncode = function(url) {
+				url = url.replace(/\//gi, "%2F");
+				url = url.replace(/\:/gi, "%3A");
+				return url;
+			}
+
+			// Create PinIt Button
+			$(".image").each(function(index, item) {
+				// http://no-way.fr/2013/05/bazar-agricole/
+				// document.location.href
+				var params = urlEncode('url=http://no-way.fr/2013/05/bazar-agricole/&media=' + $(item).data("src") + "&description=Plop");
+				$(item).append('<a href="//pinterest.com/pin/create/button/' + params + '" data-pin-do="buttonPin"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>')
+			});
+		
+			//remove and add pinterest js
+			var pinJs = $('script[src*="assets.pinterest.com/js/pinit.js"]');
+			pinJs.remove();
+			js = document.createElement('script');
+			js.src = pinJs.attr('src');
+			js.type = 'text/javascript';
+			document.body.appendChild(js);
+
+		}
+
+		$("[data-type=gallery]").each(function(index, item) {
+			// Create Gallery
+			var view = new PictureWall($(item));
+			$(item).data("Gallery", view);
+			$(item).on("gallery:resize", pintit_display);
+	});
+
+	});
 })()
 
