@@ -346,27 +346,20 @@
 
 		var pintit_display = function() {
 
-			var urlEncode = function(url) {
-				url = url.replace(/\//gi, "%2F");
-				url = url.replace(/\:/gi, "%3A");
-				return url;
+			var create_link = function(data) {
+				if (!data.text) data.text = $("title").html()
+				data.text +=  ", www.no-way.fr";
+				return '<a href="//pinterest.com/pin/create/button/?url=' + encodeURIComponent(data.url) + '&media=' + encodeURIComponent(data.img) + '&description=' + encodeURIComponent(data.text) + '" target="_blank"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>'
 			}
 
 			// Create PinIt Button
 			$(".image").each(function(index, item) {
-				// http://no-way.fr/2013/05/bazar-agricole/
-				// document.location.href
-				var params = urlEncode('url=http://no-way.fr/2013/05/bazar-agricole/&media=' + $(item).data("src") + "&description=Plop");
-				$(item).append('<a href="//pinterest.com/pin/create/button/' + params + '" data-pin-do="buttonPin"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>')
+				$(item).append(create_link({
+					url: document.location.href,
+					img: $(item).data("src"),
+					text: $(item).data("title")
+				}));
 			});
-		
-			//remove and add pinterest js
-			var pinJs = $('script[src*="assets.pinterest.com/js/pinit.js"]');
-			pinJs.remove();
-			js = document.createElement('script');
-			js.src = pinJs.attr('src');
-			js.type = 'text/javascript';
-			document.body.appendChild(js);
 
 		}
 
