@@ -163,7 +163,7 @@ section aside a {
   color: black;
 }
 .list-container,
-#article-content {
+.page-content {
   padding-top: 140px;
   margin: 0 auto;
   position: relative;
@@ -172,11 +172,11 @@ section aside a {
 }
 .list-container .list-item,
 .list-container article,
-#article-content article{
+.page-content article{
   max-width: 800px;
   margin: 0 auto;
 }
-#article-content article{
+.page-content article{
   min-height: 400px;
   padding-bottom: 100px;
 }
@@ -188,7 +188,7 @@ section aside a {
 }
 /* Hide top text*/
 .list-container aside:before,
-#article-content:before {
+.page-content:before {
   content: "";
   display: block;
   position: fixed;
@@ -217,7 +217,7 @@ section aside a {
 
 /* Pages de liste */
 .page-number,
-#article-content h2,
+.page-content h2,
 section[role=main] h1 {
   margin: 15px 174px 0.5em;
   font-size: 1.8em;
@@ -234,14 +234,14 @@ section[role=main] h1 {
 .page-number,
 header aside a,
 .paginate-menu li,
-#article-content h2 span,
+.page-content h2 span,
 section[role=main] h1 {
   background: white
 }
 
 .page-number,
 .paginate-menu li,
-#article-content h2,
+.page-content h2,
 section[role=main] h1 {
   z-index: 3;
 }
@@ -312,7 +312,7 @@ article .content {
 
 /* Mur d'images */
 
-#article-content figure {
+.page-content figure {
   overflow: auto;
   padding: 0;
   background: black;
@@ -412,7 +412,7 @@ footer p {
     min-height: 80%;
   }
   .list-container,
-  #article-content,
+  .page-content,
   section[role=main] {
     min-height: auto;
   }
@@ -443,21 +443,21 @@ footer p {
   }
 
   .list-container aside:before,
-  #article-content:before,
+  .page-content:before,
   #blog-content:before {
     height: 200px;
   }
 
-  #article-content article,
+  .page-content article,
   .list-container {
     margin: 2em 5em;
     min-height: auto;
     padding: 80px 0;
   }
-  #article-content {
+  .page-content {
     padding-top: 0;
   }
-  #article-content h2 {
+  .page-content h2 {
     margin: 0.5em 4em;
     max-height: 62px;
     overflow: hidden;
@@ -539,7 +539,7 @@ footer p {
     margin: 0 auto;
     width: auto!important;
   }
-  #article-content figure {
+  .page-content figure {
     background: none;
   }
 }
