@@ -483,11 +483,11 @@ footer p {
   }
 
   #share-menu {
-    background: aqua;
     position: fixed;
     left: 0;
-    top: 90px;
-    padding: 0;
+    bottom: 0;
+    padding: 0 1em 1em;
+    margin: 0;
   }
   .dropdown-menu {
     left: auto;
