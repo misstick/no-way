@@ -115,7 +115,7 @@ header li {
   display: inline-block;
   padding: 0;
 }
-.dropdown-menu a:hover {
+.dropdown-menu>li>a:hover {
   background: white;
   text-decoration: underline;
 }
