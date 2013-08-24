@@ -96,7 +96,7 @@ header li {
   overflow: hidden;
 }
 #share-menu {
-  margin: -1em 2em 0;
+  margin: 0 1em;
   padding: 0;
 }
 .dropdown-menu {
