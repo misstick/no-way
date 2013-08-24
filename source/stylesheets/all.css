@@ -5,7 +5,7 @@ body {
   line-height: 1.7;
   color: #aaa;
   min-width: 500px;
-background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjMiIGZpbGw9IiNmMzAiPjwvcmVjdD4KPHJlY3Qgd2lkdGg9IjMiIGhlaWdodD0iMSIgZmlsbD0iI2YzMCI+PC9yZWN0Pgo8IS0tcGF0aCBkPSdNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWicgc3Ryb2tlPScjZmZmJyBzdHJva2Utd2lkdGg9JzInLy0tPgo8L3N2Zz4=");
+/* background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjMiIGZpbGw9IiNmMzAiPjwvcmVjdD4KPHJlY3Qgd2lkdGg9IjMiIGhlaWdodD0iMSIgZmlsbD0iI2YzMCI+PC9yZWN0Pgo8IS0tcGF0aCBkPSdNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWicgc3Ryb2tlPScjZmZmJyBzdHJva2Utd2lkdGg9JzInLy0tPgo8L3N2Zz4="); */
 
 }
 a {
@@ -162,7 +162,6 @@ section aside a {
   display: inline;
   color: black;
 }
-.list-container,
 .page-content {
   padding-top: 140px;
   margin: 0 auto;
@@ -170,8 +169,6 @@ section aside a {
   z-index: 0;
   min-height: 500px;
 }
-.list-container .list-item,
-.list-container article,
 .page-content article{
   max-width: 800px;
   margin: 0 auto;
@@ -281,7 +278,8 @@ section[role=main] h1 {
   position: relative;
   overflow: auto;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
+  text-align: center;
 }
 [data-type=gallery] h2 {
   padding: 0;
@@ -379,10 +377,6 @@ footer p {
 }
 
 
-#tag-content .list-container {
-  font-size: 1.2em;
-}
-
 .fb-like iframe .pluginCountBox,
 .fb-like iframe .pluginCountBoxNub {
   display: none!important;
@@ -394,7 +388,6 @@ footer p {
   .page {
     margin: 0;
     padding-top: 0;
-    min-width: 1000px;
   }
   header aside {
     padding: 0;
@@ -406,7 +399,6 @@ footer p {
   .page {
     min-height: 80%;
   }
-  .list-container,
   .page-content,
   section[role=main] {
     min-height: auto;
@@ -443,8 +435,7 @@ footer p {
     height: 200px;
   }
 
-  .page-content article,
-  .list-container {
+  .page-content article {
     margin: 2em 5em;
     min-height: auto;
     padding: 80px 0;

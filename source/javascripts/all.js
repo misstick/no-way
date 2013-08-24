@@ -93,25 +93,33 @@
 			// Remove Previous resize
 			this.el.css("width", "auto");
 			
+			// Get Column Value
 			var items = this.items();
 			var width_max = 0;
 			items.each(function(index, item) {
 				width_max += $(item).width();
-			})
+			});
 			var len = width_max / this._ref.width;
-			var column_min = Math.ceil(this.el.width() / this._ref.width);
-			var rows_min = Math.ceil(window.innerHeight / this._ref.height);
-			
-			var column = column_min;
-			var row = len / column;
-			
+			var column = Math.ceil(this.el.width() / this._ref.width);
 			while((len / column) > 1 && len % column > 0) {
 				++column;
 			}
 			
-			// console.log("row", Math.ceil(len / column), "; column", column)
+			// Resize Content
+			var width = column * this._ref.width;
+			if (width > width_max) width = width_max;
+			this.el.width(width);
 			
-			this.el.width(column * this._ref.width);
+			
+			if (this._fill === "height") {
+				var height_min = window.innerHeight;
+				var height = Math.ceil(len / column) * this._ref.height;
+				this.el.css({
+					"min-height": window.innerHeight,
+					"margin-top": (height_min - height) / 2
+				});
+			}
+			
 			$(this.el).trigger("gallery:resize");
 		},
 
