@@ -115,8 +115,7 @@
 				var height_min = window.innerHeight;
 				var height = Math.ceil(len / column) * this._ref.height;
 				this.el.css({
-					"min-height": window.innerHeight,
-					"margin-top": (height_min - height) / 2
+					"padding": Math.ceil((height_min - height) / 2) + "px 0"
 				});
 			}
 			

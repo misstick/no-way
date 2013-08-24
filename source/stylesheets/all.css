@@ -311,6 +311,11 @@ section[role=main] h1 {
 #blog-content aside:before {
   display: none;
 }
+#tag-content,
+#blog-content {
+  overflow: auto;
+  background-color: black;
+}
 
 /* Page Detail */
 article {
