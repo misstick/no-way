@@ -16,6 +16,8 @@
 	var PictureWall = function(el, options) {
 		if (!options) options = {};
 		this.el = el;
+		
+		this._fill = this.el.data("fill") || "width";
 
 		// Init
 		var _func = this.resize.bind(this)
@@ -81,17 +83,6 @@
 			}.bind(this), 1000);
 		},
 
-		grid: function() {
-			var grid = [];
-			var coords = this._ref;
-			this.el.children().each(function(index, el) {
-				line = Math.round(el.offsetTop / coords.height);
-				if (!grid[line]) grid[line] = [];
-				grid[line].push(el);
-			});
-			return grid;
-		},
-
 		is_mobile: function() {
 			return window.innerWidth <= this.min_width;
 		},
@@ -101,42 +92,27 @@
 
 			// Remove Previous resize
 			this.el.css("width", "auto");
-
-			// Container.width should have
-			// the same value than Line.width
-			var complete = function(grid) {
-				var width = 0;
-				var line0 = grid.shift();
-				_.each(line0, function(el) {
-					width += $(el).width();
-				})
-				this.el.width(width);
-				$(this.el).trigger("gallery:resize");
-			}.bind(this);
-
-			var index = 0;
-			var _resize = function(grid) {
-
-				if (index >= 10|| grid.length <= 1) {
-					complete(grid);
-					return;
-				}
-				var last = _.last(grid);
-				var columns = Math.ceil(this.el.width() / this._ref.width);
-				if (last.length === columns) {
-					complete(grid);
-					return;
-				}
-				// Container Width must be
-				// an Integer multiple of item width
-				var width = columns * this._ref.width;
-				this.el.width(width + $(last.shift()).width());
-				// Remove Next Elements
-				++index;
-				_resize(this.grid());
-			}.bind(this);
-
-			_resize(this.grid())
+			
+			var items = this.items();
+			var width_max = 0;
+			items.each(function(index, item) {
+				width_max += $(item).width();
+			})
+			var len = width_max / this._ref.width;
+			var column_min = Math.ceil(this.el.width() / this._ref.width);
+			var rows_min = Math.ceil(window.innerHeight / this._ref.height);
+			
+			var column = column_min;
+			var row = len / column;
+			
+			while((len / column) > 1 && len % column > 0) {
+				++column;
+			}
+			
+			// console.log("row", Math.ceil(len / column), "; column", column)
+			
+			this.el.width(column * this._ref.width);
+			$(this.el).trigger("gallery:resize");
 		},
 
 		set_format: function(el, coords) {
