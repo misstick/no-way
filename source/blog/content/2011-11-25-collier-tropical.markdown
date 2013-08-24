@@ -3,7 +3,7 @@ title: Collier tropical
 date: 2011-11-25
 tags: Collier
 picture: "collier-4.jpg"
-pictures: ["collier-1.jpg", "collier-2.jpg", "collier-4.jpg"]
+pictures: ["collier-3.jpg", "collier-1.jpg", "collier-2.jpg", "collier-4.jpg"]
 ---
 
 Ambiance tropicale pour ce collier réalisé au printemps 2011.

@@ -20,8 +20,8 @@
 
 			<figure>
 				<div id="pictures-wall" class="wall" data-type="gallery">
-				<% current_page.data.pictures.each do |src, i| %>
-					<img src="<%= images_dir %>/content/<%= article.data.picture || article.data.pictures[0] %>" />
+				<% current_page.data.pictures.each do |picture, i| %>
+					<img src="/images/content/<%= picture %>" />
 				<% end %>
 				</div>
 			</figure>
