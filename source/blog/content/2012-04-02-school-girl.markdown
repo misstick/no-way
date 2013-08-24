@@ -2,6 +2,7 @@
 title: School Girl
 date: 2012-04-02
 tags: Pull
+picture: "http://no-way.fr/wp-content/uploads/2012/04/school02_medium.jpg"
 pictures: ["http://no-way.fr/wp-content/uploads/2012/04/school05_medium.jpg", "http://no-way.fr/wp-content/uploads/2012/04/school02_medium.jpg", "http://no-way.fr/wp-content/uploads/2012/04/school03_medium.jpg", "http://no-way.fr/wp-content/uploads/2012/04/school04_medium.jpg", "http://no-way.fr/wp-content/uploads/2012/04/school01_medium.jpg"]
 ---
 

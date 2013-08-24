@@ -2,6 +2,7 @@
 title: Ma capeline bleu-marine
 date: 2010-12-06
 tags: Accessoire
+picture: "http://no-way.fr/wp-content/images/modeles/capelineMarine-03.jpg"
 pictures: [http://no-way.fr/wp-content/images/modeles/capelineMarine-01.jpg", "http://no-way.fr/wp-content/images/modeles/capelineMarine-02.jpg", "http://no-way.fr/wp-content/images/modeles/capelineMarine-03.jpg"]
 ---
 

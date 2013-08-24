@@ -1,7 +1,7 @@
 ---
 title: Estran rocheux
 date: 2010-10-26
-tags: Echarpe
+tags: écharpe
 pictures: [http://no-way.fr/wp-content/images/modeles/roche0.jpg", "http://no-way.fr/wp-content/images/modeles/roche1.jpg", "http://no-way.fr/wp-content/images/modeles/roche2.jpg"]
 ---
 

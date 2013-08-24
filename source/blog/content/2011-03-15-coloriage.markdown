@@ -1,7 +1,7 @@
 ---
 title: Colorie moi une écharpe
 date: 2011-03-15
-tags: Echarpe
+tags: écharpe
 pictures: ["http://no-way.fr/wp-content/images/modeles/coloriage02.jpg", "http://no-way.fr/wp-content/images/modeles/coloriage03.jpg", "http://no-way.fr/wp-content/images/modeles/coloriage04.jpg", "http://no-way.fr/wp-content/images/modeles/coloriage01.jpg"]
 ---
 

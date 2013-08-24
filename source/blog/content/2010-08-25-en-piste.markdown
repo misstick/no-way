@@ -1,7 +1,7 @@
 ---
 title: En piste
 date: 2010-08-25
-tags: Pull, Kimono
+tags: Pull, kimono
 pictures: [http://no-way.fr/wp-content/images/modeles/danceFloor01_L.jpg", http://no-way.fr/wp-content/images/modeles/danceFloor02_L.jpg", http://no-way.fr/wp-content/images/modeles/danceFloor03_L.jpg"]
 ---
 

@@ -41,13 +41,13 @@ footer {
   text-indent: 5px;
   margin-top: -6px;
 }
-/* #logo:after {
-  content: "..";
-  position: absolute;
-  left: 25px;
-  top: -24px;
-} */
 
+h1,
+h2,
+h3,
+h4 {
+  text-transform: capitalize;
+}
 h1,
 h2,
 h3,
@@ -355,14 +355,15 @@ article .content {
 
 /* Footer */
 footer {
-  background: rgba(255,255,255,0.8);
+  background: white;
   color: black;
-  padding: 0.5em 1em;
+  padding: 0 0.5em;
   font-weight: bold;
   position: fixed;
   bottom: 0;
   right: 0;
   z-index: 12;
+  color: #F30;
 }
 .copyright {
   font-size: 0.9em;

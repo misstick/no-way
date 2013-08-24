@@ -2,6 +2,7 @@
 title: Romantique attitude
 date: 2011-09-27
 tags: Chemise, Pantalon
+picture: "http://no-way.fr/wp-content/images/modeles/pinup-01.jpg"
 pictures: ["http://no-way.fr/wp-content/images/modeles/pinup-04.jpg", "http://no-way.fr/wp-content/images/modeles/pinup-03.jpg", "http://no-way.fr/wp-content/images/modeles/pinup-02.jpg", "http://no-way.fr/wp-content/images/modeles/pinup-01.jpg"]
 ---
 

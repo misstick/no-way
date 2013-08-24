@@ -1,7 +1,7 @@
 ---
 title: Ma zibeline en alpaga
 date: 2011-03-02
-tags: Echarpe
+tags: écharpe
 pictures: ["http://no-way.fr/wp-content/images/modeles/renarde01.jpg", "http://no-way.fr/wp-content/images/modeles/renarde05.jpg", "http://no-way.fr/wp-content/images/modeles/renarde03.jpg", "http://no-way.fr/wp-content/images/modeles/renarde04.jpg"]
 ---
 

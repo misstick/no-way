@@ -2,6 +2,7 @@
 title: Instant de classe
 date: 2011-11-10
 tags: Veste
+picture: "http://no-way.fr/wp-content/images/modeles/veste-kaki-4.jpg"
 pictures: ["http://no-way.fr/wp-content/images/modeles/veste-kaki-1.jpg", "http://no-way.fr/wp-content/images/modeles/veste-kaki-6.jpg", "http://no-way.fr/wp-content/images/modeles/veste-kaki-4.jpg"]
 ---
 

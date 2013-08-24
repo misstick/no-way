@@ -1,7 +1,7 @@
 ---
 title: Kimono passion
 date: 2010-08-12
-tags: Kimono
+tags: kimono
 pictures: [http://no-way.fr/wp-content/images/modeles/kimono.jpg]
 ---
 
