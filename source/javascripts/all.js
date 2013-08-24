@@ -100,24 +100,40 @@
 				width_max += $(item).width();
 			});
 			var len = width_max / this._ref.width;
-			var column = Math.ceil(this.el.width() / this._ref.width);
+			var column_min = Math.ceil(this.el.width() / this._ref.width);
+			var column = column_min;
 			while((len / column) > 1 && len % column > 0) {
 				++column;
 			}
+			
+			var row = Math.ceil(len / column);
+			
+			
+			if (this._fill === "height") {
+				
+				// Gallery is bigger than window Size
+				// Lets fill it
+				var surface = this._ref.width * this._ref.height;
+				var surface_all = surface * len;
+				var surface_win = window.innerHeight * window.innerWidth;
+				if (surface_all > surface_win && row === 1) {
+					column = column_min;
+					row = Math.ceil(len / column);
+				}
+				
+				// Add Vertical Alignement
+				var height_min = window.innerHeight;
+				var height = row * this._ref.height;
+				this.el.css({
+					"padding": Math.ceil((height_min - height) / 2) + "px 0"
+				});
+			}
+			
 			
 			// Resize Content
 			var width = column * this._ref.width;
 			if (width > width_max) width = width_max;
 			this.el.width(width);
-			
-			
-			if (this._fill === "height") {
-				var height_min = window.innerHeight;
-				var height = Math.ceil(len / column) * this._ref.height;
-				this.el.css({
-					"padding": Math.ceil((height_min - height) / 2) + "px 0"
-				});
-			}
 			
 			$(this.el).trigger("gallery:resize");
 		},
