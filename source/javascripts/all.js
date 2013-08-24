@@ -380,8 +380,8 @@
 			window.location = $(el).data("href")
 			
 		}
-		$("#blog-content h2 a").each(function(index, item) {
-			var parent = $(item).parents(".list-item").first();
+		$("[data-type=gallery] article h2 a").each(function(index, item) {
+			var parent = $(item).parents("article").first();
 			parent.addClass("clickable");
 			parent.data("href", $(item).attr("href"));
 			parent.on("click", goto_article)
