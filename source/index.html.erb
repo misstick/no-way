@@ -7,7 +7,7 @@ picture: "https://secure.gravatar.com/avatar/9959ecc877e288989012679976743bca?s=
       <article>
         <h2><%= link_to article.title, article %><br /><span><%= article.date.strftime('%d.%m.%y') %></span></h2>
         <figure>
-          <img src="<%= article.data.picture || article.data.pictures[0] %>" />
+          <img src="<%= images_dir %>/content/<%= article.data.picture || article.data.pictures[0] %>" />
         </figure>
       </article>
   <% end %>

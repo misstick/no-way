@@ -2,7 +2,7 @@
 title: Colorie moi une écharpe
 date: 2011-03-15
 tags: écharpe
-pictures: ["http://no-way.fr/wp-content/images/modeles/coloriage02.jpg", "http://no-way.fr/wp-content/images/modeles/coloriage03.jpg", "http://no-way.fr/wp-content/images/modeles/coloriage04.jpg", "http://no-way.fr/wp-content/images/modeles/coloriage01.jpg"]
+pictures: ["coloriage02.jpg", "coloriage03.jpg", "coloriage04.jpg", "coloriage01.jpg"]
 ---
 
 Pour répondre à tous nos besoins en vitamines cet hiver, je vous propose cette écharpe : ample avec de grands aplats colorés, elle structure et dynamise la silhouette en toutes circonstances. 

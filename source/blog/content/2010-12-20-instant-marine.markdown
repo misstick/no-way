@@ -2,7 +2,7 @@
 title: Marinière marine
 date: 2010-12-20
 tags: Pull
-pictures: [http://no-way.fr/wp-content/images/modeles/mariniere-04.jpg", "http://no-way.fr/wp-content/images/modeles/mariniere-03.jpg", "http://no-way.fr/wp-content/images/modeles/mariniere-01.jpg", "http://no-way.fr/wp-content/images/modeles/mariniere-02.jpg"]
+pictures: ["mariniere-04.jpg", "mariniere-03.jpg", "mariniere-01.jpg", "mariniere-02.jpg"]
 ---
 
 <p>Cette petite douceur à été réalisée durant l’hiver 2008 : de forme longue et ample, ce pull est fait pour qu’on le tire et l’étire à loisir !</p>

@@ -21,7 +21,7 @@
 			<figure>
 				<div id="pictures-wall" class="wall" data-type="gallery">
 				<% current_page.data.pictures.each do |src, i| %>
-					<img src="<%= src %>" />
+					<img src="<%= images_dir %>/content/<%= article.data.picture || article.data.pictures[0] %>" />
 				<% end %>
 				</div>
 			</figure>

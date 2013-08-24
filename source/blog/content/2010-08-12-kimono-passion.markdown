@@ -2,7 +2,7 @@
 title: Kimono passion
 date: 2010-08-12
 tags: kimono
-pictures: [http://no-way.fr/wp-content/images/modeles/kimono.jpg]
+pictures: ["kimono.jpg"]
 ---
 
 <p>Long gilet inspiré du traditionnel kimono japonais ; créé pour la saison automne/hiver 2008, je le voulais à l’image de la saison : à la fois confortable, naturel et sensuel.</p>

@@ -2,7 +2,7 @@
 title: Ma zibeline en alpaga
 date: 2011-03-02
 tags: écharpe
-pictures: ["http://no-way.fr/wp-content/images/modeles/renarde01.jpg", "http://no-way.fr/wp-content/images/modeles/renarde05.jpg", "http://no-way.fr/wp-content/images/modeles/renarde03.jpg", "http://no-way.fr/wp-content/images/modeles/renarde04.jpg"]
+pictures: ["renarde01.jpg", "renarde05.jpg", "renarde03.jpg", "renarde04.jpg"]
 ---
 
 <p>Cet hiver, la fourrure a été aussi immanquable que la neige : vraie ou fausse <sup><a href="#0.1_note1">1</a></sup>, elle s’est affichée sur des cols, des gants ou en bordure de vestes.</p>

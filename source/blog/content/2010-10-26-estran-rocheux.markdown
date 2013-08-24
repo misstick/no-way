@@ -2,7 +2,7 @@
 title: Estran rocheux
 date: 2010-10-26
 tags: écharpe
-pictures: [http://no-way.fr/wp-content/images/modeles/roche0.jpg", "http://no-way.fr/wp-content/images/modeles/roche1.jpg", "http://no-way.fr/wp-content/images/modeles/roche2.jpg"]
+pictures: ["roche0.jpg", "roche1.jpg", "roche2.jpg"]
 ---
 
 <p>Cette écharpe de demi-saison est idéale pour le début de cet automne 2010. </p>

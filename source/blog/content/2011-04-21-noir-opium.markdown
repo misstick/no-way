@@ -2,7 +2,7 @@
 title: Noir d’opium
 date: 2011-04-21
 tags: Gilet
-pictures: ["http://no-way.fr/wp-content/images/modeles/opium02.jpg", "http://no-way.fr/wp-content/images/modeles/opium01.jpg", "http://no-way.fr/wp-content/images/modeles/opium04.jpg", "http://no-way.fr/wp-content/images/modeles/opium03.jpg"]
+pictures: ["opium02.jpg", "opium01.jpg", "opium04.jpg", "opium03.jpg"]
 ---
 
 Ce boléro a été réalisé pour les fêtes de fin d’année 2010. Il s’inscrit dans la lignée de l’écharpe <a href="http://no-way.fr/2010/10/estran-rocheux-2/" target="_blank">Estran Rocheux</a> réalisée l’été dernier.

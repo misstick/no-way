@@ -2,7 +2,7 @@
 title: Bazar agricole
 date: 2013-05-19
 tags: pantalon, pull, chemise
-<!-- pictures: ["http://no-way.fr/wp-content/uploads/2013/05/IMGP6327.jpg", "http://no-way.fr/wp-content/uploads/2013/05/IMGP6260.jpg", "http://no-way.fr/wp-content/uploads/2013/05/IMGP6274.jpg", "http://no-way.fr/wp-content/uploads/2013/05/IMGP6316.jpg", "http://no-way.fr/wp-content/uploads/2013/05/IMGP6303.jpg", "http://no-way.fr/wp-content/uploads/2013/05/IMGP6307.jpg", "http://no-way.fr/wp-content/uploads/2013/05/IMGP6315.jpg", "http://no-way.fr/wp-content/uploads/2013/05/IMGP6300.jpg", "http://no-way.fr/wp-content/uploads/2013/05/IMGP6298.jpg", "http://no-way.fr/wp-content/uploads/2013/05/IMGP6284.jpg", "http://no-way.fr/wp-content/uploads/2013/05/IMGP6289.jpg", "http://no-way.fr/wp-content/uploads/2013/05/IMGP6291.jpg"] -->
+<!-- pictures: ["2013/05/IMGP6327.jpg", "2013/05/IMGP6260.jpg", "2013/05/IMGP6274.jpg", "2013/05/IMGP6316.jpg", "2013/05/IMGP6303.jpg", "2013/05/IMGP6307.jpg", "2013/05/IMGP6315.jpg", "2013/05/IMGP6300.jpg", "2013/05/IMGP6298.jpg", "2013/05/IMGP6284.jpg", "2013/05/IMGP6289.jpg", "2013/05/IMGP6291.jpg"] -->
 ---
 
 ###C’est le printemps

@@ -2,7 +2,7 @@
 title: Menthe fraiche
 date: 2012-03-16
 tags: écharpe
-pictures: ["http://no-way.fr/wp-content/images/modeles/menthe01_medium.jpg", "http://no-way.fr/wp-content/images/modeles/menthe02_medium.jpg", "http://no-way.fr/wp-content/images/modeles/menthe04_medium.jpg", "http://no-way.fr/wp-content/images/modeles/menthe03_medium.jpg", "http://no-way.fr/wp-content/images/modeles/menthe05_medium.jpg"]
+pictures: ["menthe01_medium.jpg", "menthe02_medium.jpg", "menthe04_medium.jpg", "menthe03_medium.jpg", "menthe05_medium.jpg"]
 ---
 
 Attention, ceci est le 1<sup>er</sup> modèle No-Way publié cette année !

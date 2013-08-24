@@ -2,8 +2,8 @@
 title: Ma capeline bleu-marine
 date: 2010-12-06
 tags: Accessoire
-picture: "http://no-way.fr/wp-content/images/modeles/capelineMarine-03.jpg"
-pictures: [http://no-way.fr/wp-content/images/modeles/capelineMarine-01.jpg", "http://no-way.fr/wp-content/images/modeles/capelineMarine-02.jpg", "http://no-way.fr/wp-content/images/modeles/capelineMarine-03.jpg"]
+picture: "capelineMarine-03.jpg"
+pictures: ["capelineMarine-01.jpg", "capelineMarine-02.jpg", "capelineMarine-03.jpg"]
 ---
 
 <p>Cette capeline est la pièce maitresse de la collection « No-Way » automne/hiver 2009.</p>

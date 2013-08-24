@@ -2,7 +2,7 @@
 title: En piste
 date: 2010-08-25
 tags: Pull, kimono
-pictures: [http://no-way.fr/wp-content/images/modeles/danceFloor01_L.jpg", http://no-way.fr/wp-content/images/modeles/danceFloor02_L.jpg", http://no-way.fr/wp-content/images/modeles/danceFloor03_L.jpg"]
+pictures: ["danceFloor01_L.jpg", "danceFloor02_L.jpg", "danceFloor03_L.jpg"]
 ---
 
 <p>Le kimono n’a de cesse de m’inspirer depuis près de 2 ans. Ce pull de demi saison, crée pour le printemps 2009, n’échappe pas à cette règle. </p>

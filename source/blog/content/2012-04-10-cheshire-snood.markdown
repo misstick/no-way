@@ -2,7 +2,7 @@
 title: Cheshire snood
 date: 2012-04-10
 tags: écharpe
-pictures: ["http://no-way.fr/wp-content/uploads/2012/04/cheshire03_medium.jpg", "http://no-way.fr/wp-content/uploads/2012/04/cheshire02_medium1.jpg", "http://no-way.fr/wp-content/uploads/2012/04/cheshire01_medium.jpg", "http://no-way.fr/wp-content/uploads/2012/04/cheshire04_medium.jpg"]
+pictures: ["2012/04/cheshire03_medium.jpg", "2012/04/cheshire02_medium1.jpg", "2012/04/cheshire01_medium.jpg", "2012/04/cheshire04_medium.jpg"]
 ---
 
 Et voici l’écharpe que j’ai portée tout l’hiver, un modèle réalisé en octobre dernier. Je l’adore ! Dans un petit coin de ma tête, je la compare à la fourrure du fameux « Cheshire cat » de l’adaptation d’Alice au Pays des Merveilles par Disney.

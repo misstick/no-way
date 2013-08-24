@@ -2,7 +2,7 @@
 title: Vieille Redingote
 date: 2010-09-15
 tags: Gilet
-pictures: [http://no-way.fr/wp-content/images/modeles/redingote1.jpg]
+pictures: ["redingote1.jpg"]
 ---
 
 <p>Ce modèle, tricoté et brodé main, a été réalisé pour le printemps 2009.</p>

@@ -2,7 +2,7 @@
 title: Rouge graphique
 date: 2011-10-24
 tags: Pull
-pictures: ["http://no-way.fr/wp-content/images/modeles/redkimono-02.jpg", "http://no-way.fr/wp-content/images/modeles/redkimono-03.jpg", "http://no-way.fr/wp-content/images/modeles/redkimono-04.jpg", "http://no-way.fr/wp-content/images/modeles/redkimono-01.jpg"]
+pictures: ["redkimono-02.jpg", "redkimono-03.jpg", "redkimono-04.jpg", "redkimono-01.jpg"]
 ---
 
 Voici ma seconde création printemps/été 2011 : une petite laine pour éviter les vents frais de la demi saison. 

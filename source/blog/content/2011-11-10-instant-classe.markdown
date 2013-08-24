@@ -2,8 +2,8 @@
 title: Instant de classe
 date: 2011-11-10
 tags: Veste
-picture: "http://no-way.fr/wp-content/images/modeles/veste-kaki-4.jpg"
-pictures: ["http://no-way.fr/wp-content/images/modeles/veste-kaki-1.jpg", "http://no-way.fr/wp-content/images/modeles/veste-kaki-6.jpg", "http://no-way.fr/wp-content/images/modeles/veste-kaki-4.jpg"]
+picture: "veste-kaki-4.jpg"
+pictures: ["veste-kaki-1.jpg", "veste-kaki-6.jpg", "veste-kaki-4.jpg"]
 ---
 
 Veste en lin réalisée pour la saison printemps/été 2011. Il s’agit de ma première veste, réalisée pendant les cours de couture suivis l’année dernière (un grand merci à ma prof, Marie-Claire). 

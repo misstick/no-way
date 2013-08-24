@@ -2,7 +2,7 @@
 title: Eye of the tiger
 date: 2011-03-31
 tags: Pull
-pictures: ["http://no-way.fr/wp-content/images/modeles/rocky01.jpg", "http://no-way.fr/wp-content/images/modeles/rocky02.jpg", "http://no-way.fr/wp-content/images/modeles/rocky03.jpg"]
+pictures: ["rocky01.jpg", "rocky02.jpg", "rocky03.jpg"]
 ---
 
 Il m’arrive parfois de tricoter pour mon entourage. C’est d’ailleurs une excellente occasion de travailler sur des morphologies différentes, voire pour le sexe opposé. Je peux ainsi tester de nouvelles techniques, de nouveaux patrons : c’est une vrai bouffée d’air pur que j’essaie de m’octroyer chaque année.

@@ -2,7 +2,7 @@
 title: Rendez-vous galant
 date: 2010-07-02
 tags: Gilet, Jupe
-pictures: [http://no-way.fr/wp-content/images/modeles/fifties_01_M.jpg, http://no-way.fr/wp-content/images/modeles/fifties_02_M.jpg, http://no-way.fr/wp-content/images/modeles/fifties_03_M.jpg, http://no-way.fr/wp-content/images/modeles/fifties_04_M.jpg, http://no-way.fr/wp-content/images/modeles/fifties_05_M.jpg, http://no-way.fr/wp-content/images/modeles/fifties_06_M.jpg, http://no-way.fr/wp-content/images/modeles/fifties_07_M.jpg]
+pictures: ["fifties_01_M.jpg", "fifties_02_M.jpg", "fifties_03_M.jpg", "fifties_04_M.jpg", "fifties_05_M.jpg", "fifties_06_M.jpg", "fifties_07_M.jpg"]
 ---
 <h3>9h00 : Le réveil sonne, il faut se lever !</h3>
 <p>Rendez-vous dans 4h30: je n’ai même pas fermé l’oeil de la nuit! Ce matin, je devrai persuader grâce et sagesse d’être mes alliées. Je ne vais pas ménager ma peine!</p>

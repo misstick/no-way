@@ -2,8 +2,8 @@
 title: School Girl
 date: 2012-04-02
 tags: Pull
-picture: "http://no-way.fr/wp-content/uploads/2012/04/school02_medium.jpg"
-pictures: ["http://no-way.fr/wp-content/uploads/2012/04/school05_medium.jpg", "http://no-way.fr/wp-content/uploads/2012/04/school02_medium.jpg", "http://no-way.fr/wp-content/uploads/2012/04/school03_medium.jpg", "http://no-way.fr/wp-content/uploads/2012/04/school04_medium.jpg", "http://no-way.fr/wp-content/uploads/2012/04/school01_medium.jpg"]
+picture: "2012/04/school02_medium.jpg"
+pictures: ["2012/04/school05_medium.jpg", "2012/04/school02_medium.jpg", "2012/04/school03_medium.jpg", "2012/04/school04_medium.jpg", "2012/04/school01_medium.jpg"]
 ---
 
 Pour l’automne-hiver 2012, j’ai voulu réaliser un modèle doux et aérien, facile à vivre.

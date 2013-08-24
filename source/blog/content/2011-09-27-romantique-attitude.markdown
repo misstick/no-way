@@ -2,8 +2,8 @@
 title: Romantique attitude
 date: 2011-09-27
 tags: Chemise, Pantalon
-picture: "http://no-way.fr/wp-content/images/modeles/pinup-01.jpg"
-pictures: ["http://no-way.fr/wp-content/images/modeles/pinup-04.jpg", "http://no-way.fr/wp-content/images/modeles/pinup-03.jpg", "http://no-way.fr/wp-content/images/modeles/pinup-02.jpg", "http://no-way.fr/wp-content/images/modeles/pinup-01.jpg"]
+picture: "pinup-01.jpg"
+pictures: ["pinup-04.jpg", "pinup-03.jpg", "pinup-02.jpg", "pinup-01.jpg"]
 ---
 
 Avec un peu de retard, je vous présente mes premières créations de la collection printemps/été 2011 : pas de maille, juste de la couture.
