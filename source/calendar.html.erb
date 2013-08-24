@@ -18,10 +18,12 @@ pageable: true
   </aside>
 
 
-  <ul class="list-container">
-    <% page_articles.each_with_index do |article, i| %>
-      <li class="list-item"><%= link_to article.title, article %> <span><%= article.date.strftime('%d.%m.%y') %></span></li>
-    <% end %>
-  </ul>
-  <figure class="right-column"></figure>
+  <% page_articles.each_with_index do |article, i| %>
+      <article class="list-item">
+        <h2><%= link_to article.title, article %><br /><span><%= article.date.strftime('%d.%m.%y') %></span></h2>
+        <figure>
+          <img src="<%= article.data.pictures[0] %>" />
+        </figure>
+      </article>
+  <% end %>
 </div>

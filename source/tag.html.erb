@@ -1,18 +1,15 @@
----
-pageable: true
-per_page: 12
----
 <div id="tag-content">
   <aside>
     <h1><%= tagname %></h1>
-
-    <%= partial 'blog/_paginate', :locals => { :prev_page => prev_page, :next_page => next_page, :page_number => page_number, :num_pages => num_pages } %>
   </aside>
-
-  <ul class="list-container">
-    <% page_articles.each_with_index do |article, i| %>
-      <li class="list-item"><%= link_to article.title, article %> <span><%= article.date.strftime('%d.%m.%y') %></span></li>
-    <% end %>
-  </ul>
-  <figure class="right-column"></figure>
+  <div class="list-container wall" data-type="gallery">
+  <% page_articles.each_with_index do |article, i| %>
+      <article class="list-item">
+        <h2><%= link_to article.title, article %><br /><span><%= article.date.strftime('%d.%m.%y') %></span></h2>
+        <figure>
+          <img src="<%= article.data.pictures[0] %>" />
+        </figure>
+      </article>
+  <% end %>
+  </div>
 </div>

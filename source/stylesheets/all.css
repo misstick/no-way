@@ -245,43 +245,76 @@ section[role=main] h1 {
 section[role=main] h1 {
   z-index: 3;
 }
-#blog-content {
-/*   color: #f30; */
-  overflow: auto;
-  margin: 0;
+
+
+.wall {
+  overflow: hidden;
   position: relative;
+  display: block;
+  margin: auto;
+}
+.wall.load img {
+  visibility: hidden;
+}
+
+.wall>div {
+  overflow: hidden;
+  display: block;
+  float: left;
+}
+.image {
+  position: relative;
+}
+.image a {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 1em;
+  visibility: hidden;
+}
+.list-item:hover a,
+.image:hover a {
+  visibility: visible;
+}
+.clickable {
+  cursor: pointer;
+}
+[data-type=gallery] {
+  position: relative;
+  overflow: auto;
   max-width: 2000px;
   padding: 0;
+  margin: 0;
 }
-#blog-content aside:before {
-  display: none;
-}
-#blog-content h2 {
+[data-type=gallery] h2 {
   padding: 0;
   font-size: 1em;
   position: absolute;
   z-index: 2;
   right: 0;
+  bottom: 0;
   border: 0;
   color: white;
   margin: 1em;
   text-align: right;
 }
-#blog-content h2 a,
-#blog-content h2 span {
+[data-type=gallery] h2 a,
+[data-type=gallery] h2 span {
   background: rgba(0,0,0,1);
 }
-#blog-content h2 a:hover {
+[data-type=gallery] h2 a:hover {
   color: #f30;
 }
-
-#blog-content .list-item {
+[data-type=gallery] .list-item {
   position: relative;
   width: 500px;
   height: 500px;
   float: left;
   padding: 0;
   overflow: hidden;
+}
+#blog-content aside:before {
+  display: none;
 }
 
 /* Page Detail */
@@ -311,47 +344,12 @@ article .content {
 }
 
 /* Mur d'images */
-
 .page-content figure {
   overflow: auto;
   padding: 0;
   background: black;
   position: relative;
   z-index: 2;
-}
-
-.wall {
-  overflow: hidden;
-  position: relative;
-  display: block;
-  margin: auto;
-}
-.wall.load img {
-  visibility: hidden;
-}
-
-.wall>div {
-  overflow: hidden;
-  display: block;
-  float: left;
-}
-.image {
-  position: relative;
-}
-.image a {
-  position: absolute;
-left: 50%;
-top: 50%;
-  padding: 1em;
-  margin: -1em;
-  visibility: hidden;
-}
-.list-item:hover a,
-.image:hover a {
-  visibility: visible;
-}
-.clickable {
-  cursor: pointer;
 }
 
 /* Footer */
