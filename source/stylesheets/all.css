@@ -245,29 +245,7 @@ section[role=main] h1 {
 }
 
 
-.wall {
-  overflow: hidden;
-  margin: auto;
-}
-.wall.load img {
-  visibility: hidden;
-}
 
-.wall>div {
-  overflow: hidden;
-  display: block;
-  float: left;
-}
-.image {
-  position: relative;
-}
-.image a {
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 1em;
-  visibility: hidden;
-}
 article:hover a,
 .image:hover a {
   visibility: visible;
@@ -301,14 +279,29 @@ article:hover a,
 [data-type=gallery] h2 a:hover {
   color: #f30;
 }
-[data-type=gallery] article {
+[data-type=gallery]>div,
+[data-type=gallery]>article {
   position: relative;
-  width: 500px;
-  height: 500px;
   float: left;
   padding: 0;
   overflow: hidden;
 }
+[data-type=gallery].load img {
+  visibility: hidden;
+}
+.image {
+  position: relative;
+}
+.image a {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 1em;
+  visibility: hidden;
+}
+
+
+
 #blog-content aside:before {
   display: none;
 }
@@ -316,6 +309,12 @@ article:hover a,
 #blog-content {
   overflow: auto;
   background-color: black;
+}
+#tag-content article,
+#blog-content article {
+
+  width: 500px;
+  height: 500px;
 }
 
 /* Page Detail */
@@ -405,10 +404,6 @@ footer p {
     right: 0;
     position: fixed;
     top: 0;
-  }
-
-  .page {
-    min-height: 80%;
   }
   .page-content,
   section[role=main] {
@@ -522,14 +517,8 @@ footer p {
   }
 }
 /* =mobile ------------------------------------------------------------------ */
-@media screen and (max-width: 730px) {
-  .page {
-    min-width: 100%;
-  }
+@media screen and (max-width: 900px) {
 
-  .wall img{
-    width: 100%;
-  }
 
   #blog-content article {
     float: none;
