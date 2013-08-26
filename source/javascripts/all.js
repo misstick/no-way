@@ -61,8 +61,7 @@
 			var loaded = false;
 			var items = this.items();
 			var complete = function() {
-				if (this.is_mobile() || loaded) {
-					$(this.el).removeClass("load");
+				if (loaded) {
 					return;
 				}
 				loaded = true;
@@ -83,12 +82,7 @@
 			}.bind(this), 1000);
 		},
 
-		is_mobile: function() {
-			return window.innerWidth <= this.min_width;
-		},
-
 		resize: function() {
-			if (this.is_mobile()) return;
 
 			// Remove Previous resize
 			this.el.css("width", "auto");
