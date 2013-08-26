@@ -365,6 +365,10 @@ footer {
   z-index: 12;
   color: #F30;
 }
+footer strike {
+  font-weight: normal;
+  color: #000;
+}
 .copyright {
   font-size: 0.9em;
   padding: 0;

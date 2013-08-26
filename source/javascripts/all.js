@@ -387,6 +387,16 @@
 			parent.on("click", goto_article)
 
 		})
+
+		var email =  $("footer .email");
+		if (email.get(0)) {
+			var parent = email.get(0).parentNode;
+			var value = email.html();
+			email.remove();
+			$(parent).html('<a href="mailto:' + value.replace("[AT]", "@").replace("[DOT]", ".") + '">' + $(parent).html() + '</a>')
+		}
+
+
 	});
 })()
 
