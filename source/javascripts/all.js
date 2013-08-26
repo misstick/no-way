@@ -16,7 +16,7 @@
 	var PictureWall = function(el, options) {
 		if (!options) options = {};
 		this.el = el;
-		
+
 		this._fill = this.el.data("fill") || "width";
 
 		// Init
@@ -92,7 +92,7 @@
 
 			// Remove Previous resize
 			this.el.css("width", "auto");
-			
+
 			// Get Column Value
 			var items = this.items();
 			var width_max = 0;
@@ -105,12 +105,12 @@
 			while((len / column) > 1 && len % column > 0) {
 				++column;
 			}
-			
+
 			var row = Math.ceil(len / column);
-			
-			
+
+
 			if (this._fill === "height") {
-				
+
 				// Gallery is bigger than window Size
 				// Lets fill it
 				var surface = this._ref.width * this._ref.height;
@@ -120,7 +120,7 @@
 					column = column_min;
 					row = Math.ceil(len / column);
 				}
-				
+
 				// Add Vertical Alignement
 				var height_min = window.innerHeight;
 				var height = row * this._ref.height;
@@ -128,13 +128,13 @@
 					"padding": Math.ceil((height_min - height) / 2) + "px 0"
 				});
 			}
-			
-			
+
+
 			// Resize Content
 			var width = column * this._ref.width;
 			if (width > width_max) width = width_max;
 			this.el.width(width);
-			
+
 			$(this.el).trigger("gallery:resize");
 		},
 
@@ -350,9 +350,9 @@
 			var create_link = function(data) {
 				if (!data.text) data.text = $("title").html()
 				data.text +=  ", www.no-way.fr";
-				return '<a href="//pinterest.com/pin/create/button/?url=' + encodeURIComponent(data.url) + '&media=' + encodeURIComponent(data.img) + '&description=' + encodeURIComponent(data.text) + '" target="_blank"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>'
+				return '<a href="//pinterest.com/pin/create/button/?url=' + encodeURIComponent(data.url) + '&media=' + encodeURIComponent("http://www.no-way.fr/" + data.img) + '&description=' + encodeURIComponent(data.text) + '" target="_blank"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>'
 			}
-			
+
 			// Create PinIt Button
 			$(".image").each(function(index, item) {
 				$(item).append(create_link({
@@ -371,21 +371,21 @@
 			$(item).data("Gallery", view);
 			$(item).on("gallery:resize", pintit_display);
 		});
-		
+
 		//
 		// Home Links
 		//
 		var goto_article = function(event) {
 			var el = event.currentTarget;
 			window.location = $(el).data("href")
-			
+
 		}
 		$("[data-type=gallery] article h2 a").each(function(index, item) {
 			var parent = $(item).parents("article").first();
 			parent.addClass("clickable");
 			parent.data("href", $(item).attr("href"));
 			parent.on("click", goto_article)
-			
+
 		})
 	});
 })()
