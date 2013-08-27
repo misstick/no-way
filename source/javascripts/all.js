@@ -98,6 +98,7 @@
 		},
 
 		resize: function() {
+
 			var content = $(".scroller", this.el);
 
 			// Remove Previous resize
@@ -230,7 +231,8 @@
 
 			$("button", this.el).on("click", _goto);
 
-			$("button[data-action=back]", this.el).click()
+			$("button[data-action=back]", this.el).click();
+			$(this.el).off("gallery:resize");
 		},
 
 		replace_picture: function(el, options) {
