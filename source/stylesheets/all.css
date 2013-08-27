@@ -257,13 +257,36 @@ article:hover a,
   position: relative;
   padding: 0;
   width: 100%;
+  overflow: hidden;
 }
 [data-type=gallery] .scroller {
   overflow: auto;
   margin: 0 auto;
   text-align: center;
 }
-
+[data-type=gallery] nav {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+[data-type=gallery] nav button {
+  border: 0;
+  height: 60px;
+  width: 60px;
+  background-color: #f30;
+  color: white;
+  font-size: 5em;
+  line-height: 0.8;
+}
+[data-action=back]:after {
+  content: "<";
+}
+[data-action=next]:after {
+  content: ">";
+}
+[data-type=gallery] button.disabled {
+  display: none;
+}
 [data-type=gallery] h2 {
   padding: 0;
   font-size: 1em;

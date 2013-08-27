@@ -23,7 +23,8 @@
 		var _func = this.resize.bind(this)
 		$(window).on("resize", _.debounce(_func, 100));
 		$(this.el).on("format:end", this.render.bind(this));
-		
+
+		$(this.el).on("gallery:resize", this.set_nav.bind(this));
 		this.load();
 	}
 
@@ -191,6 +192,30 @@
 			}.bind(this);
 
 			$(this.el).trigger("format:end", {success: success});
+		},
+
+		set_nav: function() {
+			var _goto = function(event) {
+				var target = event.currentTarget;
+				var action = $(target).data("action");
+				var value = (action === "next") ? this.el.get(0).scrollWidth : 0;
+
+				// Display Visibility
+				var success = function() {
+					var old = $(target).siblings()
+					old.removeClass("disabled");
+					$(target).addClass("disabled");
+				}.bind(this);
+
+				// ANimation
+				this.el.animate({ "scrollLeft": value}, { complete: success});
+
+			}.bind(this);
+
+			// Add navigation
+			this.el.append('<nav><button data-action="back"><button data-action="next"></nav>')
+
+			$("button", this.el).on("click", _goto);
 		},
 
 		replace_picture: function(el, options) {
