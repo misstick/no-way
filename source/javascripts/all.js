@@ -1,9 +1,18 @@
 (function() {
 
-var create_affix = function(el) {
 
-	el.affix({ offset: el.offset()});
-}
+	_.mixin({
+		create_affix: function(el) {
+			el.affix({ offset: el.offset()});
+		},
+		is_touch: function() {
+			/* Modernizr 2.6.2 (Custom Build) | MIT & BSD
+			* Build: http://modernizr.com/download/#-touch-shiv-cssclasses-teststyles-prefixes-load
+			*/
+			return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
+		}
+	})
+
 
 	//
 	// View: PictureWall
@@ -198,7 +207,7 @@ var create_affix = function(el) {
 		},
 
 		set_nav: function() {
-
+			if (_.is_touch()) return;
 			var _goto = function(event) {
 				var target = event.currentTarget;
 				var action = $(target).data("action");
@@ -217,7 +226,7 @@ var create_affix = function(el) {
 
 			// Add navigation
 			this.el.append('<nav><button data-action="back"><button data-action="next"></nav>');
-			create_affix($("nav", this.el));
+			_.create_affix($("nav", this.el));
 
 			$("button", this.el).on("click", _goto);
 
