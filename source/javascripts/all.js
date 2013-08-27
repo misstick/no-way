@@ -76,21 +76,21 @@
 
 		load: function() {
 			var loaded = false;
-
 			var items = this.el.children();
+			
 			var complete = function() {
 				if (loaded) return;
 				loaded = true;
 				this.format_html();
 				$(this.el).removeClass("load");
 			}.bind(this);
+			
 			var success = _.after(items.length, complete);
 			
 			var set_size = function(event) {
 				$(event.target).attr("width", event.target.offsetWidth);
 				$(event.target).attr("height", event.target.offsetHeight);
 				success();
-				
 			}
 
 			// Listen to picture.load
@@ -99,10 +99,6 @@
 				el = this.get_pictures($(el));
 				if (el.get(0)) el.get(0).onload = set_size;
 			}.bind(this));
-
-			// setTimeout(function() {
-			// 	if (!loaded) complete();
-			// }.bind(this), 1000);
 		},
 
 		resize: function() {
@@ -419,6 +415,27 @@
 				}));
 			});
 		}
+		
+		
+		// Home Links
+		var links_display = function() {
+			var goto_article = function(event) {
+				var el = event.currentTarget;
+				console.log(el)
+				window.location = $(el).data("href")
+			
+			}
+			$("[data-type=gallery] .image").each(function(index, item) {
+				var link = $("a", item.parentNode);
+				if (!link.get(0)) return;
+				
+				item = $(item);
+				item.addClass("clickable");
+				item.data("href", link.attr("href"));
+				item.on("click", goto_article)
+			
+			})
+		}
 
 		// Gallery
 		$("[data-type=gallery]").each(function(index, item) {
@@ -426,21 +443,8 @@
 			var view = new PictureWall($(item));
 			$(item).data("Gallery", view);
 			$(item).on("gallery:resize", pintit_display);
+			$(item).on("gallery:resize", links_display);
 		});
-
-		// Home Links
-		var goto_article = function(event) {
-			var el = event.currentTarget;
-			window.location = $(el).data("href")
-
-		}
-		$("[data-type=gallery] article h2 a").each(function(index, item) {
-			var parent = $(item).parents("article").first();
-			parent.addClass("clickable");
-			parent.data("href", $(item).attr("href"));
-			parent.on("click", goto_article)
-
-		})
 
 		// Contact
 		var email =  $("footer .email");
