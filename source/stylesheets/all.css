@@ -258,7 +258,7 @@ article:hover a,
 [data-type=gallery] {
   padding: 0;
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 
 [data-type=gallery] nav.affix {
@@ -266,7 +266,6 @@ article:hover a,
   right: 0;
 }
 [data-type=gallery] .scroller {
-  overflow: auto;
   margin: 0 auto;
   text-align: center;
 }
