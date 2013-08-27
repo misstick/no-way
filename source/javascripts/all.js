@@ -23,6 +23,7 @@
 		var _func = this.resize.bind(this)
 		$(window).on("resize", _.debounce(_func, 100));
 		$(this.el).on("format:end", this.render.bind(this));
+		
 		this.load();
 	}
 
@@ -54,12 +55,13 @@
 		},
 
 		items: function() {
-			return this.el.children();
+			return $(".scroller", this.el).children();
 		},
 
 		load: function() {
 			var loaded = false;
-			var items = this.items();
+
+			var items = this.el.children();
 			var complete = function() {
 				if (loaded) {
 					return;
@@ -83,9 +85,10 @@
 		},
 
 		resize: function() {
+			var content = $(".scroller", this.el);
 
 			// Remove Previous resize
-			this.el.css("width", "auto");
+			content.css("width", "auto");
 
 			// Get Column Value
 			var items = this.items();
@@ -94,14 +97,13 @@
 				width_max += $(item).width();
 			});
 			var len = width_max / this._ref.width;
-			var column_min = Math.ceil(this.el.width() / this._ref.width);
+			var column_min = Math.ceil(content.width() / this._ref.width);
 			var column = column_min;
 			while((len / column) > 1 && len % column > 0) {
 				++column;
 			}
 
 			var row = Math.ceil(len / column);
-
 
 			if (this._fill === "height") {
 
@@ -123,11 +125,10 @@
 				});
 			}
 
-
 			// Resize Content
 			var width = column * this._ref.width;
 			if (width > width_max) width = width_max;
-			this.el.width(width);
+			content.width(width);
 
 			$(this.el).trigger("gallery:resize");
 		},
@@ -144,6 +145,11 @@
 		},
 
 		format_html: function() {
+			// Create COntainer
+			var content = this.el.html()
+			this.el.html("<div class=scroller></div>");
+			$(".scroller", this.el).append(content);
+
 			var index0;
 			var items = this.items();
 			var coords0 = this.coords(items.first());
@@ -201,7 +207,7 @@
 			// Create a new container
 			// if el is a picture
 			var parent = $(el.parentNode);
-			if (parent.attr("data-format") !== undefined || parent.get(0) === this.el.get(0)) {
+			if (parent.attr("data-format") !== undefined || parent.hasClass("scroller")) {
 				parent.append("<div class='image'>");
 				parent = $(".image").last();
 			} else {
@@ -288,6 +294,7 @@
 				}
 
 			}.bind(this));
+
 
 			$("[data-item=true]", this.el).each(function(index, el){
 				var pictures = this.get_pictures(el);

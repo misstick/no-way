@@ -255,11 +255,15 @@ article:hover a,
 }
 [data-type=gallery] {
   position: relative;
-  overflow: auto;
   padding: 0;
+  width: 100%;
+}
+[data-type=gallery] .scroller {
+  overflow: auto;
   margin: 0 auto;
   text-align: center;
 }
+
 [data-type=gallery] h2 {
   padding: 0;
   font-size: 1em;
@@ -279,8 +283,7 @@ article:hover a,
 [data-type=gallery] h2 a:hover {
   color: #f30;
 }
-[data-type=gallery]>div,
-[data-type=gallery]>article {
+[data-type=gallery] [data-item] {
   position: relative;
   float: left;
   padding: 0;
@@ -345,7 +348,6 @@ article .content {
 
 /* Mur d'images */
 .page-content figure {
-  overflow: auto;
   padding: 0;
   background: black;
   position: relative;
