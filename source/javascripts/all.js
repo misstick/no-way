@@ -4,8 +4,9 @@
 	_.mixin({
 		create_affix: function(el) {
 			var coords = el.offset();
-			el.affix({ offset: coords});
-			if (!coords.top) el.addClass("affix")
+			
+			if (!coords.top) el.addClass("affix");
+			else el.affix({ offset: coords});
 		},
 		is_touch: function() {
 			/* Modernizr 2.6.2 (Custom Build) | MIT & BSD
