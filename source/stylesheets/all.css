@@ -256,7 +256,6 @@ article:hover a,
   cursor: pointer;
 }
 [data-type=gallery] {
-  position: relative;
   padding: 0;
   width: 100%;
   overflow: hidden;
