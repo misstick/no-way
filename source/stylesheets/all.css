@@ -261,7 +261,6 @@ article:hover a,
 }
 [data-type=gallery] nav.affix {
   position: fixed;
-
 }
 [data-type=gallery] .scroller {
   overflow: auto;
@@ -524,6 +523,12 @@ footer p {
     border-radius: 0;
     margin: 0;
     display: none;
+  }
+
+
+  [data-type=gallery] nav.affix {
+    top: auto;
+    bottom: 30px;
   }
 
   .open .btn,
