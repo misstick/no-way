@@ -259,6 +259,10 @@ article:hover a,
   width: 100%;
   overflow: hidden;
 }
+[data-type=gallery] nav.affix {
+  position: fixed;
+
+}
 [data-type=gallery] .scroller {
   overflow: auto;
   margin: 0 auto;
@@ -271,12 +275,10 @@ article:hover a,
 }
 [data-type=gallery] nav button {
   border: 0;
-  height: 60px;
-  width: 60px;
   background-color: #f30;
   color: white;
   font-size: 5em;
-  line-height: 0.8;
+  line-height: 0.6;
 }
 [data-action=back]:after {
   content: "<";
@@ -285,7 +287,9 @@ article:hover a,
   content: ">";
 }
 [data-type=gallery] button.disabled {
-  display: none;
+  background: #aaa;
+  color: #ccc;
+  cursor: auto;
 }
 [data-type=gallery] h2 {
   padding: 0;

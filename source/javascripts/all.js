@@ -1,6 +1,9 @@
 (function() {
 
-	window.Views = {}
+var create_affix = function(el) {
+
+	el.affix({ offset: el.offset()});
+}
 
 	//
 	// View: PictureWall
@@ -195,27 +198,30 @@
 		},
 
 		set_nav: function() {
+
 			var _goto = function(event) {
 				var target = event.currentTarget;
 				var action = $(target).data("action");
 				var value = (action === "next") ? this.el.get(0).scrollWidth : 0;
 
 				// Display Visibility
-				var success = function() {
+				var display_buttons = function() {
 					var old = $(target).siblings()
 					old.removeClass("disabled");
 					$(target).addClass("disabled");
 				}.bind(this);
 
 				// ANimation
-				this.el.animate({ "scrollLeft": value}, { complete: success});
-
+				this.el.animate({ "scrollLeft": value}, { complete: display_buttons});
 			}.bind(this);
 
 			// Add navigation
-			this.el.append('<nav><button data-action="back"><button data-action="next"></nav>')
+			this.el.append('<nav><button data-action="back"><button data-action="next"></nav>');
+			create_affix($("nav", this.el));
 
 			$("button", this.el).on("click", _goto);
+
+			$("button[data-action=back]", this.el).click()
 		},
 
 		replace_picture: function(el, options) {
