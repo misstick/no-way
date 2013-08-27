@@ -212,18 +212,22 @@
 
 		set_nav: function() {
 			if (_.is_touch() || this.el.get(0).scrollWidth === this.el.get(0).offsetWidth) return;
-
+			
+			// Display Visibility
+			var display_buttons = function() {
+				var min = 0;
+				var max = this.el.get(0).scrollWidth - this.el.get(0).offsetWidth;
+				var value = this.el.get(0).scrollLeft;
+				
+				$("[data-action=next]")[(value === max) ? "addClass" : "removeClass"]("disabled");
+				$("[data-action=back]")[(value === min) ? "addClass" : "removeClass"]("disabled");
+				
+			}.bind(this);
+			
 			var _goto = function(event) {
 				var target = event.currentTarget;
 				var action = $(target).data("action");
 				var value = (action === "next") ? this.el.get(0).scrollWidth : 0;
-
-				// Display Visibility
-				var display_buttons = function() {
-					var old = $(target).siblings()
-					old.removeClass("disabled");
-					$(target).addClass("disabled");
-				}.bind(this);
 
 				// ANimation
 				this.el.animate({ "scrollLeft": value}, { complete: display_buttons});
@@ -232,10 +236,14 @@
 			// Add navigation
 			this.el.append('<nav><button data-action="back"><button data-action="next"></nav>');
 			_.create_affix($("nav", this.el));
-
+			
+			// Handle Click Event
 			$("button", this.el).on("click", _goto);
-
-			$("button[data-action=back]", this.el).click();
+			
+			// Handle Scroll Event
+			$(this.el).on("scroll", _.throttle(display_buttons, 100))
+			
+			$(this.el).trigger("scroll");
 			$(this.el).off("gallery:resize");
 		},
 
