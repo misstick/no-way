@@ -206,8 +206,8 @@ section aside a {
     linear,
     left bottom,
     left top,
-    color-stop(0.25, rgba(255,0,0, 0)),
-    color-stop(0.75, rgb(255,0,0))
+    color-stop(0.25, rgba(255,255,255, 0)),
+    color-stop(1, rgb(255,255,255))
   );
 }
 
@@ -264,6 +264,7 @@ article:hover a,
 
 [data-type=gallery] nav.affix {
   position: fixed;
+  right: 0;
 }
 [data-type=gallery] .scroller {
   overflow: auto;
