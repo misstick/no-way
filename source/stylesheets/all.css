@@ -608,13 +608,6 @@ footer p {
     margin-left: -125px;
     text-align: center;
   }
-
-
-  #blog-content article {
-    float: none;
-    margin: 0 auto;
-    width: auto!important;
-  }
   .page-content figure {
     background: none;
   }
