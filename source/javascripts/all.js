@@ -3,7 +3,9 @@
 
 	_.mixin({
 		create_affix: function(el) {
-			el.affix({ offset: el.offset()});
+			var coords = el.offset();
+			el.affix({ offset: coords});
+			if (!coords.top) el.addClass("affix")
 		},
 		is_touch: function() {
 			/* Modernizr 2.6.2 (Custom Build) | MIT & BSD
@@ -208,7 +210,8 @@
 		},
 
 		set_nav: function() {
-			if (_.is_touch()) return;
+			if (_.is_touch() || this.el.get(0).scrollWidth === this.el.get(0).offsetWidth) return;
+
 			var _goto = function(event) {
 				var target = event.currentTarget;
 				var action = $(target).data("action");
