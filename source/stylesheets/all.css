@@ -526,7 +526,8 @@ footer p {
   }
 
 
-  [data-type=gallery] nav.affix {
+  [data-type=gallery] nav {
+    position: fixed;
     top: auto;
     bottom: 30px;
   }
