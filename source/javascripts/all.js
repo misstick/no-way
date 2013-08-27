@@ -79,25 +79,30 @@
 
 			var items = this.el.children();
 			var complete = function() {
-				if (loaded) {
-					return;
-				}
+				if (loaded) return;
 				loaded = true;
 				this.format_html();
 				$(this.el).removeClass("load");
 			}.bind(this);
-			var loader = _.after(items.length, complete);
+			var success = _.after(items.length, complete);
+			
+			var set_size = function(event) {
+				$(event.target).attr("width", event.target.offsetWidth);
+				$(event.target).attr("height", event.target.offsetHeight);
+				success();
+				
+			}
 
 			// Listen to picture.load
 			this.el.addClass("load");
 			items.each(function(index, el){
 				el = this.get_pictures($(el));
-				if (el.get(0)) el.get(0).onload = loader;
+				if (el.get(0)) el.get(0).onload = set_size;
 			}.bind(this));
 
-			setTimeout(function() {
-				if (!loaded) complete();
-			}.bind(this), 1000);
+			// setTimeout(function() {
+			// 	if (!loaded) complete();
+			// }.bind(this), 1000);
 		},
 
 		resize: function() {
