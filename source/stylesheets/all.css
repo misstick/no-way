@@ -256,7 +256,6 @@ article:hover a,
   cursor: pointer;
 }
 [data-type=gallery] {
-  position: relative;
   padding: 0;
   width: 100%;
   overflow: auto;
@@ -264,9 +263,9 @@ article:hover a,
 
 [data-type=gallery] nav.affix {
   position: fixed;
+  right: 0;
 }
 [data-type=gallery] .scroller {
-  overflow: auto;
   margin: 0 auto;
   text-align: center;
 }

@@ -4,8 +4,9 @@
 	_.mixin({
 		create_affix: function(el) {
 			var coords = el.offset();
-			el.affix({ offset: coords});
-			if (!coords.top) el.addClass("affix")
+			
+			if (!coords.top) el.addClass("affix");
+			else el.affix({ offset: coords});
 		},
 		is_touch: function() {
 			/* Modernizr 2.6.2 (Custom Build) | MIT & BSD
@@ -75,28 +76,29 @@
 
 		load: function() {
 			var loaded = false;
-
 			var items = this.el.children();
+			
 			var complete = function() {
-				if (loaded) {
-					return;
-				}
+				if (loaded) return;
 				loaded = true;
 				this.format_html();
 				$(this.el).removeClass("load");
 			}.bind(this);
-			var loader = _.after(items.length, complete);
+			
+			var success = _.after(items.length, complete);
+			
+			var set_size = function(event) {
+				$(event.target).attr("width", event.target.offsetWidth);
+				$(event.target).attr("height", event.target.offsetHeight);
+				success();
+			}
 
 			// Listen to picture.load
 			this.el.addClass("load");
 			items.each(function(index, el){
 				el = this.get_pictures($(el));
-				if (el.get(0)) el.get(0).onload = loader;
+				if (el.get(0)) el.get(0).onload = set_size;
 			}.bind(this));
-
-			setTimeout(function() {
-				if (!loaded) complete();
-			}.bind(this), 1000);
 		},
 
 		resize: function() {
@@ -211,18 +213,22 @@
 
 		set_nav: function() {
 			if (_.is_touch() || this.el.get(0).scrollWidth === this.el.get(0).offsetWidth) return;
-
+			
+			// Display Visibility
+			var display_buttons = function() {
+				var min = 0;
+				var max = this.el.get(0).scrollWidth - this.el.get(0).offsetWidth;
+				var value = this.el.get(0).scrollLeft;
+				
+				$("[data-action=next]")[(value === max) ? "addClass" : "removeClass"]("disabled");
+				$("[data-action=back]")[(value === min) ? "addClass" : "removeClass"]("disabled");
+				
+			}.bind(this);
+			
 			var _goto = function(event) {
 				var target = event.currentTarget;
 				var action = $(target).data("action");
 				var value = (action === "next") ? this.el.get(0).scrollWidth : 0;
-
-				// Display Visibility
-				var display_buttons = function() {
-					var old = $(target).siblings()
-					old.removeClass("disabled");
-					$(target).addClass("disabled");
-				}.bind(this);
 
 				// ANimation
 				this.el.animate({ "scrollLeft": value}, { complete: display_buttons});
@@ -231,10 +237,14 @@
 			// Add navigation
 			this.el.append('<nav><button data-action="back"><button data-action="next"></nav>');
 			_.create_affix($("nav", this.el));
-
+			
+			// Handle Click Event
 			$("button", this.el).on("click", _goto);
-
-			$("button[data-action=back]", this.el).click();
+			
+			// Handle Scroll Event
+			$(this.el).on("scroll", _.throttle(display_buttons, 100))
+			
+			$(this.el).trigger("scroll");
 			$(this.el).off("gallery:resize");
 		},
 
@@ -405,6 +415,27 @@
 				}));
 			});
 		}
+		
+		
+		// Home Links
+		var links_display = function() {
+			var goto_article = function(event) {
+				var el = event.currentTarget;
+				console.log(el)
+				window.location = $(el).data("href")
+			
+			}
+			$("[data-type=gallery] .image").each(function(index, item) {
+				var link = $("a", item.parentNode);
+				if (!link.get(0)) return;
+				
+				item = $(item);
+				item.addClass("clickable");
+				item.data("href", link.attr("href"));
+				item.on("click", goto_article)
+			
+			})
+		}
 
 		// Gallery
 		$("[data-type=gallery]").each(function(index, item) {
@@ -412,21 +443,8 @@
 			var view = new PictureWall($(item));
 			$(item).data("Gallery", view);
 			$(item).on("gallery:resize", pintit_display);
+			$(item).on("gallery:resize", links_display);
 		});
-
-		// Home Links
-		var goto_article = function(event) {
-			var el = event.currentTarget;
-			window.location = $(el).data("href")
-
-		}
-		$("[data-type=gallery] article h2 a").each(function(index, item) {
-			var parent = $(item).parents("article").first();
-			parent.addClass("clickable");
-			parent.data("href", $(item).attr("href"));
-			parent.on("click", goto_article)
-
-		})
 
 		// Contact
 		var email =  $("footer .email");
