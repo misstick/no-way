@@ -296,7 +296,7 @@ z-index: 10;
   bottom: 0;
   border: 0;
   color: white;
-  margin: 1em;
+  padding: 1em;
   text-align: right;
 }
 [data-type=gallery] h2 a,
@@ -306,7 +306,42 @@ z-index: 10;
 [data-type=gallery] h2 a:hover {
   color: #f30;
 }
-[data-type=gallery] [data-item] {
+
+[data-type=gallery] [data-content=text] {
+  background-color: #ddd;
+  color: #fff;
+}
+[data-type=gallery] [data-content=text] h2 {
+  position: relative;
+  font-size: 2em;
+  margin: 0;
+}
+[data-type=gallery] [data-content=text] h2 a, 
+[data-type=gallery] [data-content=text] h2 span {
+  background: #f30;
+}
+[data-type=gallery] [data-content=text] .content {
+  padding: inherit;
+  font-size: 2em;
+  line-height: 1;
+  margin: 1em;
+  max-height: 7em;
+}
+
+[data-content=text] .ellipsis {
+  position: relative;
+}
+[data-content=text] .ellipsis:after {
+  content: "...";
+  display: inline-block;
+  position: absolute;
+  background-color: #ddd;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+[data-type=gallery] [data-format] {
   position: relative;
   float: left;
   padding: 0;
@@ -338,7 +373,6 @@ z-index: 10;
 }
 #tag-content article,
 #blog-content article {
-
   width: 500px;
   height: 500px;
 }
@@ -603,7 +637,7 @@ footer p {
   }
 
   [data-type=gallery] .scroller,
-  [data-type=gallery] [data-item],
+  [data-type=gallery] [data-format],
   [data-type=gallery] .image {
     width: 100%!important;
   }

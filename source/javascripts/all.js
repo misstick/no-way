@@ -88,8 +88,10 @@
 			var success = _.after(items.length, complete);
 			
 			var set_size = function(event) {
-				$(event.target).attr("width", event.target.offsetWidth);
-				$(event.target).attr("height", event.target.offsetHeight);
+				if (event && event.target) {
+					$(event.target).attr("width", event.target.offsetWidth);
+					$(event.target).attr("height", event.target.offsetHeight);
+				}
 				success();
 			}
 
@@ -98,6 +100,7 @@
 			items.each(function(index, el){
 				el = this.get_pictures($(el));
 				if (el.get(0)) el.get(0).onload = set_size;
+				else set_size(null);
 			}.bind(this));
 		},
 
@@ -249,7 +252,9 @@
 		},
 
 		replace_picture: function(el, options) {
-
+			if (el === undefined || !el) {
+				return false;
+			}
 			if (!options) options = {};
 			var style = {
 				"width": options.coords.width,
@@ -336,22 +341,27 @@
 				}
 				// Add a background to container:
 				// To align picture on axes: x, y
-				var picture = this.replace_picture(img, {
-					coords: coords
-				});
-
-				// Move Picture
-				if (previous) {
-					previous.append(picture);
-					previous.attr("data-item", true);
+				var item = el;
+				var content = "picture";
+				if (img) {
+					var picture = this.replace_picture(img, {
+						coords: coords
+					});
+					// Move Picture
+					if (previous) {
+						previous.append(picture);
+						previous.attr("data-item", true);
+						item = previous;
+					}
 				} else {
-					$(el).attr("data-item", true);
+					content = "text";
 				}
+				$(item).attr("data-content", content);
 
 			}.bind(this));
 
 
-			$("[data-item=true]", this.el).each(function(index, el){
+			$("[data-format]", this.el).each(function(index, el){
 				var pictures = this.get_pictures(el);
 
 				// Clean LandscapeItem Size
@@ -421,9 +431,7 @@
 		var links_display = function() {
 			var goto_article = function(event) {
 				var el = event.currentTarget;
-				console.log(el)
-				window.location = $(el).data("href")
-			
+				window.location = $(el).data("href");
 			}
 			$("[data-type=gallery] .image").each(function(index, item) {
 				var link = $("a", item.parentNode);
@@ -441,7 +449,16 @@
 		$("[data-type=gallery]").each(function(index, item) {
 			// Create Gallery
 			var view = new PictureWall($(item));
+			var _ellipsis = function() {
+				$("[data-content=text] .content", this.el).each(function(index, item) {
+					var className = "ellipsis";
+					var test = (item.scrollHeight > item.offsetHeight);
+					$(item)[test ? "addClass" : "removeClass"](className);
+				})
+			}.bind(view);
 			$(item).data("Gallery", view);
+			
+			$(item).on("gallery:resize", _ellipsis);
 			$(item).on("gallery:resize", pintit_display);
 			$(item).on("gallery:resize", links_display);
 		});
@@ -454,7 +471,6 @@
 			email.remove();
 			$(parent).html('<a href="mailto:' + value.replace("[AT]", "@").replace("[DOT]", ".") + '">' + $(parent).html() + '</a>')
 		}
-
 
 	});
 })()

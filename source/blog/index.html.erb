@@ -1,0 +1,14 @@
+---
+title: Portfolio
+picture: "https://secure.gravatar.com/avatar/9959ecc877e288989012679976743bca?s=140&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png"
+---
+<div id="blog-content" data-type="gallery" data-fill="height">
+  <% page_articles.each_with_index do |article, i| %>
+	  <article>
+		<h2><%= link_to article.title, article %><br /><span><%= article.date.strftime('%d.%m.%y') %></span></h2>
+		<figure>
+		  <img src="/images/content/<%= article.data.picture || article.data.pictures[0] %>" />
+		</figure>
+	  </article>
+  <% end %>
+</div>
