@@ -320,6 +320,9 @@ z-index: 10;
 [data-type=gallery] [data-content=text] h2 span {
   background: #f30;
 }
+[data-type=gallery] [data-content=text] h2 a:hover {
+  background: #fff;
+}
 [data-type=gallery] [data-content=text] .content {
   padding: inherit;
   font-size: 2em;
@@ -341,7 +344,9 @@ z-index: 10;
   right: 0;
 }
 
-[data-type=gallery] [data-format] {
+[data-type=gallery] [data-format],
+[data-type=gallery] .portrait,
+[data-type=gallery] .landscape {
   position: relative;
   float: left;
   padding: 0;

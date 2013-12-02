@@ -350,7 +350,6 @@
 					// Move Picture
 					if (previous) {
 						previous.append(picture);
-						previous.attr("data-item", true);
 						item = previous;
 					}
 				} else {

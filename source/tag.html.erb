@@ -10,9 +10,15 @@ picture: "https://secure.gravatar.com/avatar/9959ecc877e288989012679976743bca?s=
   <% page_articles.each_with_index do |article, i| %>
       <article>
         <h2><%= link_to article.title, article %><br /><span><%= article.date.strftime('%d.%m.%y') %></span></h2>
-        <figure>
-          <img src="/images/content/<%= article.data.picture || article.data.pictures[0] %>" />
-        </figure>
+        <% if article.data.is_actu %>
+          <div class="content">
+            <%= article.body %>
+          </div>
+        <% else %>
+            <figure>
+              <img src="/images/content/<%= article.data.picture || article.data.pictures[0] %>" />
+            </figure>
+        <% end %>
       </article>
   <% end %>
   </div>
