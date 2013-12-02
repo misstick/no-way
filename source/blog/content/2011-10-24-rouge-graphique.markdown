@@ -1,7 +1,7 @@
 ---
 title: Rouge graphique
 date: 2011-10-24
-tags: Pull
+tags: Pull / Gilet
 pictures: ["redkimono-02.jpg", "redkimono-03.jpg", "redkimono-04.jpg", "redkimono-01.jpg"]
 ---
 

@@ -40,12 +40,7 @@ footer {
   margin-top: -6px;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  text-transform: capitalize;
-}
+
 h1,
 h2,
 h3,
@@ -176,7 +171,6 @@ section aside a {
   margin: 0 auto;
 }
 .page-content article{
-  min-height: 400px;
   padding-bottom: 100px;
 }
 #home-content {

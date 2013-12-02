@@ -1,7 +1,7 @@
 ---
 title: Ma zibeline en alpaga
 date: 2011-03-02
-tags: écharpe
+tags: accessoire
 pictures: ["renarde01.jpg", "renarde05.jpg", "renarde03.jpg", "renarde04.jpg"]
 ---
 

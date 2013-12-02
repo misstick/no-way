@@ -1,7 +1,7 @@
 ---
 title: Noir d’opium
 date: 2011-04-21
-tags: Gilet
+tags: Pull / Gilet
 pictures: ["opium02.jpg", "opium01.jpg", "opium04.jpg", "opium03.jpg"]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Colorie moi une écharpe
 date: 2011-03-15
-tags: écharpe
+tags: accessoire
 pictures: ["coloriage02.jpg", "coloriage03.jpg", "coloriage04.jpg", "coloriage01.jpg"]
 ---
 

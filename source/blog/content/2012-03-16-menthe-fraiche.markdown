@@ -1,7 +1,7 @@
 ---
 title: Menthe fraiche
 date: 2012-03-16
-tags: écharpe
+tags: accessoire
 pictures: ["menthe01_medium.jpg", "menthe02_medium.jpg", "menthe04_medium.jpg", "menthe03_medium.jpg", "menthe05_medium.jpg"]
 ---
 

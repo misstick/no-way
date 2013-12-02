@@ -1,7 +1,7 @@
 ---
 title: Instant de classe
 date: 2011-11-10
-tags: Veste
+tags: Veste / Manteau
 picture: "veste-kaki-4.jpg"
 pictures: ["veste-kaki-1.jpg", "veste-kaki-6.jpg", "veste-kaki-4.jpg"]
 ---

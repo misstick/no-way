@@ -1,7 +1,7 @@
 ---
 title: Marinière marine
 date: 2010-12-20
-tags: Pull
+tags: Pull / Gilet
 pictures: ["mariniere-04.jpg", "mariniere-03.jpg", "mariniere-01.jpg", "mariniere-02.jpg"]
 ---
 

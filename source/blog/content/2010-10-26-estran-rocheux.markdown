@@ -1,7 +1,7 @@
 ---
 title: Estran rocheux
 date: 2010-10-26
-tags: écharpe
+tags: accessoire
 pictures: ["roche0.jpg", "roche1.jpg", "roche2.jpg"]
 ---
 

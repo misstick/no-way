@@ -1,7 +1,7 @@
 ---
 title: Bazar agricole
 date: 2013-05-19
-tags: Pantalon, Pull, Chemise
+tags: Pantalon, Pull / Gilet, Chemise
 pictures: ["2013/05/IMGP6327.jpg", "2013/05/IMGP6260.jpg", "2013/05/IMGP6274.jpg", "2013/05/IMGP6316.jpg", "2013/05/IMGP6303.jpg", "2013/05/IMGP6307.jpg", "2013/05/IMGP6315.jpg", "2013/05/IMGP6300.jpg", "2013/05/IMGP6298.jpg", "2013/05/IMGP6284.jpg", "2013/05/IMGP6289.jpg", "2013/05/IMGP6291.jpg"]
 ---
 

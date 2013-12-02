@@ -1,7 +1,7 @@
 ---
 title: School Girl
 date: 2012-04-02
-tags: Pull
+tags: Pull / Gilet
 picture: "2012/04/school02_medium.jpg"
 pictures: ["2012/04/school05_medium.jpg", "2012/04/school02_medium.jpg", "2012/04/school03_medium.jpg", "2012/04/school04_medium.jpg", "2012/04/school01_medium.jpg"]
 ---

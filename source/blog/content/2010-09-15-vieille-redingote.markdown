@@ -1,7 +1,7 @@
 ---
 title: Vieille Redingote
 date: 2010-09-15
-tags: Gilet
+tags: Veste / Manteau
 pictures: ["redingote1.jpg"]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Ma capeline bleu-marine
 date: 2010-12-06
-tags: Accessoire
+tags: accessoire
 picture: "capelineMarine-03.jpg"
 pictures: ["capelineMarine-01.jpg", "capelineMarine-02.jpg", "capelineMarine-03.jpg"]
 ---

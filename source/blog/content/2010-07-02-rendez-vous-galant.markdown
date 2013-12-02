@@ -1,7 +1,7 @@
 ---
 title: Rendez-vous galant
 date: 2010-07-02
-tags: Gilet, Jupe
+tags: Pull / Gilet, Jupe / Robe
 pictures: ["fifties_01_M.jpg", "fifties_02_M.jpg", "fifties_03_M.jpg", "fifties_04_M.jpg", "fifties_05_M.jpg", "fifties_06_M.jpg", "fifties_07_M.jpg"]
 ---
 <h3>9h00 : Le réveil sonne, il faut se lever !</h3>

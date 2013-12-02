@@ -1,7 +1,7 @@
 ---
 title: En piste
 date: 2010-08-25
-tags: Pull, kimono
+tags: Pull / Gilet, kimono
 pictures: ["danceFloor01_L.jpg", "danceFloor02_L.jpg", "danceFloor03_L.jpg"]
 ---
 

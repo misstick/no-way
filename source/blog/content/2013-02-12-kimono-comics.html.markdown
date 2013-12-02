@@ -1,7 +1,7 @@
 ---
 title: kimono comics
 date: 2013-02-12
-tags: Manteau, kimono
+tags: Veste / Manteau, kimono
 pictures: ["2013/01/IMGP6136.jpg", "2013/01/IMGP6151.jpg", "2013/01/IMGP6132.jpg", "2013/01/IMGP6142.jpg", "2013/01/IMGP6150.jpg", "2013/01/IMGP6111.jpg"]
 ---
 

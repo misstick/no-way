@@ -1,7 +1,7 @@
 ---
 title: De rouge et de rouille
 date: 2013-01-30
-tags: écharpe
+tags: accessoire
 pictures: ["2013/01/IMGP6231.jpg", "2013/01/IMGP6226.jpg", "2013/01/IMGP6233.jpg", "2013/01/IMGP6168.jpg"]
 ---
 

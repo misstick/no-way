@@ -1,7 +1,7 @@
 ---
 title: Tutu de soirée
 date: 2010-12-21
-tags: Jupe
+tags: Jupe / Robe
 pictures: ["tutu-03.jpg", "tutu-01.jpg", "tutu-02.jpg", "tutu-04.jpg"]
 ---
 <p>Ce jupon a été un pur caprice créatif de ma part, réalisé à la fin de l’été 2009. J’ai voulu tester des effets de matières, de volumes, de pliages, etc. Beaucoup de fraîcheur en est ressortie : ça fait toujours du bien de sortir de ses habitudes, de ces schémas de pensée qui nous collent à la peau. D’un autre coté, cela à généré de nombreux doutes quant au résultat : prendre plus de risques entraîne implicitement la peur de l’inconnu.</p>

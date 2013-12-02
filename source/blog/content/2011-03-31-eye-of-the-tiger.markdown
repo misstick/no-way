@@ -1,7 +1,7 @@
 ---
 title: Eye of the tiger
 date: 2011-03-31
-tags: Pull
+tags: Pull / Gilet, Homme
 pictures: ["rocky01.jpg", "rocky02.jpg", "rocky03.jpg"]
 ---
 
