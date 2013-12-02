@@ -311,24 +311,40 @@ z-index: 10;
   background-color: #ddd;
   color: #fff;
 }
+[data-type=gallery] [data-content=text]:after {
+  content: "Actu.";
+  position: absolute;
+  right: 2em;
+  top: 9em;
+  background-color: #f30;
+  text-transform: uppercase;
+  font-size: 1em;
+  font-weight: bold;
+}
 [data-type=gallery] [data-content=text] h2 {
   position: relative;
   font-size: 2em;
-  margin: 0;
+}
+[data-type=gallery] [data-content=text] h2 a {
+  text-decoration: underline;
 }
 [data-type=gallery] [data-content=text] h2 a, 
 [data-type=gallery] [data-content=text] h2 span {
-  background: #f30;
+  background: none;
 }
-[data-type=gallery] [data-content=text] h2 a:hover {
+[data-type=gallery] [data-content=text] a:hover {
   background: #fff;
+  color: #f30;
 }
 [data-type=gallery] [data-content=text] .content {
   padding: inherit;
   font-size: 2em;
   line-height: 1;
-  margin: 1em;
-  max-height: 7em;
+  margin: 0 1.5em 1em 3em;
+  max-height: 5em;
+  border: solid 1px;
+  display: block;
+  color: white;
 }
 
 [data-content=text] .ellipsis {

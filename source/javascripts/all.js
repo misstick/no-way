@@ -445,19 +445,39 @@
 		}
 
 		// Gallery
+		var create_link = function(el) {
+			if (el.tagName.toLowerCase() !== "A") {
+				var url = $("h2 a", el.parentNode).first().attr("href");
+				$(el.parentNode).append("<a href='" + url + "' class='" + el.className + "'>");
+				
+				// Remove linked Children
+				$("a", el).each(function(index, item) {
+					var text = $(item).html();
+					$(item).after(text);
+					item.remove();
+				})
+				
+				// Create Link Element
+				var link = $("a.content", el.parentNode);
+				link.html($(el).html());
+				$(el).remove();
+			}
+		}
+		var _ellipsis = function() {
+			$("[data-content=text] .content", this.el).each(function(index, item) {
+				var className = "ellipsis";
+				var test = (item.scrollHeight > item.offsetHeight);
+				$(item)[test ? "addClass" : "removeClass"](className);
+				
+				// Transform shortDescription as a link
+				create_link(item);
+			})
+		};
 		$("[data-type=gallery]").each(function(index, item) {
 			// Create Gallery
 			var view = new PictureWall($(item));
-			var _ellipsis = function() {
-				$("[data-content=text] .content", this.el).each(function(index, item) {
-					var className = "ellipsis";
-					var test = (item.scrollHeight > item.offsetHeight);
-					$(item)[test ? "addClass" : "removeClass"](className);
-				})
-			}.bind(view);
 			$(item).data("Gallery", view);
-			
-			$(item).on("gallery:resize", _ellipsis);
+			$(item).on("gallery:resize", _ellipsis.bind(view));
 			$(item).on("gallery:resize", pintit_display);
 			$(item).on("gallery:resize", links_display);
 		});
