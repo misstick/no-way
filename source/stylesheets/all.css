@@ -311,19 +311,20 @@ z-index: 10;
   background-color: #ddd;
   color: #fff;
 }
-[data-type=gallery] [data-content=text]:after {
-  content: "Actu.";
-  position: absolute;
-  right: 2em;
-  top: 9em;
+[data-type=gallery] [data-content=text]:before {
+  content: "Actu";
   background-color: #f30;
   text-transform: uppercase;
   font-size: 1em;
   font-weight: bold;
+  margin: 3em;
+  position: absolute;
+  right: 0;
 }
 [data-type=gallery] [data-content=text] h2 {
   position: relative;
   font-size: 2em;
+  padding: 2em 1.5em 0;
 }
 [data-type=gallery] [data-content=text] h2 a {
   text-decoration: underline;
@@ -334,7 +335,7 @@ z-index: 10;
 }
 [data-type=gallery] [data-content=text] a:hover {
   background: #fff;
-  color: #f30;
+  color: #000;
 }
 [data-type=gallery] [data-content=text] .content {
   padding: inherit;
