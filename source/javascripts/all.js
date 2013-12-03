@@ -342,7 +342,6 @@
 				// Add a background to container:
 				// To align picture on axes: x, y
 				var item = el;
-				var content = "picture";
 				if (img) {
 					var picture = this.replace_picture(img, {
 						coords: coords
@@ -352,15 +351,16 @@
 						previous.append(picture);
 						item = previous;
 					}
-				} else {
-					content = "text";
+					
+					$(item).attr("data-content", "picture");
+					return;
 				}
-				$(item).attr("data-content", content);
+				$(item).attr("data-content", "text");
 
 			}.bind(this));
 
 
-			$("[data-format]", this.el).each(function(index, el){
+			$("[data-content]", this.el).each(function(index, el){
 				var pictures = this.get_pictures(el);
 
 				// Clean LandscapeItem Size

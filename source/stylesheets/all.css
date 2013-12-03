@@ -321,6 +321,9 @@ z-index: 10;
   position: absolute;
   right: 0;
 }
+#tag-content [data-type=gallery] [data-content=text]:before {
+  display: none;
+}
 [data-type=gallery] [data-content=text] h2 {
   position: relative;
   font-size: 2em;
@@ -361,9 +364,7 @@ z-index: 10;
   right: 0;
 }
 
-[data-type=gallery] [data-format],
-[data-type=gallery] .portrait,
-[data-type=gallery] .landscape {
+[data-type=gallery] [data-content] {
   position: relative;
   float: left;
   padding: 0;
