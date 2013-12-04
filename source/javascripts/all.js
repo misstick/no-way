@@ -102,6 +102,10 @@
 				if (el.get(0)) el.get(0).onload = set_size;
 				else set_size(null);
 			}.bind(this));
+			
+			setTimeout(function() {
+				complete()
+			}, 1000)
 		},
 
 		resize: function() {
@@ -230,7 +234,8 @@
 			var _goto = function(event) {
 				var target = event.currentTarget;
 				var action = $(target).data("action");
-				var value = (action === "next") ? this.el.get(0).scrollWidth : 0;
+				var step = this.el.width() / 2;
+				var value = (action === "next") ? this.el.get(0).scrollLeft + step : this.el.get(0).scrollLeft - step;
 
 				// ANimation
 				this.el.animate({ "scrollLeft": value}, { complete: display_buttons});
