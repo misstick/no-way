@@ -240,8 +240,6 @@ section[role=main] h1 {
   z-index: 3;
 }
 
-
-
 article:hover a,
 .image:hover a {
   visibility: visible;
@@ -296,7 +294,7 @@ z-index: 10;
   bottom: 0;
   border: 0;
   color: white;
-  padding: 1em;
+  padding: 2.5em 2em;
   text-align: right;
 }
 [data-type=gallery] h2 a,
@@ -328,6 +326,7 @@ z-index: 10;
   position: relative;
   font-size: 2em;
   padding: 2em 1.5em 0;
+  top: 0!important;
 }
 [data-type=gallery] [data-content=text] h2 a {
   text-decoration: underline;
@@ -450,12 +449,14 @@ footer strike {
   font-weight: normal;
   color: #000;
 }
-.copyright {
+footer ul {
   font-size: 0.9em;
   padding: 0;
-  margin: 0;
+  margin: 0.5em 0.5em 0;
+  vertical-align: text-top;
+  display: inline-block;
 }
-.copyright li {
+footer li {
   display: inline-block;
 }
 footer a {
@@ -467,7 +468,17 @@ footer h2 {
 footer p {
   clear: both;
 }
-
+.icon {
+  display: block;
+  float: left;
+  font-size: 2em;
+  width: 1em;
+  height: 1em;
+  color: #f30;
+}
+.icon span {
+  display: none;
+}
 
 .fb-like iframe .pluginCountBox,
 .fb-like iframe .pluginCountBoxNub {
@@ -573,7 +584,7 @@ footer p {
     margin: 0;
   }
   .dropdown-menu {
-    width: 300px;
+    width: 600px;
     left: auto;
     right: 0;
     background: #f30;
@@ -584,7 +595,7 @@ footer p {
     max-height: 300px;
   }
   .dropdown-menu li {
-    width: 100px;
+    width: 200px;
     display: block;
     float: left;
   }
@@ -630,6 +641,12 @@ footer p {
     position: static;
     padding: 0;
     margin: 2.25em 0 0 0;
+  }
+  [data-type=gallery] [data-content=text] {
+    height: auto!important;
+  }
+  [data-type=gallery] [data-content=text] .content {
+    margin: 1em;
   }
 
   .list-container aside:before,
