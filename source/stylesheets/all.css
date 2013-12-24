@@ -659,12 +659,6 @@ footer p {
     width: 100%;
   }
 
-  [data-type=gallery] .scroller,
-  [data-type=gallery] [data-format],
-  [data-type=gallery] .image {
-    width: 100%!important;
-  }
-
 }
 
 /* =wide_screens ------------------------------------------------------------ */
