@@ -205,7 +205,9 @@
 			// Add min-coords
 			var el = $(items.get(index0));
 			var coords = this.coords(el);
-
+			
+			// FIX: el shouldnt exist when mobile resolution
+			// check this point
 			this._ref = coords;
 			var success = function() {
 				this.resize()
