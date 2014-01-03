@@ -31,6 +31,7 @@
 	var PictureWall = function(el, options) {
 		if (!options) options = {};
 		this.el = el;
+		this.min_screen = 700;
 
 		this._fill = this.el.data("fill") || "width";
 
@@ -110,7 +111,7 @@
 
 		resize: function() {
 			var content = $(".scroller", this.el);
-
+			
 			// Remove Previous resize
 			content.css("width", "auto");
 
@@ -128,6 +129,7 @@
 			}
 
 			var row = Math.ceil(len / column);
+			
 
 			if (this._fill === "height") {
 
@@ -165,6 +167,11 @@
 		},
 
 		get_format: function(el) {
+			var isColumns = this.el.width() > this.min_screen;
+			if (!isColumns) {
+				return this.format[0];
+			}
+			
 			return $(el).attr("data-format");
 		},
 
@@ -209,11 +216,9 @@
 			var el = $(items.get(index0));
 			var coords = this.coords(el);
 			
-			// FIX: el shouldnt exist when mobile resolution
-			// check this point
 			this._ref = coords;
 			var success = function() {
-				this.resize()
+				this.resize();
 			}.bind(this);
 
 			$(this.el).trigger("format:end", {success: success});
@@ -280,12 +285,11 @@
 				parent.addClass("image")
 			}
 			parent.css(style);
-			parent.data("src", $(el).attr("src"))
-
+			parent.data("src", $(el).attr("src"));
 			// Save initaila-size
 			var coords = this.coords($(el));
 			$(parent).attr("data-size", coords.width + "|" + coords.height);
-
+			
 			$(el).remove();
 			return parent.get(0);
 		},
@@ -364,7 +368,6 @@
 				$(item).attr("data-content", "text");
 
 			}.bind(this));
-
 
 			$("[data-content]", this.el).each(function(index, el){
 				var pictures = this.get_pictures(el);
