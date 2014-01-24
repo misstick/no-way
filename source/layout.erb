@@ -10,24 +10,24 @@
 		<meta property="og:title" content="<%= current_page.data.title %>" />
 		<meta property="og:image" content="<%= current_page.data.picture %>" />
 
-		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,200italic,400italic,700' rel='stylesheet' type='text/css'>
-		<%= stylesheet_link_tag "vendor/bootstrap/bootstrap.min", "all" %>
-		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-		<%= javascript_include_tag  "vendor/underscore", "vendor/bootstrap/bootstrap.min", "all" %>
+		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,200italic,400italic,700' rel='stylesheet' type='text/css' />
+		<link href='/vendor/bootstrap/bootstrap.min.css' rel='stylesheet' type='text/css'>
+		<link href='/vendor/icomoon/style.css' rel='stylesheet' type='text/css' />
+		<%= stylesheet_link_tag "all" %>
 		
-		<%= stylesheet_link_tag "vendor/icomoon/style", "all" %>
+		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<script src="/vendor/underscore.js"></script>
+		<script src="/vendor/bootstrap/bootstrap.min.js"></script>
+		<%= javascript_include_tag "all" %>
+		
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	</head>
 	<body>
-
 		<div class="page">
-
 			<%= partial "header" %>
-
 			<section id="main" role="main">
 				<%= yield %>
 			</section>
-
 			<%= partial "footer" %>
 		</div>
 	</body>
