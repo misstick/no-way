@@ -1,10 +1,8 @@
 (function() {
 
-
 	_.mixin({
 		create_affix: function(el) {
 			var coords = el.offset();
-			
 			if (!coords.top) el.addClass("affix");
 			else el.affix({ offset: coords});
 		},
@@ -14,8 +12,7 @@
 			*/
 			return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 		}
-	})
-
+	});
 
 	//
 	// View: PictureWall
@@ -434,7 +431,6 @@
 			});
 		}
 	
-	
 		// Home Links
 		var links_display = function() {
 			var goto_article = function(event) {
@@ -482,9 +478,9 @@
 				create_link(item);
 			})
 		};
+		
 		$("[data-type=gallery]").each(function(index, item) {
 			// Create Gallery
-			
 			$(item).data("Gallery", view);
 			$(item).on("gallery:resize", _ellipsis.bind(view));
 			$(item).on("gallery:resize", pintit_display);
