@@ -498,5 +498,7 @@
 		}
 	
 	});
+	
+	window.PictureWall = PictureWall;
 })()
 
