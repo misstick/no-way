@@ -14,3 +14,6 @@
 /.sass-cache
 
 *.DS_Store
+
+/source/bower_components
+/source/node_module
