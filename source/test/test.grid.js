@@ -15,11 +15,10 @@ TEST CASE
 describe('Gallery', function(){
   var view = new PictureWall($("#test-content"));
   
-  this.timeout(2000);
-  it('load:success', function(){
-    
-    view.load();
-    
-    
-  });
+  // it('load:success', function(){
+  //   
+  //   view.load();
+  //   
+  //   
+  // });
 });
