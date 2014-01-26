@@ -3,16 +3,23 @@ var assert = chai.assert;
 var expect = chai.assert;
 
 
-describe('Array', function(){
-  before(function(){
+
+/*
+
+TEST CASE
+
+1.
+
+*/
+
+describe('Gallery', function(){
+  var view = new PictureWall($("#test-content"));
+  
+  this.timeout(2000);
+  it('load:success', function(){
+    
+    view.load();
+    
     
   });
-
-  it('should take less than 500ms', function(done){
-    setTimeout(done, 300);
-  })
-  
-  it('should take less than 500ms as well', function(done){
-    setTimeout(done, 200);
-  })
 });

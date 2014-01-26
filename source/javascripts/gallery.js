@@ -21,26 +21,28 @@
 	// Save picture positions
 	//
 
-
-	// FIX : STocker la taille dans un cookie (ou +)
-	// Stocker l'url de la page
-
 	var PictureWall = function(el, options) {
 		if (!options) options = {};
 		this.el = el;
 		this.min_screen = 700;
-
 		this._fill = this.el.data("fill") || "width";
 
 		// Init
 		var _func = this.resize.bind(this)
 		$(window).on("resize", _.debounce(_func, 100));
 		$(this.el).on("format:end", this.render.bind(this));
-
 		$(this.el).on("gallery:resize", this.set_nav.bind(this));
 	}
-
+	
+	
+	// 	
+	// @TODO : transform this prototype
+	// into a BackBone.view, Backbone.model
+	// Use Events to be able to test the controller easily	
+	// 
 	PictureWall.prototype = {
+		
+		timeout: 1000,
 
 		item: "img",
 
@@ -49,7 +51,8 @@
 		format: ["portrait", "landscape"],
 
 		_clean: true,
-
+		
+		// @TEST : test that coords are not undefined && typeof === number
 		coords: function(el) {
 			return {
 				width: el.get(0).offsetWidth,
@@ -66,11 +69,12 @@
 			}
 			return $(el);
 		},
-
+		
+		// @TEST: test the initial number of pictures Wall.become item
 		items: function() {
 			return $(".scroller", this.el).children();
 		},
-
+		
 		load: function() {
 			var loaded = false;
 			var items = this.el.children();
@@ -91,7 +95,8 @@
 				}
 				success();
 			}
-
+			
+			// @TEST : this event should be called once
 			// Listen to picture.load
 			this.el.addClass("load");
 			items.each(function(index, el){
@@ -102,7 +107,7 @@
 			
 			setTimeout(function() {
 				complete()
-			}, 1000)
+			}, this.timeout)
 		},
 
 		resize: function() {
@@ -216,10 +221,14 @@
 			var success = function() {
 				this.resize();
 			}.bind(this);
-
+			
+			// @TEST : format:end should be called once
+			// @each load && resize
 			$(this.el).trigger("format:end", {success: success});
 		},
-
+		
+		// @TEST : Navigation bar should exist
+		// on nonetouch resolutions
 		set_nav: function() {
 			if (_.is_touch() || this.el.get(0).scrollWidth === this.el.get(0).offsetWidth) return;
 			
@@ -377,6 +386,8 @@
 				// Ne pas les regrouper
 				// et donc ne pas toucher à leur taille
 				//
+				// @TEST : landscape cases
+				// resize pictures
 				if (this._clean) {
 					if ($(el).hasClass(this.format[1])) {
 						if (pictures.size() >= 2) {
