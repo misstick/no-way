@@ -38,7 +38,6 @@
 		$(this.el).on("format:end", this.render.bind(this));
 
 		$(this.el).on("gallery:resize", this.set_nav.bind(this));
-		this.load();
 	}
 
 	PictureWall.prototype = {

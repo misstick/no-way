@@ -72,11 +72,12 @@
 		
 		$("[data-type=gallery]").each(function(index, item) {
 			// Create Gallery
+			var view = new PictureWall($(item));
+			$(item).on("gallery:resize", links_display);
 			$(item).data("Gallery", view);
 			$(item).on("gallery:resize", _ellipsis.bind(view));
 			$(item).on("gallery:resize", pintit_display);
-			$(item).on("gallery:resize", links_display);
-			var view = new PictureWall($(item));
+			view.load();
 		});
 	
 		// Contact
