@@ -26,12 +26,13 @@
 		this.el = el;
 		this.min_screen = 700;
 		this._fill = this.el.data("fill") || "width";
-
-		// Init
-		var _func = this.resize.bind(this)
-		$(window).on("resize", _.debounce(_func, 100));
-		$(this.el).on("format:end", this.render.bind(this));
-		$(this.el).on("gallery:resize", this.set_nav.bind(this));
+		
+		console.log(this)
+		// // Init
+		// var _func = this.resize.bind(this)
+		// $(window).on("resize", _.debounce(_func, 100));
+		// $(this.el).on("format:end", this.render.bind(this));
+		// $(this.el).on("gallery:resize", this.set_nav.bind(this));
 	}
 	
 	
