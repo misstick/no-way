@@ -16,4 +16,4 @@
 *.DS_Store
 
 /source/bower_components
-/source/node_module
+/source/node_modules*
