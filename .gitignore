@@ -9,6 +9,9 @@
 
 # Ignore the build directory
 /build
+/source/node_modules/*
+/source/vendor/*
+/source/images/*
 
 # Ignore Sass' cache
 /.sass-cache
