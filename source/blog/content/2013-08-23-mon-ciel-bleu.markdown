@@ -23,6 +23,6 @@ pictures: ["2013/08/IMGP6390-2.jpg", "2013/08/IMGP6360-2.jpg", "2013/08/IMGP6381
 Tout commença il y a 3 ans lorsque j’appris à concevoir un patron de pantalon, puis à le monter. Cependant chaque essai avait un problème : soit le tracé du patron était mauvais, soit les coutures laissaient à désirer. Affinant mes tracés, améliorant ma technique, j’ai créé 1, 2, 3, puis 7 patrons, et pantalons. </p>
 <p>Celui-ci met un terme à cette sinistre série ; il ne me reste plus qu’à réaliser son frère jumeau pour cet hiver.</p>
 
-<p>STPo a réalisé avec beaucoup d’adresse les photos, prises le long de la rue des Pyrénées, à Paris.</p>
+<p><a href="http://www.stpo.fr/" target="_blank">STPo</a> a réalisé avec beaucoup d’adresse les photos, prises le long de la rue des Pyrénées, à Paris.</p>
 
 <div id="note1">(1) Bientôt : Comment j’ai déporté mon addiction du tabac au velours.</div>

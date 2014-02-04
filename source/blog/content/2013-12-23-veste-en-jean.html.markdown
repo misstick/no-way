@@ -24,4 +24,4 @@ Le corps est en jeans léger et les manches sont tricotées avec 2 fils : le fil
 
 Et voilà le résultat en photos ! Elle est facile à vivre et très confortable et ce malgré les nombreuses erreurs de finitions. Au fil du temps j'en ai presque oublié que c'était moi qui l'avais fait.
 
-Merci à STPo pour les photos.
+Merci à <a href="http://www.stpo.fr/" target="_blank">STPo</a> pour les photos.
