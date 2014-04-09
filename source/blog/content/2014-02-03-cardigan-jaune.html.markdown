@@ -1,7 +1,7 @@
 ---
 title: Cardigan Jaune
 date: 2014-02-03
-tags: Pull / Gilet
+tags: Pull / Gilet, Actualité
 is_actu: true
 pictures: ["2014/02/giletjaune-work-1.jpg", "2014/02/giletjaune-work-3.jpg", "2014/02/giletjaune-work-4.jpg", "2014/02/giletjaune-work-2.jpg"]
 ---
