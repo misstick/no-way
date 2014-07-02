@@ -18,49 +18,49 @@
             }
         </style>
     </head>
-    <body>
-        
-        <div id="test-content" data-type="gallery">
-            <img src="../images/content/2013/05/IMGP6327.jpg" />
-            <img src="../images/content/2013/05/IMGP6260.jpg" />
-            <img src="../images/content/2013/05/IMGP6274.jpg" />            
-            <img src="../images/content/2013/05/IMGP6316.jpg" />            
-            <img src="../images/content/2013/05/IMGP6303.jpg" />            
-            <img src="../images/content/2013/05/IMGP6307.jpg" />            
-            <img src="../images/content/2013/05/IMGP6315.jpg" />            
-            <img src="../images/content/2013/05/IMGP6300.jpg" />            
-            <img src="../images/content/2013/05/IMGP6298.jpg" />            
-            <img src="../images/content/2013/05/IMGP6284.jpg" />                        
-            <img src="../images/content/2013/05/IMGP6289.jpg" />            
-            <img src="../images/content/2013/05/IMGP6291.jpg" />
-            <img src="../images/content/2013/05/IMGP6327.jpg" />
-            <img src="../images/content/2013/05/IMGP6260.jpg" />
-            <img src="../images/content/2013/05/IMGP6274.jpg" />            
-            <img src="../images/content/2013/05/IMGP6316.jpg" />            
-            <img src="../images/content/2013/05/IMGP6303.jpg" />            
-            <img src="../images/content/2013/05/IMGP6307.jpg" />            
-            <img src="../images/content/2013/05/IMGP6315.jpg" />            
-            <img src="../images/content/2013/05/IMGP6300.jpg" />            
-            <img src="../images/content/2013/05/IMGP6298.jpg" />            
-            <img src="../images/content/2013/05/IMGP6284.jpg" />                        
-            <img src="../images/content/2013/05/IMGP6289.jpg" />            
-            <img src="../images/content/2013/05/IMGP6291.jpg" />
-        </div>
-        
+    <body> 
+    
+      <div id="test-content" data-type="gallery">
+          <img src="../images/content/2013/05/IMGP6327.jpg" />
+          <img src="../images/content/2013/05/IMGP6260.jpg" />
+          <img src="../images/content/2013/05/IMGP6274.jpg" />            
+          <img src="../images/content/2013/05/IMGP6316.jpg" />            
+          <img src="../images/content/2013/05/IMGP6303.jpg" />            
+          <img src="../images/content/2013/05/IMGP6307.jpg" />            
+          <img src="../images/content/2013/05/IMGP6315.jpg" />            
+          <img src="../images/content/2013/05/IMGP6300.jpg" />            
+          <img src="../images/content/2013/05/IMGP6298.jpg" />            
+          <img src="../images/content/2013/05/IMGP6284.jpg" />                        
+          <img src="../images/content/2013/05/IMGP6289.jpg" />            
+          <img src="../images/content/2013/05/IMGP6291.jpg" />
+          <img src="../images/content/2013/05/IMGP6327.jpg" />
+          <img src="../images/content/2013/05/IMGP6260.jpg" />
+          <img src="../images/content/2013/05/IMGP6274.jpg" />            
+          <img src="../images/content/2013/05/IMGP6316.jpg" />            
+          <img src="../images/content/2013/05/IMGP6303.jpg" />            
+          <img src="../images/content/2013/05/IMGP6307.jpg" />            
+          <img src="../images/content/2013/05/IMGP6315.jpg" />            
+          <img src="../images/content/2013/05/IMGP6300.jpg" />            
+          <img src="../images/content/2013/05/IMGP6298.jpg" />            
+          <img src="../images/content/2013/05/IMGP6284.jpg" />                        
+          <img src="../images/content/2013/05/IMGP6289.jpg" />            
+          <img src="../images/content/2013/05/IMGP6291.jpg" />
+      </div>
+    
+           
         <div id="mocha"></div>
-        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-        <script src="../vendor/underscore/underscore.js"></script>
-        <script src="../vendor/bootstrap/bootstrap.min.js"></script>
         <script src="../vendor/mocha/mocha.js"></script>
         <script src="../vendor/chai/chai.js"></script>
-        <script src="../vendor/sinon.js"></script>
-        <script src="../javascripts/gallery.js"></script>
-        <script>mocha.setup('bdd')</script>
+        <script>
+              mocha.setup('bdd');
+              mocha.reporter('html');
+              assert = chai.assert;
+              expect = chai.expect;
+        </script>
         <script src="test.grid.js"></script>
         <script>
-          // mocha.checkLeaks();
-          mocha.globals(['jQuery']);
-          mocha.run();
+              if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+              else { mocha.run(); }
         </script>
     </body>
 </html>
