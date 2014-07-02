@@ -17,6 +17,11 @@
                 background: yellow;
             }
         </style>
+        
+        
+        <script src="../vendor/mocha/mocha.js"></script>
+        <script src="../vendor/chai/chai.js"></script>
+        <script src="utils.js"></script>
     </head>
     <body> 
     
@@ -46,17 +51,18 @@
           <img src="../images/content/2013/05/IMGP6289.jpg" />            
           <img src="../images/content/2013/05/IMGP6291.jpg" />
       </div>
-    
-           
+
         <div id="mocha"></div>
-        <script src="../vendor/mocha/mocha.js"></script>
-        <script src="../vendor/chai/chai.js"></script>
+        
+        <script src="../vendor/jquery/jquery.min.js"></script>
+        <script src="../vendor/underscore/underscore.js"></script>
         <script>
               mocha.setup('bdd');
               mocha.reporter('html');
               assert = chai.assert;
               expect = chai.expect;
         </script>
+        <script src="../javascripts/gallery.js"></script>
         <script src="test.grid.js"></script>
         <script>
               if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
