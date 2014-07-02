@@ -17,3 +17,4 @@
 
 /source/bower_components
 /source/node_modules*
+/source/vendor/*
