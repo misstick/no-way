@@ -25,12 +25,12 @@ describe('Gallery', function(){
     // Listen to picture.load
     it('the event "load:success" should be called only once', function(done){
         var callback = sinon.spy();
-        $(view.el).on("gallery:loaded", callback);
+        $(view.el).on("load:stop", callback);
         var test = function() {
             assert.ok(callback.calledOnce);
             done();
         };
-        $(view.el).on("gallery:loaded", _.debounce(test, 800));
+        $(view.el).on("load:stop", _.debounce(test, 800));
         
         view.load();
     });

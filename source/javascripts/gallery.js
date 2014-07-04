@@ -14,6 +14,32 @@
 		}
 	});
 
+
+	var Loader = function(el, options) {
+		if (el) {
+			this.initialize(el, options);
+		}
+	}
+
+	Loader.prototype = {
+		
+		initialize: function(el, options) {
+			this.el = el;
+			$(this.el).on("load:start", this.start.bind(this));
+			$(this.el).on("load:stop", this.stop.bind(this));
+		},
+
+		start: function() {
+			console.log("START")
+			$(this.el).addClass("load");
+		},
+		
+		stop: function() {
+			console.log("STOP");
+			$(this.el).removeClass("load");
+		}
+	};
+	
 	//
 	// View: PictureWall
 	// Handle format: landscape/portrait
@@ -33,9 +59,11 @@
 		// console.log(typeof this.resize.bind)
 		var _func = this.resize.bind(this);
 		$("body").on("resize", _.debounce(_func, 100));
-		$(this.el).on("gallery:loaded", this.format_html.bind(this))
+		$(this.el).on("load:stop", this.format_html.bind(this));
 		$(this.el).on("format:end", this.render.bind(this));
 		$(this.el).on("gallery:resize", this.set_nav.bind(this));
+		
+		this.__loader = new Loader(this.el);
 	}
 	
 	
@@ -78,11 +106,7 @@
 			var items = $("img", this.el);
 
 			var _complete = _.after(items.length, function() {
-				// @FIXME : listen to event "gallery:loaded" 
-				// to do that
-				$(this.el).removeClass("load");
-				
-				$(this.el).trigger("gallery:loaded");
+				$(this.el).trigger("load:stop");
 			}.bind(this));
 
 			var _is_loaded = function(el) {
@@ -97,8 +121,7 @@
 			}
 			
 			// Hide content
-			// @FIXME : add an event for that
-			this.el.addClass("load");
+			$(this.el).trigger("load:start");
 			
 			// Get real picture size
 			// and launch render after that
