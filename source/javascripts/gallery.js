@@ -45,8 +45,6 @@
 	// 
 	PictureWall.prototype = {
 
-		item: "img",
-
 		min_width: "730", // Mobile Resolution
 
 		format: ["portrait", "landscape"],
@@ -70,14 +68,13 @@
 			}
 			return $(el);
 		},
-		
-		// @TEST: test the initial number of pictures Wall.become item
+
 		items: function() {
 			return $(".scroller", this.el).children();
 		},
 		
 		load: function() {
-			var items = this.el.children();
+			var items = $("img", this.el);
 			
 			var complete = function() {
 				this.format_html();
@@ -86,7 +83,7 @@
 			}.bind(this);
 
 			var set_size = function(event) {
-				if (event && event.target) {
+				if (event.target) {
 					$(event.target).attr("width", event.target.offsetWidth);
 					$(event.target).attr("height", event.target.offsetHeight);
 				}
@@ -96,9 +93,7 @@
 
 			var _complete = _.after(items.length, complete)
 			items.each(function(index, el){
-				el = this.get_pictures($(el));
-				if (el.get(0)) el.get(0).onload = set_size;
-				else set_size(null);
+				el.onload = set_size;
 				_complete();
 			}.bind(this));
 		},

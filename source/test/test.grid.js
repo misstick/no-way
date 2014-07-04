@@ -19,6 +19,8 @@ describe('Gallery', function(){
         view = undefined;
     });
     
+    // @TEST: test the initial number of pictures Wall becomes an item
+    
     // @TEST : this event should be called once
     // Listen to picture.load
     it('the event "load:success" should be called only once', function(done){
