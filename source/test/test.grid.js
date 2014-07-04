@@ -11,7 +11,7 @@ describe('Gallery', function(){
     // to make other test possible, easier
     
     beforeEach(function() {
-        view = new PictureWall($("#test-content"));
+        view = new PictureWall();
     });
     
     afterEach(function() {
@@ -24,15 +24,18 @@ describe('Gallery', function(){
     // @TEST : this event should be called once
     // Listen to picture.load
     it('the event "load:success" should be called only once', function(done){
+        
+        var el = $("#test-content");
+        
         var callback = sinon.spy();
-        $(view.el).on("load:stop", callback);
+        $(el).on("load:stop", callback);
         var test = function() {
             assert.ok(callback.calledOnce);
             done();
         };
-        $(view.el).on("load:stop", _.debounce(test, 800));
+        $(el).on("load:stop", _.debounce(test, 800));
         
-        view.load();
+        view.initialize(el);
     });
     
     // @TEST : format:end should be called once

@@ -30,13 +30,48 @@
 		},
 
 		start: function() {
-			console.log("START")
+			console.log("START");
 			$(this.el).addClass("load");
 		},
 		
 		stop: function() {
 			console.log("STOP");
 			$(this.el).removeClass("load");
+		},
+		
+		render: function() {
+			$(this.el).trigger("load:start");
+			
+			var items = $("img", this.el);
+			
+			var _complete = _.after(items.length, function() {
+				$(this.el).trigger("load:stop");
+			}.bind(this));
+			
+			var _is_loaded = function(el) {
+				return !!el.offsetWidth;
+			}
+			
+			var _set_size = function(el) {
+				if (el) {
+					$(el).attr("width", el.offsetWidth);
+					$(el).attr("height", el.offsetHeight);
+				}
+				_complete();
+			}
+			
+			// Get real picture size
+			// and launch render after that
+			items.each(function(index, el){
+				if (!_is_loaded(el)) {
+					el.onload = function(event) {
+						_set_size(event.target);
+					};
+					return;
+				}
+				_set_size(el);
+				
+			}.bind(this));
 		}
 	};
 	
@@ -49,21 +84,9 @@
 
 	var PictureWall = function(el, options) {
 		if (!options) options = {};
-		this.el = el;
-		this.min_screen = 700;
-		this._fill = this.el.data("fill") || "width";
-		
-		
-		// Init
-		// @FIXME : bind doesnt work with mocha-phantomjs
-		// console.log(typeof this.resize.bind)
-		var _func = this.resize.bind(this);
-		$("body").on("resize", _.debounce(_func, 100));
-		$(this.el).on("load:stop", this.format_html.bind(this));
-		$(this.el).on("format:end", this.render.bind(this));
-		$(this.el).on("gallery:resize", this.set_nav.bind(this));
-		
-		this.__loader = new Loader(this.el);
+		if (el) {
+			this.initialize(el, options);
+		}
 	}
 	
 	
@@ -73,12 +96,31 @@
 	// Use Events to be able to test the controller easily	
 	// 
 	PictureWall.prototype = {
+		
+		min_screen: "700",
 
 		min_width: "730", // Mobile Resolution
 
 		format: ["portrait", "landscape"],
 
+		// @FIXME : remove this tricky/creepy option
 		_clean: true,
+		
+		initialize: function(el, options) {
+			this.el = el;
+			this._fill = this.el.data("fill") || "width";
+			
+			var _func = this.resize.bind(this);
+			$("body").on("resize", _.debounce(_func, 100));
+			$(this.el).on("load:stop", this.format_html.bind(this));
+			$(this.el).on("format:end", this.render.bind(this));
+			$(this.el).on("gallery:resize", this.set_nav.bind(this));
+			
+			// @FIXME : put this in the future into render
+			// when all methods will be cleanedup && renamed
+			this.__loader = new Loader(this.el);
+			this.__loader.render();
+		},
 		
 		// @TEST : test that coords are not undefined && typeof === number
 		coords: function(el) {
@@ -100,41 +142,6 @@
 
 		items: function() {
 			return $(".scroller", this.el).children();
-		},
-		
-		load: function() {
-			var items = $("img", this.el);
-
-			var _complete = _.after(items.length, function() {
-				$(this.el).trigger("load:stop");
-			}.bind(this));
-
-			var _is_loaded = function(el) {
-				return !!el.offsetWidth;
-			}
-			var _set_size = function(el) {
-				if (el) {
-					$(el).attr("width", el.offsetWidth);
-					$(el).attr("height", el.offsetHeight);
-				}
-				_complete();
-			}
-			
-			// Hide content
-			$(this.el).trigger("load:start");
-			
-			// Get real picture size
-			// and launch render after that
-			items.each(function(index, el){
-				if (!_is_loaded(el)) {
-					el.onload = function(event) {
-						_set_size(event.target);
-					};
-					return;
-				}
-				_set_size(el);
-				
-			}.bind(this));
 		},
 
 		resize: function() {
