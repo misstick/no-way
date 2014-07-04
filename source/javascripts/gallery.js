@@ -75,26 +75,46 @@
 		
 		load: function() {
 			var items = $("img", this.el);
-			
-			var complete = function() {
+
+			var _complete = _.after(items.length, function() {
+				
+				// @FIXME : listen to event "gallery:loaded" 
+				// to do that
 				this.format_html();
+				
+				// @FIXME : listen to event "gallery:loaded" 
+				// to do that
 				$(this.el).removeClass("load");
+				
 				$(this.el).trigger("gallery:loaded");
-			}.bind(this);
+			}.bind(this));
 
-			var set_size = function(event) {
-				if (event.target) {
-					$(event.target).attr("width", event.target.offsetWidth);
-					$(event.target).attr("height", event.target.offsetHeight);
-				}
+			var _is_loaded = function(el) {
+				return !!el.offsetWidth;
 			}
-
-			this.el.addClass("load");
-
-			var _complete = _.after(items.length, complete)
-			items.each(function(index, el){
-				el.onload = set_size;
+			var _set_size = function(el) {
+				if (el) {
+					$(el).attr("width", el.offsetWidth);
+					$(el).attr("height", el.offsetHeight);
+				}
 				_complete();
+			}
+			
+			// Hide content
+			// @FIXME : add an event for that
+			this.el.addClass("load");
+			
+			// Get real picture size
+			// and launch render after that
+			items.each(function(index, el){
+				if (!_is_loaded(el)) {
+					el.onload = function(event) {
+						_set_size(event.target);
+					};
+					return;
+				}
+				_set_size(el);
+				
 			}.bind(this));
 		},
 
