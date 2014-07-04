@@ -66,17 +66,21 @@
 			return data;
 		},
 		
-		sort: function(coords) {
-			if (coords.length > 1) {
-				var model0 = coords[0];
-				var model1 = coords[coords.length - 1];
+		sort: function() {
+			if (this.models.length > 1) {
+				var model0 = _.first(this.models);
+				var model1 = _.last(this.models);
 				var is_portrait = model1.format == "portrait";
 				var is_smaller = model1.width < model0.width;
 				if (is_portrait && is_smaller) {
-					coords.unshift(model1);
-					coords.pop();
+					this.models.unshift(model1);
+					this.models.pop();
 				}
 			}
+		},
+		
+		get: function(index) {
+			return this.models[index];
 		},
 		
 		remove: function() {
@@ -97,10 +101,9 @@
 
 	Loader.prototype = {
 		
-		coords: new Coords(),
-		
 		initialize: function(el, options) {
 			this.el = el;
+			this.collection = options.collection;
 			$(this.el).on("load:start", this.start.bind(this));
 			$(this.el).on("load:stop", this.stop.bind(this));
 		},
@@ -165,6 +168,7 @@
 		
 		initialize: function(el, options) {
 			this.el = el;
+			this.collection = options.collection;
 			var _func = this.resize.bind(this);
 			$("body").on("resize", _.debounce(_func, 100));
 		},
@@ -189,6 +193,8 @@
 		resize: function() {
 			var content = this.__content;
 			
+			var coords = this.collection.get(0);
+			
 			// Remove Previous resize
 			content.css("width", "auto");
 		
@@ -198,8 +204,8 @@
 			items.each(function(index, item) {
 				width_max += $(item).width();
 			});
-			var len = width_max / this._ref.width;
-			var column_min = Math.ceil(content.width() / this._ref.width);
+			var len = width_max / coords.width;
+			var column_min = Math.ceil(content.width() / coords.width);
 			var column = column_min;
 			while((len / column) > 1 && len % column > 0) {
 				++column;
@@ -209,10 +215,11 @@
 			
 		
 			if (this._fill === "height") {
+				
 		
 				// Gallery is bigger than window Size
 				// Lets fill it
-				var surface = this._ref.width * this._ref.height;
+				var surface = coords.width * coords.height;
 				var surface_all = surface * len;
 				var surface_win = window.innerHeight * window.innerWidth;
 				if (surface_all > surface_win && row === 1) {
@@ -222,14 +229,14 @@
 		
 				// Add Vertical Alignement
 				var height_min = window.innerHeight;
-				var height = row * this._ref.height;
+				var height = row * coords.height;
 				this.el.css({
 					"padding": Math.ceil((height_min - height) / 2) + "px 0"
 				});
 			}
 		
 			// Resize Content
-			var width = column * this._ref.width;
+			var width = column * coords.width;
 			if (width > width_max) width = width_max;
 			content.width(width);
 			
@@ -264,6 +271,8 @@
 		min_width: "730", // Mobile Resolution
 
 		format: ["portrait", "landscape"],
+		
+		collection: new Coords(),
 
 		// @FIXME : remove this tricky/creepy option
 		_clean: true,
@@ -276,11 +285,15 @@
 			$(this.el).on("format:end", this.render.bind(this));
 			$(this.el).on("resize", this.set_nav.bind(this));
 			
-			this.__scroller = new Scroller(this.el);
+			this.__scroller = new Scroller(this.el, {
+				collection: this.collection
+			});
 			
 			// @FIXME : put this in the future into render
 			// when all methods will be cleanedup && renamed
-			this.__loader = new Loader(this.el);
+			this.__loader = new Loader(this.el, {
+				collection: this.collection
+			});
 			this.__loader.render();
 		},
 		
@@ -343,11 +356,12 @@
 				Which is : the 1st portrait element
 				
 				1. define & save each picture format into a collection/model
-				2. Find the first portrait with a metho of this collection
+				2. Find the first portrait with a method of this collection
+				3. How to handle "this._clean" ???
 			*/
 			
 			var items = this.items();
-			var coords = this.__loader.coords;
+			var coords = this.collection;
 			_.each(items, function(item) {
 				var data = this.get_data(item);
 				coords.add(data);
@@ -395,14 +409,11 @@
 			var coords = this.coords(el);
 			
 			this._ref = coords;
-			var success = function() {
-				this.resize();
-			}.bind(this);
+*/
 			
 			// @TEST : format:end should be called once
 			// @each load && resize
-			$(this.el).trigger("format:end", {success: success});
-			*/
+			$(this.el).trigger("format:end");
 		},
 
 
@@ -511,13 +522,17 @@
 		
 
 		render: function(event, options) {
+			
 			if (!options) options = {};
 
 			var items = this.items();
 			items.each(function(index, el){
 				var img = this.get_picture(el).get(0);
 				var format = this.get_format(el);
-				var coords = this._ref;
+				
+				// Smaller coords
+				// var coords = this._ref;
+				var coords = this.collection.get(0);
 				var previous;
 
 				// Create a container
@@ -594,8 +609,11 @@
 				}.bind(this));
 
 			}.bind(this));
-
-			if (options.success) options.success();
+			
+			// @FIXME : Really ?
+			// use an event instead
+			$("body").trigger("resize");
+			// if (options.success) options.success();
 		},
 		
 		destroy: function() {
