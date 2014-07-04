@@ -81,6 +81,90 @@
 		}
 	};
 	
+	var Scroller = function(el, options) {
+		if (el) {
+			this.initialize(el, options);
+		}
+	}
+	
+	Scroller.prototype = {
+		
+		previous_html: null,
+		
+		initialize: function(el, options) {
+			this.el = el;
+			var _func = this.resize.bind(this);
+			$("body").on("resize", _.debounce(_func, 100));
+		},
+		
+		render: function() {
+			// @FIXME : save it  into a fragment
+			// to restore it after a destroy
+			if (!this.previous_html) {
+				var content = $(this.el).html();
+				$(this.el).html("<div class=scroller></div>");
+				this.__content = $(".scroller", this.el);
+				this.__content.append(content);
+				this.previous_html = content;
+			}
+			
+		},
+		
+		items: function() {
+			return this.__content.children();
+		},
+		
+		resize: function() {
+			var content = this.__content;
+			
+			// Remove Previous resize
+			content.css("width", "auto");
+		
+			// Get Column Value
+			var items = this.items();
+			var width_max = 0;
+			items.each(function(index, item) {
+				width_max += $(item).width();
+			});
+			var len = width_max / this._ref.width;
+			var column_min = Math.ceil(content.width() / this._ref.width);
+			var column = column_min;
+			while((len / column) > 1 && len % column > 0) {
+				++column;
+			}
+		
+			var row = Math.ceil(len / column);
+			
+		
+			if (this._fill === "height") {
+		
+				// Gallery is bigger than window Size
+				// Lets fill it
+				var surface = this._ref.width * this._ref.height;
+				var surface_all = surface * len;
+				var surface_win = window.innerHeight * window.innerWidth;
+				if (surface_all > surface_win && row === 1) {
+					column = column_min;
+					row = Math.ceil(len / column);
+				}
+		
+				// Add Vertical Alignement
+				var height_min = window.innerHeight;
+				var height = row * this._ref.height;
+				this.el.css({
+					"padding": Math.ceil((height_min - height) / 2) + "px 0"
+				});
+			}
+		
+			// Resize Content
+			var width = column * this._ref.width;
+			if (width > width_max) width = width_max;
+			content.width(width);
+			
+			$(this.el).trigger("resize");
+		}
+	}
+	
 	//
 	// View: PictureWall
 	// Handle format: landscape/portrait
@@ -116,11 +200,11 @@
 			this.el = el;
 			this._fill = this.el.data("fill") || "width";
 			
-			var _func = this.resize.bind(this);
-			$("body").on("resize", _.debounce(_func, 100));
 			$(this.el).on("load:stop", this.format_html.bind(this));
 			$(this.el).on("format:end", this.render.bind(this));
-			$(this.el).on("gallery:resize", this.set_nav.bind(this));
+			$(this.el).on("resize", this.set_nav.bind(this));
+			
+			this.__scroller = new Scroller(this.el);
 			
 			// @FIXME : put this in the future into render
 			// when all methods will be cleanedup && renamed
@@ -133,8 +217,8 @@
 		// as data (cf Loader.save)
 		coords: function(el) {
 			return {
-				width: el.get(0).offsetWidth,
-				height: el.get(0).offsetHeight
+				width: el.offsetWidth,
+				height: el.offsetHeight
 			}
 		},
 
@@ -149,66 +233,16 @@
 		},
 
 		items: function() {
-			return $(".scroller", this.el).children();
-		},
-
-		resize: function() {
-			var content = $(".scroller", this.el);
-			
-			// Remove Previous resize
-			content.css("width", "auto");
-
-			// Get Column Value
-			var items = this.items();
-			var width_max = 0;
-			items.each(function(index, item) {
-				width_max += $(item).width();
-			});
-			var len = width_max / this._ref.width;
-			var column_min = Math.ceil(content.width() / this._ref.width);
-			var column = column_min;
-			while((len / column) > 1 && len % column > 0) {
-				++column;
-			}
-
-			var row = Math.ceil(len / column);
-			
-
-			if (this._fill === "height") {
-
-				// Gallery is bigger than window Size
-				// Lets fill it
-				var surface = this._ref.width * this._ref.height;
-				var surface_all = surface * len;
-				var surface_win = window.innerHeight * window.innerWidth;
-				if (surface_all > surface_win && row === 1) {
-					column = column_min;
-					row = Math.ceil(len / column);
-				}
-
-				// Add Vertical Alignement
-				var height_min = window.innerHeight;
-				var height = row * this._ref.height;
-				this.el.css({
-					"padding": Math.ceil((height_min - height) / 2) + "px 0"
-				});
-			}
-
-			// Resize Content
-			var width = column * this._ref.width;
-			if (width > width_max) width = width_max;
-			content.width(width);
-			
-			$(this.el).trigger("gallery:resize");
+			return this.__scroller.items();
 		},
 
 		set_format: function(el, coords) {
-			if (!coords) coords = this.coords($(el));
+			if (!coords) coords = this.coords(el);
 			var format = (coords.width < coords.height) ? this.format[0] : this.format[1];
 			$(el).attr("data-format", format);
 			return format;
 		},
-
+		
 		get_format: function(el) {
 			var isColumns = this.el.width() > this.min_screen;
 			if (!isColumns) {
@@ -218,18 +252,27 @@
 			return $(el).attr("data-format");
 		},
 
+		// @FIXME : format_html && render are in fact the same method
+		// compress thes 2 methods together
 		format_html: function() {
 			// Create COntainer
-			var content = this.el.html()
-			this.el.html("<div class=scroller></div>");
-			$(".scroller", this.el).append(content);
-
+			this.__scroller.render();
+			
+			/*
+				Purpose : Find the reference scale of the grid.
+				Which is : the 1st portrait element
+				
+				1. define & save each picture format into a collection/model
+				2. Find the first portrait with a metho of this collection
+			*/
+			
+			/*
 			var index0;
 			var items = this.items();
-			var coords0 = this.coords(items.first());
+			var coords0 = this.coords(items.get(0));
 
 			items.each(function(index, el){
-				var coords = this.coords($(el));
+				var coords = this.coords(el);
 				// Tag each Picture
 				var format = this.set_format(el, coords);
 				// Get The minimal Height
@@ -267,8 +310,10 @@
 			// @TEST : format:end should be called once
 			// @each load && resize
 			$(this.el).trigger("format:end", {success: success});
+			*/
 		},
-		
+
+
 		// @TEST : Navigation bar should exist
 		// on nonetouch resolutions
 		set_nav: function() {
@@ -290,11 +335,11 @@
 				var action = $(target).data("action");
 				var step = this.el.width() / 2;
 				var value = (action === "next") ? this.el.get(0).scrollLeft + step : this.el.get(0).scrollLeft - step;
-
+		
 				// ANimation
 				this.el.animate({ "scrollLeft": value}, { complete: display_buttons});
 			}.bind(this);
-
+		
 			// Add navigation
 			this.el.append('<nav><button data-action="back"><button data-action="next"></nav>');
 			_.create_affix($("nav", this.el));
@@ -306,7 +351,7 @@
 			$(this.el).on("scroll", _.throttle(display_buttons, 100))
 			
 			$(this.el).trigger("scroll");
-			$(this.el).off("gallery:resize");
+			$(this.el).off("resize");
 		},
 
 		replace_picture: function(el, options) {
@@ -334,7 +379,7 @@
 			parent.css(style);
 			parent.data("src", $(el).attr("src"));
 			// Save initaila-size
-			var coords = this.coords($(el));
+			var coords = this.coords(el);
 			$(parent).attr("data-size", coords.width + "|" + coords.height);
 			
 			$(el).remove();
@@ -350,12 +395,12 @@
 					height: value[1] * 1
 				}
 			}
-			return this.coords($(el));
+			return this.coords(el);
 		},
 
 		background_size: function(el) {
 			var coords = this.item_size(el);
-			var coords0 = this.coords($(el));
+			var coords0 = this.coords(el);
 
 			// Picture isnt large enought
 			if (coords.width < coords0.width) {
@@ -371,6 +416,7 @@
 			}
 			return coords.width + "px " + coords.height + "px";
 		},
+		
 
 		render: function(event, options) {
 			if (!options) options = {};
