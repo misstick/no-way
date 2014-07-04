@@ -2,7 +2,7 @@ describe('Gallery', function(){
     
     // @FIXME : timout shouldnt be force
     // Get better performance
-    this.timeout(3500);
+    this.timeout(2500);
 
     // @TODO : use fake pictures
     // @TODO : after makinh these test, factorise gallery.js
@@ -19,7 +19,7 @@ describe('Gallery', function(){
             assert.ok(callback.calledOnce);
             done();
         };
-        $(view.el).on("gallery:loaded", _.debounce(test, 2000));
+        $(view.el).on("gallery:loaded", _.debounce(test, 800));
         
         view.load();
     });
