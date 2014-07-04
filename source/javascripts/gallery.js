@@ -13,6 +13,76 @@
 			return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 		}
 	});
+	
+	var Coords = function(data) {
+		this.initialize(data || null);
+	}
+	
+	Coords.prototype = {
+		
+		defaults: {
+			src: null,
+			width: 0,
+			height: 0,
+			format: null
+		},
+		
+		models: [],
+		
+		initialize: function(data) {
+			if (data) {
+				this.add(data);
+			}
+		},
+		
+		add: function(data, options) {
+			var options = options || {};
+			if (!data && data !== undefined) {
+				return;
+			}
+			if (_.isArray(data)) {
+				_.each(data, function(model) {
+					this.add(model);
+				}.bind(this));
+				return;
+			}
+			_.extend(this.defaults, data);
+			var attributes = this.validate(data, options);
+			attributes.cid = "C" + this.models.length;
+			this.models.push(attributes);
+		},
+		
+		validate: function(data, options) {
+			data.format = (data.width >= data.height) ? "portrait" : "paysage";
+			
+			
+			// @FIXME : remove empty values
+			// save no empty data
+			// var attributes = _.map(data, function(value, key) {
+			// 	
+			// 	return !_.isEmpty(value);
+			// });
+			
+			return data;
+		},
+		
+		sort: function(coords) {
+			if (coords.length > 1) {
+				var model0 = coords[0];
+				var model1 = coords[coords.length - 1];
+				var is_portrait = model1.format == "portrait";
+				var is_smaller = model1.width < model0.width;
+				if (is_portrait && is_smaller) {
+					coords.unshift(model1);
+					coords.pop();
+				}
+			}
+		},
+		
+		remove: function() {
+			
+		}
+	};
 
 	// 
 	// Loader
@@ -26,6 +96,8 @@
 	}
 
 	Loader.prototype = {
+		
+		coords: new Coords(),
 		
 		initialize: function(el, options) {
 			this.el = el;
@@ -251,6 +323,14 @@
 			
 			return $(el).attr("data-format");
 		},
+		
+		get_data: function(el) {
+			return {
+				src: el.src,
+				width: el.offsetWidth,
+				height: el.offsetHeight
+			};
+		},
 
 		// @FIXME : format_html && render are in fact the same method
 		// compress thes 2 methods together
@@ -265,6 +345,18 @@
 				1. define & save each picture format into a collection/model
 				2. Find the first portrait with a metho of this collection
 			*/
+			
+			var items = this.items();
+			var coords = this.__loader.coords;
+			_.each(items, function(item) {
+				var data = this.get_data(item);
+				coords.add(data);
+				
+				// Find the smaller "portrait" picture
+				// and keepit as a reference
+				coords.sort();
+				
+			}.bind(this));
 			
 			/*
 			var index0;
