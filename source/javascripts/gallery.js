@@ -44,8 +44,6 @@
 	// Use Events to be able to test the controller easily	
 	// 
 	PictureWall.prototype = {
-		
-		timeout: 1000,
 
 		item: "img",
 
@@ -99,19 +97,16 @@
 				}
 				success();
 			}
-			
-			// @TEST : this event should be called once
-			// Listen to picture.load
+
 			this.el.addClass("load");
+
+			var _complete = _.after(items.length, complete)
 			items.each(function(index, el){
 				el = this.get_pictures($(el));
 				if (el.get(0)) el.get(0).onload = set_size;
 				else set_size(null);
+				_complete();
 			}.bind(this));
-			
-			setTimeout(function() {
-				complete()
-			}, this.timeout)
 		},
 
 		resize: function() {
