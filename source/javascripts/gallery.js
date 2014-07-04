@@ -53,7 +53,7 @@
 		},
 		
 		validate: function(data, options) {
-			data.format = (data.width >= data.height) ? "portrait" : "paysage";
+			data.format = (data.width >= data.height) ? "landscape" : "portrait";
 			
 			
 			// @FIXME : remove empty values
@@ -70,12 +70,17 @@
 			if (this.models.length > 1) {
 				var model0 = _.first(this.models);
 				var model1 = _.last(this.models);
+				
+				// Handle Portrait pictures
 				var is_portrait = model1.format == "portrait";
 				var is_smaller = model1.width < model0.width;
 				if (is_portrait && is_smaller) {
 					this.models.unshift(model1);
 					this.models.pop();
 				}
+				
+				// @FIXME : create another sort
+				// to link make couple of "landscape" pictures
 			}
 		},
 		
@@ -447,23 +452,24 @@
 			return coords.width + "px " + coords.height + "px";
 		},
 		
+		
+		/*
+			Purpose : Find the reference scale of the grid.
+			Which is : the 1st portrait element
+			
+			1. define & save each picture format into a collection/model
+			2. Find the first portrait with a method of this collection
+			3. How to handle "this._clean" ???
+		*/
 
 		render: function(event, options) {
 			
 			// Create Container
 			this.__scroller.render();
 			
-			/*
-				Purpose : Find the reference scale of the grid.
-				Which is : the 1st portrait element
-				
-				1. define & save each picture format into a collection/model
-				2. Find the first portrait with a method of this collection
-				3. How to handle "this._clean" ???
-			*/
-			
 			var items = this.items();
 			var coords = this.collection;
+			
 			_.each(items, function(item) {
 				var data = this.get_data(item);
 				coords.add(data);
@@ -472,9 +478,20 @@
 				// and keepit as a reference
 				coords.sort();
 				
+				
 			}.bind(this));
 
-			var items = this.items();
+			//
+			// @FIXME : search into Collection
+			// Do not parse DOM
+			//
+			_.each(coords.models, function(model) {
+				console.log(model);
+			});
+			
+			
+			return;
+			
 			items.each(function(index, el){
 				var img = this.get_picture(el).get(0);
 				var format = this.get_format(el);
@@ -486,6 +503,7 @@
 
 				// Create a container
 				// If el is a simple picture
+				/*
 				if (img === el) {
 					if (format === this.format[1]) {
 						// Create .bloc
@@ -498,8 +516,11 @@
 					}
 					previous = $(el).prevAll("." + format).first();
 				}
+				*/
+				
 				// Add a background to container:
 				// To align picture on axes: x, y
+				/*
 				var item = el;
 				if (img) {
 					var picture = this.replace_picture(img, {
@@ -515,9 +536,13 @@
 					return;
 				}
 				$(item).attr("data-content", "text");
+				*/
 
 			}.bind(this));
-
+			
+			// @FIXME : all of this should be removed
+			// by FIX made upper
+			/*
 			$("[data-content]", this.el).each(function(index, el){
 				var pictures = this.get_picture(el);
 
@@ -558,7 +583,9 @@
 				}.bind(this));
 
 			}.bind(this));
+			*/
 			
+			// @FIXME : Whatfor ?
 			$("body").trigger("resize");
 		},
 		
