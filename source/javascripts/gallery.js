@@ -39,6 +39,15 @@
 			$(this.el).removeClass("load");
 		},
 		
+		is_loaded: function(el) {
+			return !!el.offsetWidth;
+		},
+		
+		save: function(el) {
+			$(el).attr("width", el.offsetWidth);
+			$(el).attr("height", el.offsetHeight);
+		},
+		
 		render: function() {
 			$(this.el).trigger("load:start");
 			
@@ -48,28 +57,21 @@
 				$(this.el).trigger("load:stop");
 			}.bind(this));
 			
-			var _is_loaded = function(el) {
-				return !!el.offsetWidth;
-			}
-			
-			var _set_size = function(el) {
-				if (el) {
-					$(el).attr("width", el.offsetWidth);
-					$(el).attr("height", el.offsetHeight);
-				}
+			var _save = function(el) {
+				this.save(el);
 				_complete();
 			}
 			
 			// Get real picture size
 			// and launch render after that
 			items.each(function(index, el){
-				if (!_is_loaded(el)) {
+				if (!this.is_loaded(el)) {
 					el.onload = function(event) {
-						_set_size(event.target);
+						_save(event.target);
 					};
 					return;
 				}
-				_set_size(el);
+				_save(el);
 				
 			}.bind(this));
 		}
