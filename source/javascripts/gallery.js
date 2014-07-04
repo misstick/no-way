@@ -20,6 +20,10 @@
 	
 	Coords.prototype = {
 		
+		// @TODO : add another property 
+		// to save new size : 
+		// (default) .__size: {width: , height},
+		// (final) .size: {width: , height},
 		defaults: {
 			src: null,
 			width: 0,
@@ -127,9 +131,14 @@
 		
 		// @TODO : create a couple Collection/model
 		// to handle this as data
-		save: function(el) {
+		set_data: function(el) {
 			$(el).attr("width", el.offsetWidth);
 			$(el).attr("height", el.offsetHeight);
+			return {
+				src: el.src,
+				width: el.offsetWidth,
+				height: el.offsetHeight
+			};
 		},
 		
 		render: function() {
@@ -142,7 +151,14 @@
 			}.bind(this));
 			
 			var _save = function(el) {
-				this.save(el);
+				var data = this.set_data(el);
+				
+				this.collection.add(data);
+				
+				// Find the smaller "portrait" picture
+				// and keepit as a reference
+				this.collection.sort();
+				
 				_complete();
 			}.bind(this);
 			
@@ -325,30 +341,6 @@
 			return this.__scroller.items();
 		},
 
-		set_format: function(el, coords) {
-			if (!coords) coords = this.coords(el);
-			var format = (coords.width < coords.height) ? this.format[0] : this.format[1];
-			$(el).attr("data-format", format);
-			return format;
-		},
-		
-		get_format: function(el) {
-			var isColumns = this.el.width() > this.min_screen;
-			if (!isColumns) {
-				return this.format[0];
-			}
-			
-			return $(el).attr("data-format");
-		},
-		
-		get_data: function(el) {
-			return {
-				src: el.src,
-				width: el.offsetWidth,
-				height: el.offsetHeight
-			};
-		},
-
 		// @TEST : Navigation bar should exist
 		// on nonetouch resolutions
 		set_nav: function() {
@@ -389,6 +381,8 @@
 			$(this.el).off("resize");
 		},
 
+		// @FIXME : create a prevate method into .render
+		// and remove it
 		replace_picture: function(el, options) {
 			if (el === undefined || !el) {
 				return false;
@@ -420,7 +414,9 @@
 			$(el).remove();
 			return parent.get(0);
 		},
-
+		
+		// @FIXME: replace with "model.__size"
+		// and remove this method
 		item_size: function (el) {
 			var value = $(el).attr("data-size");
 			if (value) {
@@ -469,17 +465,6 @@
 			
 			var items = this.items();
 			var coords = this.collection;
-			
-			_.each(items, function(item) {
-				var data = this.get_data(item);
-				coords.add(data);
-				
-				// Find the smaller "portrait" picture
-				// and keepit as a reference
-				coords.sort();
-				
-				
-			}.bind(this));
 
 			//
 			// @FIXME : search into Collection
@@ -493,17 +478,17 @@
 			return;
 			
 			items.each(function(index, el){
-				var img = this.get_picture(el).get(0);
-				var format = this.get_format(el);
+				// var img = this.get_picture(el).get(0);
+				// var format = this.get_format(el);
 				
 				// Smaller coords
 				// var coords = this._ref;
 				var coords = this.collection.get(0);
-				var previous;
-
+				// @TODO : clean this with collection.sorted
 				// Create a container
 				// If el is a simple picture
 				/*
+				var previous;
 				if (img === el) {
 					if (format === this.format[1]) {
 						// Create .bloc
@@ -518,6 +503,8 @@
 				}
 				*/
 				
+				// @FIXME : sort all of this before
+				// into collection (remove this frome render)
 				// Add a background to container:
 				// To align picture on axes: x, y
 				/*
