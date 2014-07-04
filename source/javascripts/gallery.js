@@ -59,7 +59,7 @@
 			}
 		},
 
-		get_pictures: function(el) {
+		get_picture: function(el) {
 			if (el.get !== undefined ) el = el.get(0);
 			var tagName = el.tagName.toLowerCase();
 			if (tagName != "img") {
@@ -323,7 +323,7 @@
 
 			var items = this.items();
 			items.each(function(index, el){
-				var img = this.get_pictures(el).get(0);
+				var img = this.get_picture(el).get(0);
 				var format = this.get_format(el);
 				var coords = this._ref;
 				var previous;
@@ -363,7 +363,7 @@
 			}.bind(this));
 
 			$("[data-content]", this.el).each(function(index, el){
-				var pictures = this.get_pictures(el);
+				var pictures = this.get_picture(el);
 
 				// Clean LandscapeItem Size
 				// case0: 2 pictures in 1 columns
