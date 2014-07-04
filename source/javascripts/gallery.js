@@ -87,6 +87,7 @@
 				loaded = true;
 				this.format_html();
 				$(this.el).removeClass("load");
+				$(this.el).trigger("gallery:loaded");
 			}.bind(this);
 			
 			var success = _.after(items.length, complete);

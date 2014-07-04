@@ -1,17 +1,27 @@
 describe('Gallery', function(){
-    var view = new PictureWall($("#test-content"));
-    view.load();
     
+    // @FIXME : timout shouldnt be force
+    // Get better performance
+    this.timeout(3500);
+
     // @TODO : use fake pictures
     // @TODO : after makinh these test, factorise gallery.js
     // to make other test possible, easier
     
     // @TEST : this event should be called once
     // Listen to picture.load
-    it('the event "load:success" should be called only once', function(){
-        // @TODO : use a spy (load sinon.js)
-        // to listen how many times this callback is called
-        // it should be onely 1
+    it('the event "load:success" should be called only once', function(done){
+        var view = new PictureWall($("#test-content"));
+
+        var callback = sinon.spy();
+        $(view.el).on("gallery:loaded", callback);
+        var test = function() {
+            assert.ok(callback.calledOnce);
+            done();
+        };
+        $(view.el).on("gallery:loaded", _.debounce(test, 2000));
+        
+        view.load();
     });
     
     // @TEST : format:end should be called once
