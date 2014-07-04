@@ -64,7 +64,7 @@
 			var _save = function(el) {
 				this.save(el);
 				_complete();
-			}
+			}.bind(this);
 			
 			// Get real picture size
 			// and launch render after that
