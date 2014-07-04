@@ -77,25 +77,19 @@
 		},
 		
 		load: function() {
-			var loaded = false;
 			var items = this.el.children();
 			
 			var complete = function() {
-				if (loaded) return;
-				loaded = true;
 				this.format_html();
 				$(this.el).removeClass("load");
 				$(this.el).trigger("gallery:loaded");
 			}.bind(this);
-			
-			var success = _.after(items.length, complete);
-			
+
 			var set_size = function(event) {
 				if (event && event.target) {
 					$(event.target).attr("width", event.target.offsetWidth);
 					$(event.target).attr("height", event.target.offsetHeight);
 				}
-				success();
 			}
 
 			this.el.addClass("load");
