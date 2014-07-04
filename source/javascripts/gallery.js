@@ -281,8 +281,7 @@
 			this.el = el;
 			this._fill = this.el.data("fill") || "width";
 			
-			$(this.el).on("load:stop", this.format_html.bind(this));
-			$(this.el).on("format:end", this.render.bind(this));
+			$(this.el).on("load:stop", this.render.bind(this));
 			$(this.el).on("resize", this.set_nav.bind(this));
 			
 			this.__scroller = new Scroller(this.el, {
@@ -344,78 +343,6 @@
 				height: el.offsetHeight
 			};
 		},
-
-		// @FIXME : format_html && render are in fact the same method
-		// compress thes 2 methods together
-		format_html: function() {
-			// Create COntainer
-			this.__scroller.render();
-			
-			/*
-				Purpose : Find the reference scale of the grid.
-				Which is : the 1st portrait element
-				
-				1. define & save each picture format into a collection/model
-				2. Find the first portrait with a method of this collection
-				3. How to handle "this._clean" ???
-			*/
-			
-			var items = this.items();
-			var coords = this.collection;
-			_.each(items, function(item) {
-				var data = this.get_data(item);
-				coords.add(data);
-				
-				// Find the smaller "portrait" picture
-				// and keepit as a reference
-				coords.sort();
-				
-			}.bind(this));
-			
-			/*
-			var index0;
-			var items = this.items();
-			var coords0 = this.coords(items.get(0));
-
-			items.each(function(index, el){
-				var coords = this.coords(el);
-				// Tag each Picture
-				var format = this.set_format(el, coords);
-				// Get The minimal Height
-				// to define line_height
-				if (format === this.format[0]) {
-					if (coords0.height > coords.height) {
-						index0 = index;
-					}
-				}
-			}.bind(this));
-
-			// Previous Test didnt Work
-			if (index0 == undefined) {
-				_.find(items, function(el, index) {
-					var test = this.get_format(el) === this.format[0];
-					if (test) index0 = index;
-					return test;
-				}.bind(this));
-			}
-
-			if (index0 == undefined) {
-				index0 = 0;
-				this._clean = false;
-			}
-
-			// Add min-coords
-			var el = $(items.get(index0));
-			var coords = this.coords(el);
-			
-			this._ref = coords;
-*/
-			
-			// @TEST : format:end should be called once
-			// @each load && resize
-			$(this.el).trigger("format:end");
-		},
-
 
 		// @TEST : Navigation bar should exist
 		// on nonetouch resolutions
@@ -523,7 +450,29 @@
 
 		render: function(event, options) {
 			
-			if (!options) options = {};
+			// Create Container
+			this.__scroller.render();
+			
+			/*
+				Purpose : Find the reference scale of the grid.
+				Which is : the 1st portrait element
+				
+				1. define & save each picture format into a collection/model
+				2. Find the first portrait with a method of this collection
+				3. How to handle "this._clean" ???
+			*/
+			
+			var items = this.items();
+			var coords = this.collection;
+			_.each(items, function(item) {
+				var data = this.get_data(item);
+				coords.add(data);
+				
+				// Find the smaller "portrait" picture
+				// and keepit as a reference
+				coords.sort();
+				
+			}.bind(this));
 
 			var items = this.items();
 			items.each(function(index, el){
@@ -610,10 +559,7 @@
 
 			}.bind(this));
 			
-			// @FIXME : Really ?
-			// use an event instead
 			$("body").trigger("resize");
-			// if (options.success) options.success();
 		},
 		
 		destroy: function() {
