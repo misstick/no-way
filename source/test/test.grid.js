@@ -1,5 +1,7 @@
 describe('Gallery', function(){
     
+    var view;
+    
     // @FIXME : timout shouldnt be force
     // Get better performance
     this.timeout(2500);
@@ -8,11 +10,18 @@ describe('Gallery', function(){
     // @TODO : after makinh these test, factorise gallery.js
     // to make other test possible, easier
     
+    beforeEach(function() {
+        view = new PictureWall($("#test-content"));
+    });
+    
+    afterEach(function() {
+        view.destroy();
+        view = undefined;
+    });
+    
     // @TEST : this event should be called once
     // Listen to picture.load
     it('the event "load:success" should be called only once', function(done){
-        var view = new PictureWall($("#test-content"));
-
         var callback = sinon.spy();
         $(view.el).on("gallery:loaded", callback);
         var test = function() {

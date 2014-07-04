@@ -415,6 +415,10 @@
 			}.bind(this));
 
 			if (options.success) options.success();
+		},
+		
+		destroy: function() {
+			console.log("destroy")
 		}
 
 	}
