@@ -14,6 +14,10 @@
 		}
 	});
 
+	// 
+	// Loader
+	// Handle Content loading 
+	// 
 
 	var Loader = function(el, options) {
 		if (el) {
@@ -30,12 +34,10 @@
 		},
 
 		start: function() {
-			console.log("START");
 			$(this.el).addClass("load");
 		},
 		
 		stop: function() {
-			console.log("STOP");
 			$(this.el).removeClass("load");
 		},
 		
@@ -43,6 +45,8 @@
 			return !!el.offsetWidth;
 		},
 		
+		// @TODO : create a couple Collection/model
+		// to handle this as data
 		save: function(el) {
 			$(el).attr("width", el.offsetWidth);
 			$(el).attr("height", el.offsetHeight);
@@ -125,6 +129,8 @@
 		},
 		
 		// @TEST : test that coords are not undefined && typeof === number
+		// @ TODO : create collection/model to handle this
+		// as data (cf Loader.save)
 		coords: function(el) {
 			return {
 				width: el.get(0).offsetWidth,
