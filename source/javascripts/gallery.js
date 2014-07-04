@@ -33,6 +33,7 @@
 		// console.log(typeof this.resize.bind)
 		var _func = this.resize.bind(this);
 		$("body").on("resize", _.debounce(_func, 100));
+		$(this.el).on("gallery:loaded", this.format_html.bind(this))
 		$(this.el).on("format:end", this.render.bind(this));
 		$(this.el).on("gallery:resize", this.set_nav.bind(this));
 	}
@@ -77,11 +78,6 @@
 			var items = $("img", this.el);
 
 			var _complete = _.after(items.length, function() {
-				
-				// @FIXME : listen to event "gallery:loaded" 
-				// to do that
-				this.format_html();
-				
 				// @FIXME : listen to event "gallery:loaded" 
 				// to do that
 				$(this.el).removeClass("load");
