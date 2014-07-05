@@ -84,6 +84,7 @@
 				// Handle Portrait pictures
 				var is_portrait = model1.format == "portrait";
 				var is_smaller = model1.width < model0.width;
+				
 				if (is_portrait && is_smaller) {
 					this.models.pop();
 					this.models.unshift(model1);
@@ -225,6 +226,7 @@
 			// Remove Previous resize
 			content.css("width", "auto");
 		
+		/*
 			// Get Column Value
 			var items = this.items();
 			var width_max = 0;
@@ -266,8 +268,7 @@
 			var width = column * coords.width;
 			if (width > width_max) width = width_max;
 			content.width(width);
-			
-			$(this.el).trigger("resize");
+*/
 		}
 	}
 	
@@ -315,6 +316,7 @@
 			});
 		},
 		
+		/*
 		// @TEST : test that coords are not undefined && typeof === number
 		// @ TODO : create collection/model to handle this
 		// as data (cf Loader.save)
@@ -324,7 +326,6 @@
 				height: el.offsetHeight
 			}
 		},
-
 		get_picture: function(el) {
 			if (el.get !== undefined ) el = el.get(0);
 			var tagName = el.tagName.toLowerCase();
@@ -338,6 +339,7 @@
 		items: function() {
 			return this.__scroller.items();
 		},
+*/
 
 		// @TEST : Navigation bar should exist
 		// on nonetouch resolutions
@@ -378,7 +380,7 @@
 			$(this.el).trigger("scroll");
 			$(this.el).off("resize");
 		},
-
+/*
 		// @FIXME : create a prevate method into .render
 		// and remove it
 		replace_picture: function(el, options) {
@@ -461,15 +463,22 @@
 			// Create Container
 			this.__scroller.render();
 			
-			var container = this.__scroller.el;
+			var container = this.__scroller.__content;
 			var coords = this.collection;
 
 			var _render = function(data) {
+				// @TODO : handle 2 values of size
+				// it depends of screen size
+				// 1 screen height == 2.5 rows
+				
 				var content = '';
 				var model0 = data;
 				var template0 = '<div data-format="<%= format %>" data-content="<%= type %>">';
-				var template1 = '<img src="<%= src %>"" width="<%= width %>"" height="<%= height %>"" />';
+				var template1 = '<div class="image" style="background-image: url(\'<%= src %>\'); width: <%= width %>px; height: <%= height %>px;"';
 				var template2 = '</div>';
+				
+				// @FIXME : create a <div> instead
+				// see "replace_picture" methods
 				
 				if (_.isArray(data)) {
 					model0 = data[0];
@@ -484,7 +493,8 @@
 				
 			}.bind(this);
 			
-			coords.sort_by_format(_render);
+			// Transform data into DOM
+			var plop = coords.sort_by_format(_render);
 
 			// @FIXME : Whatfor ?
 			$("body").trigger("resize");
