@@ -96,9 +96,11 @@
 			var callback = callback || function(data) { return data; };
 			return _.map(this.models, function(model, index, list) {
 				if (model.format != "portrait") {
-					var next = list[index + 1];
-					if (next && next.format != "portrait") {
-						list.splice(index, 1);
+					
+					var _list = list.slice(index + 1, list.length);
+					var next = _.findWhere(_list, {format: "landscape"});
+					if (next) {
+						list.splice(_.indexOf(list, next), 1);
 						return callback([model, next]);
 					}
 					return callback([model]);
