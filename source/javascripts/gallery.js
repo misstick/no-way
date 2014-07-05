@@ -25,8 +25,8 @@
 		// (default) .__size: {width: , height},
 		// (final) .size: {width: , height},
 		
-		// @FIXME : add DOM order (is different than load order)
 		defaults: {
+			order: 0,
 			src: null,
 			width: 0,
 			height: 0,
@@ -77,19 +77,9 @@
 		},
 		
 		sort: function() {
-			if (this.models.length > 1) {
-				var model0 = _.first(this.models);
-				var model1 = _.last(this.models);
-				
-				// Handle Portrait pictures
-				var is_portrait = model1.format == "portrait";
-				var is_smaller = model1.width < model0.width;
-				
-				if (is_portrait && is_smaller) {
-					this.models.unshift(model1);
-					this.models.pop();
-				}
-			}
+			this.models = _.sortBy(this.models, function(model) {
+				return model.order;
+			});
 		},
 		
 		sort_by_format: function(callback) {
@@ -158,7 +148,8 @@
 			return {
 				src: el.src,
 				width: el.offsetWidth,
-				height: el.offsetHeight
+				height: el.offsetHeight,
+				order: el._index
 			};
 		},
 		
@@ -168,6 +159,7 @@
 			var items = $("img", this.el);
 			
 			var _complete = _.after(items.length, function() {
+				this.collection.sort();
 				$(this.el).trigger("load:stop");
 			}.bind(this));
 			
@@ -176,16 +168,13 @@
 				var data = this.set_data(el);
 				this.collection.add(data);
 				
-				// Find the smaller "portrait" picture
-				// and keepit as a reference
-				this.collection.sort();
-				
 				_complete();
 			}.bind(this);
 			
 			// Get real picture size
 			// and launch render after that
 			items.each(function(index, el){
+				el._index = index;
 				if (!this.is_loaded(el)) {
 					el.onload = _save;
 					return;
