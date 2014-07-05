@@ -24,11 +24,14 @@
 		// to save new size : 
 		// (default) .__size: {width: , height},
 		// (final) .size: {width: , height},
+		
+		// @FIXME : add DOM order (is different than load order)
 		defaults: {
 			src: null,
 			width: 0,
 			height: 0,
-			format: null
+			format: "portrait",
+			type: "picture"
 		},
 		
 		models: [],
@@ -50,15 +53,18 @@
 				}.bind(this));
 				return;
 			}
-			_.extend(this.defaults, data);
-			var attributes = this.validate(data, options);
-			attributes.cid = "C" + this.models.length;
-			this.models.push(attributes);
+			
+			var attributes = _.clone(this.defaults);
+			_.extend(attributes, data);
+			attributes = this.validate(attributes, options);
+			if (attributes) {
+				attributes.cid = "C" + this.models.length;
+				this.models.push(attributes);
+			}
 		},
 		
 		validate: function(data, options) {
 			data.format = (data.width >= data.height) ? "landscape" : "portrait";
-			
 			
 			// @FIXME : remove empty values
 			// save no empty data
@@ -79,13 +85,25 @@
 				var is_portrait = model1.format == "portrait";
 				var is_smaller = model1.width < model0.width;
 				if (is_portrait && is_smaller) {
-					this.models.unshift(model1);
 					this.models.pop();
+					this.models.unshift(model1);
 				}
-				
-				// @FIXME : create another sort
-				// to link make couple of "landscape" pictures
 			}
+		},
+		
+		sort_by_format: function(callback) {
+			var callback = callback || function(data) { return data; };
+			return _.map(this.models, function(model, index, list) {
+				if (model.format != "portrait") {
+					var next = list[index + 1];
+					if (next && next.format != "portrait") {
+						list.splice(index, 1);
+						return callback([model, next]);
+					}
+					return callback([model]);
+				}
+				return callback(model);
+			});
 		},
 		
 		get: function(index) {
@@ -150,9 +168,9 @@
 				$(this.el).trigger("load:stop");
 			}.bind(this));
 			
-			var _save = function(el) {
+			var _save = function(event) {
+				var el = event.target;
 				var data = this.set_data(el);
-				
 				this.collection.add(data);
 				
 				// Find the smaller "portrait" picture
@@ -166,12 +184,10 @@
 			// and launch render after that
 			items.each(function(index, el){
 				if (!this.is_loaded(el)) {
-					el.onload = function(event) {
-						_save(event.target);
-					};
+					el.onload = _save;
 					return;
 				}
-				_save(el);
+				_save({target: el});
 				
 			}.bind(this));
 		}
@@ -185,8 +201,6 @@
 	
 	Scroller.prototype = {
 		
-		previous_html: null,
-		
 		initialize: function(el, options) {
 			this.el = el;
 			this.collection = options.collection;
@@ -195,16 +209,8 @@
 		},
 		
 		render: function() {
-			// @FIXME : save it  into a fragment
-			// to restore it after a destroy
-			if (!this.previous_html) {
-				var content = $(this.el).html();
-				$(this.el).html("<div class=scroller></div>");
-				this.__content = $(".scroller", this.el);
-				this.__content.append(content);
-				this.previous_html = content;
-			}
-			
+			$(this.el).html("<div class=scroller></div>");
+			this.__content = $(".scroller", this.el);
 		},
 		
 		items: function() {
@@ -287,16 +293,7 @@
 	// 
 	PictureWall.prototype = {
 		
-		min_screen: "700",
-
-		min_width: "730", // Mobile Resolution
-
-		format: ["portrait", "landscape"],
-		
 		collection: new Coords(),
-
-		// @FIXME : remove this tricky/creepy option
-		_clean: true,
 		
 		initialize: function(el, options) {
 			this.el = el;
@@ -305,16 +302,17 @@
 			$(this.el).on("load:stop", this.render.bind(this));
 			$(this.el).on("resize", this.set_nav.bind(this));
 			
-			this.__scroller = new Scroller(this.el, {
-				collection: this.collection
-			});
-			
 			// @FIXME : put this in the future into render
 			// when all methods will be cleanedup && renamed
 			this.__loader = new Loader(this.el, {
 				collection: this.collection
 			});
 			this.__loader.render();
+			
+			
+			this.__scroller = new Scroller(this.el, {
+				collection: this.collection
+			});
 		},
 		
 		// @TEST : test that coords are not undefined && typeof === number
@@ -463,115 +461,31 @@
 			// Create Container
 			this.__scroller.render();
 			
-			var items = this.items();
+			var container = this.__scroller.el;
 			var coords = this.collection;
 
-			//
-			// @FIXME : search into Collection
-			// Do not parse DOM
-			//
-			_.each(coords.models, function(model) {
-				console.log(model);
-			});
-			
-			
-			return;
-			
-			items.each(function(index, el){
-				// var img = this.get_picture(el).get(0);
-				// var format = this.get_format(el);
+			var _render = function(data) {
+				var content = '';
+				var model0 = data;
+				var template0 = '<div data-format="<%= format %>" data-content="<%= type %>">';
+				var template1 = '<img src="<%= src %>"" width="<%= width %>"" height="<%= height %>"" />';
+				var template2 = '</div>';
 				
-				// Smaller coords
-				// var coords = this._ref;
-				var coords = this.collection.get(0);
-				// @TODO : clean this with collection.sorted
-				// Create a container
-				// If el is a simple picture
-				/*
-				var previous;
-				if (img === el) {
-					if (format === this.format[1]) {
-						// Create .bloc
-						var container = $(el).prevAll("." + format).first();
-						if (!container.get(0) || container.children().size() >= 2) {
-							$(el).before('<div class="' + format + '">');
-						}
-					}	else {
-						$(el).before('<div class="' + format + '">');
-					}
-					previous = $(el).prevAll("." + format).first();
-				}
-				*/
-				
-				// @FIXME : sort all of this before
-				// into collection (remove this frome render)
-				// Add a background to container:
-				// To align picture on axes: x, y
-				/*
-				var item = el;
-				if (img) {
-					var picture = this.replace_picture(img, {
-						coords: coords
+				if (_.isArray(data)) {
+					model0 = data[0];
+					_.each(data, function(model) {
+						content += _.template(template1, model);
 					});
-					// Move Picture
-					if (previous) {
-						previous.append(picture);
-						item = previous;
-					}
-					
-					$(item).attr("data-content", "picture");
-					return;
+				} else {
+					content = _.template(template1, model0);
 				}
-				$(item).attr("data-content", "text");
-				*/
-
-			}.bind(this));
+				content = _.template(template0, model0) + content + _.template(template2, model0);
+				container.append(content);
+				
+			}.bind(this);
 			
-			// @FIXME : all of this should be removed
-			// by FIX made upper
-			/*
-			$("[data-content]", this.el).each(function(index, el){
-				var pictures = this.get_picture(el);
+			coords.sort_by_format(_render);
 
-				// Clean LandscapeItem Size
-				// case0: 2 pictures in 1 columns
-				// case1: 1 pictures int 2 columns
-				//
-				// FIX: gérer mieux l'exception
-				// lorsque ttes les image sont la même taille
-				// Ne pas les regrouper
-				// et donc ne pas toucher à leur taille
-				//
-				// @TEST : landscape cases
-				// resize pictures
-				if (this._clean) {
-					if ($(el).hasClass(this.format[1])) {
-						if (pictures.size() >= 2) {
-							pictures.each(function(index, item) {
-								$(item).css({
-									height: $(item).height() / 2
-								});
-							}.bind(this));
-						} else {
-							// Colspan=2
-							var picture = pictures.first();
-							picture.css({
-								width: $(el).width() * 2,
-								height: $(el).height()
-							});
-						}
-					}
-				}
-
-				// Resize Background
-				pictures.each(function(index0, img) {
-					var size = this.background_size(img);
-					$(img).css({ "background-size": size});
-				}.bind(this));
-
-			}.bind(this));
-			*/
-			
 			// @FIXME : Whatfor ?
 			$("body").trigger("resize");
 		},
