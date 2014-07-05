@@ -86,8 +86,8 @@
 				var is_smaller = model1.width < model0.width;
 				
 				if (is_portrait && is_smaller) {
-					this.models.pop();
 					this.models.unshift(model1);
+					this.models.pop();
 				}
 			}
 		},
@@ -470,11 +470,10 @@
 				// @TODO : handle 2 values of size
 				// it depends of screen size
 				// 1 screen height == 2.5 rows
-				
 				var content = '';
 				var model0 = data;
 				var template0 = '<div data-format="<%= format %>" data-content="<%= type %>">';
-				var template1 = '<div class="image" style="background-image: url(\'<%= src %>\'); width: <%= width %>px; height: <%= height %>px;"';
+				var template1 = '<div class="image" style="background-image: url(\'<%= src %>\'); width: <%= width %>px; height: <%= height %>px;"></div>';
 				var template2 = '</div>';
 				
 				// @FIXME : create a <div> instead
