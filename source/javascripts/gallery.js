@@ -14,19 +14,14 @@
 		}
 	});
 	
-	var Coords = function(data) {
+	var Collection = function(data) {
 		this.initialize(data || null);
 	}
 	
-	Coords.prototype = {
+	Collection.prototype = {
 		
 		defaults: {
-			order: 0,
-			src: null,
-			width: 0,
-			height: 0,
-			format: "portrait",
-			type: "picture"
+			order: 0
 		},
 		
 		models: [],
@@ -59,6 +54,50 @@
 		},
 		
 		validate: function(data, options) {
+			return data;
+		},
+		
+		sort: function() {
+			this.models = _.sortBy(this.models, function(model) {
+				return model.order;
+			});
+		},
+				
+		get: function(index) {
+			return this.models[index];
+		},
+		
+		reset: function() {
+			this.models = [];
+		},
+		
+		remove: function() {
+			
+		}
+	};
+	
+	
+	var Coords = function(data) {
+		this.initialize(data || null);
+	}
+	
+	Coords.prototype = {
+		
+		defaults: {
+			order: 0,
+			src: null,
+			width: 0,
+			height: 0,
+			format: "portrait",
+			type: "picture"
+		},
+		initialize: function(data) {
+			if (data) {
+				this.add(data);
+			}
+		},
+		
+		validate: function(data, options) {
 			data.format = (data.width >= data.height) ? "landscape" : "portrait";
 			
 			// @TODO : add another property 
@@ -69,15 +108,10 @@
 			return data;
 		},
 		
-		sort: function() {
-			this.models = _.sortBy(this.models, function(model) {
-				return model.order;
-			});
-		},
-		
 		sort_by_format: function(callback) {
+			var models = _.clone(this.models);
 			var callback = callback || function(data) { return data; };
-			return _.map(this.models, function(model, index, list) {
+			return _.map(models, function(model, index, list) {
 				if (model.format != "portrait") {
 					
 					var _list = list.slice(index + 1, list.length);
@@ -92,12 +126,37 @@
 			});
 		},
 		
-		get: function(index) {
-			return this.models[index];
-		},
-		
-		remove: function() {
+		get_item_size: function(screen_coords) {
+			var width = 0;
+			var height = 0;
+			var height_max = Math.ceil(screen_coords.height / 1.5);
+			var model0 = null;
 			
+			// Get Smaller Item into the grid
+			_.each(this.models, function(model) {
+				if (!model0 && model.format == "portrait") {
+					model0 = model;
+				}
+				var _height = (model.format == "portrait") ? model.height : model.height * 2;
+				if(!height) {
+					height = _height;
+					return;
+				}
+				if (_height < height) {
+					height = _height;
+				}
+			});
+			
+			// It should have several rows
+			// in one page
+			if (height > height_max) {
+				height = height_max;
+			}
+			
+			return {
+				width: Math.ceil(model0.width * height / model0.height),
+				height: height
+			}
 		}
 	};
 
@@ -181,9 +240,10 @@
 	
 	Scroller.prototype = {
 		
+		collection: new Collection(),
+		
 		initialize: function(el, options) {
 			this.el = el;
-			this.collection = options.collection;
 			
 			var _func = this.resize.bind(this);
 			$("body").on("resize", _.debounce(_func, 100));
@@ -210,17 +270,18 @@
 		resize: function() {
 			var content = this.__content;
 			var collection = this.collection;
+			var items = this.__content.children();
 
 			// Remove Previous resize		
 			content.css("width", "auto");
-
-			var coords = _.find(collection.models, function(model) {
-				return model.format == "portrait";
+			
+			var coords = collection.get_item_size({
+				width: window.innerWidth,
+				height: window.innerHeight
 			});
-			var width_max = _.reduce(collection.models, function(result, model) {
-				if (_.isObject(result)) result = result.width;
-				return result + model.width;
-			});
+			
+			// var width_max = coords.width * ;
+			console.log(width_max)
 			var len = width_max / coords.width;
 			
 			// Get Column Value
@@ -252,10 +313,29 @@
 			}
 			*/
 			
-			// Resize Content
-			var width = columns * coords.width;
-			// if (width > width_max) width = width_max;
-			content.width(width);
+			// // Force Content.width
+			// // to have scroller
+			// var width = columns * coords.width;
+			// // if (width > width_max) width = width_max;
+			// content.width(width);
+			
+			// Resize items
+			// @TODO : add methods
+			_.each(items, function(item) {
+				$(item).css(coords);
+				_.each($(item).children(), function(item0) {
+					var cid = $(item0).attr("data-cid");
+					var data = _.find(collection.models, function(model) {
+						return model.cid == cid;
+					});
+					$(item0).css({
+						"background-size": _.template('<%= width %>px <%= height %>px', {
+							width: data.width * item0.offsetHeight / data.height,
+							height: item0.offsetHeight
+						})
+					});
+				});
+			})
 		}
 	}
 	
@@ -297,9 +377,7 @@
 			});
 			this.__loader.render();
 			
-			this.__scroller = new Scroller(this.el, {
-				collection: this.collection
-			});
+			this.__scroller = new Scroller(this.el);
 		},
 
 		// @TODO : Create a new component to handle navigation
@@ -342,29 +420,7 @@
 			$(this.el).trigger("scroll");
 			$(this.el).off("resize");
 		},
-/*
 
-		background_size: function(el) {
-			var coords = this.item_size(el);
-			var coords0 = this.coords(el);
-
-			// Picture isnt large enought
-			if (coords.width < coords0.width) {
-				var width = Math.round(coords.width * coords0.height / coords.height);
-				return (width < coords0.width) ? "100% auto" : "auto 100%";
-			}
-			// Picture height isnt tall enought
-			if (coords.height < coords0.height) {
-				var width = Math.round(coords.width * coords0.height / coords.height);
-				if (width >= coords0.width) {
-					return width + "px " + coords0.height + "px";
-				}
-			}
-			return coords.width + "px " + coords.height + "px";
-		},
-*/
-		
-		
 		/*
 			Purpose : Find the reference scale of the grid.
 			Which is : the 1st portrait element
@@ -375,6 +431,9 @@
 		*/
 
 		render: function(event, options) {
+			
+			var _collection = this.__scroller.collection;
+			
 			var _all_content = '';
 			
 			var _success = _.debounce(function(data) {
@@ -387,8 +446,8 @@
 				// 1 screen height == 2.5 rows
 				var content = '';
 				var model0 = data;
-				var template0 = '<div data-format="<%= format %>" data-content="<%= type %>">';
-				var template1 = '<div class="image" style="background-image: url(\'<%= src %>\'); width: <%= width %>px; height: <%= height %>px;"></div>';
+				var template0 = '<div data-content="<%= type %>">';
+				var template1 = '<div class="image <%= format %>" data-cid="<%= cid %>" style="background-image: url(\'<%= src %>\');"></div>';
 				var template2 = '</div>';
 				
 				if (_.isArray(data)) {
@@ -403,10 +462,13 @@
 				
 				// Change Grid size
 				_success();
+				
+				_collection.push(data);
 
 			}.bind(this);
 				
 			// Transform data into DOM
+			_collection.reset();
 			this.collection.sort_by_format(_render);
 		},
 		
