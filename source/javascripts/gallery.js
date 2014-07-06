@@ -195,46 +195,49 @@
 			}
 		},
 		
-		items: function() {
-			return this.__content.children();
-		},
+		// items: function() {
+		// 	return this.__content.children();
+		// },
 		
 		resize: function() {
 			var content = this.__content;
 			
-			var coords = this.collection.get(0);
-			
 			// Remove Previous resize
 			content.css("width", "auto");
-		
-		/*
-			// Get Column Value
-			var items = this.items();
-			var width_max = 0;
-			items.each(function(index, item) {
-				width_max += $(item).width();
+			
+			// Get reference data
+			// @TODO : move this into Coords
+			// && defined this when data is saved (validate)
+			
+			var coords = _.find(this.collection.models, function(model) {
+				return model.format == "portrait";
+			});
+			var width_max = _.reduce(this.collection.models, function(result, model) {
+				if (_.isObject(result)) result = result.width;
+				return result + model.width;
 			});
 			var len = width_max / coords.width;
-			var column_min = Math.ceil(content.width() / coords.width);
-			var column = column_min;
-			while((len / column) > 1 && len % column > 0) {
-				++column;
-			}
-		
-			var row = Math.ceil(len / column);
 			
-		
+			// Get Column Value
+			var column_min = Math.ceil(content.width() / coords.width);
+			var columns = column_min;
+			while((len / columns) > 1 && len % columns > 0) {
+				++columns;
+			}
+			
+			var rows = Math.ceil(len / columns);
+			console.log(column_min, columns, rows)
+			
+			/*
 			if (this._fill === "height") {
-				
-		
 				// Gallery is bigger than window Size
 				// Lets fill it
 				var surface = coords.width * coords.height;
 				var surface_all = surface * len;
 				var surface_win = window.innerHeight * window.innerWidth;
 				if (surface_all > surface_win && row === 1) {
-					column = column_min;
-					row = Math.ceil(len / column);
+					columns = column_min;
+					rows = Math.ceil(len / column);
 				}
 		
 				// Add Vertical Alignement
@@ -244,12 +247,13 @@
 					"padding": Math.ceil((height_min - height) / 2) + "px 0"
 				});
 			}
-		
+			*/
+
+
 			// Resize Content
-			var width = column * coords.width;
-			if (width > width_max) width = width_max;
+			var width = columns * coords.width;
+			// if (width > width_max) width = width_max;
 			content.width(width);
-*/
 		}
 	}
 	
