@@ -133,11 +133,7 @@
 			return !!el.offsetWidth;
 		},
 		
-		// @TODO : create a couple Collection/model
-		// to handle this as data
-		set_data: function(el) {
-			$(el).attr("width", el.offsetWidth);
-			$(el).attr("height", el.offsetHeight);
+		data: function(el) {
 			return {
 				src: el.src,
 				width: el.offsetWidth,
@@ -158,7 +154,7 @@
 			
 			var _save = function(event) {
 				var el = event.target;
-				var data = this.set_data(el);
+				var data = this.data(el);
 				this.collection.add(data);
 				_complete();
 			}.bind(this);
