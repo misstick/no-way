@@ -68,8 +68,8 @@
 		},
 		
 		reset: function() {
-			this.models = [];
-		},
+			this.models = []
+		}
 		
 		remove: function() {
 			
@@ -240,7 +240,7 @@
 	
 	Scroller.prototype = {
 		
-		collection: new Collection(),
+		grid: [],
 		
 		initialize: function(el, options) {
 			this.el = el;
@@ -269,7 +269,11 @@
 		
 		resize: function() {
 			var content = this.__content;
-			var collection = this.collection;
+			
+			// Grid is a table with CID references
+			// of models of collection
+			var grid = this.grid;
+			
 			var items = this.__content.children();
 
 			// Remove Previous resize		
@@ -336,6 +340,10 @@
 					});
 				});
 			})
+		},
+		
+		reset: function() {
+			this.models = [];
 		}
 	}
 	
@@ -432,11 +440,12 @@
 
 		render: function(event, options) {
 			
-			var _collection = this.__scroller.collection;
+			var _grid = [];
 			
 			var _all_content = '';
 			
 			var _success = _.debounce(function(data) {
+				this.__scroller.grid = _grid;
 				this.__scroller.render.call(this.__scroller, _all_content)
 			}.bind(this), 200);
 			
@@ -463,12 +472,11 @@
 				// Change Grid size
 				_success();
 				
-				_collection.push(data);
+				_grid.push(_.pluck(data, "cid"));
 
 			}.bind(this);
 				
 			// Transform data into DOM
-			_collection.reset();
 			this.collection.sort_by_format(_render);
 		},
 		
