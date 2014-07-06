@@ -69,7 +69,7 @@
 		
 		reset: function() {
 			this.models = []
-		}
+		},
 		
 		remove: function() {
 			
@@ -244,6 +244,7 @@
 		
 		initialize: function(el, options) {
 			this.el = el;
+			this.collection = options.collection;
 			
 			var _func = this.resize.bind(this);
 			$("body").on("resize", _.debounce(_func, 100));
@@ -273,8 +274,7 @@
 			// Grid is a table with CID references
 			// of models of collection
 			var grid = this.grid;
-			
-			var items = this.__content.children();
+			var collection = this.collection;
 
 			// Remove Previous resize		
 			content.css("width", "auto");
@@ -284,8 +284,8 @@
 				height: window.innerHeight
 			});
 			
-			// var width_max = coords.width * ;
-			console.log(width_max)
+			var width_max = coords.width * grid.length;
+			console.log("GRID", grid, width_max)
 			var len = width_max / coords.width;
 			
 			// Get Column Value
@@ -323,27 +323,29 @@
 			// // if (width > width_max) width = width_max;
 			// content.width(width);
 			
-			// Resize items
+			// Resize Grid Items
 			// @TODO : add methods
-			_.each(items, function(item) {
-				$(item).css(coords);
-				_.each($(item).children(), function(item0) {
-					var cid = $(item0).attr("data-cid");
-					var data = _.find(collection.models, function(model) {
-						return model.cid == cid;
+			_.each(grid, function(data) {
+				_.each(data, function(cid, index) {
+					var item = $('[data-cid=' + cid + ']', this.el);
+					
+					// Resize Container
+					if (!index) {
+						$(item).parent().css(coords);
+					}
+					
+					// Resize Picture
+					var model = _.find(collection.models, function(_model) {
+						return _model.cid == cid;
 					});
-					$(item0).css({
+					$(item).css({
 						"background-size": _.template('<%= width %>px <%= height %>px', {
 							width: data.width * item0.offsetHeight / data.height,
 							height: item0.offsetHeight
 						})
 					});
 				});
-			})
-		},
-		
-		reset: function() {
-			this.models = [];
+			});
 		}
 	}
 	
@@ -385,7 +387,9 @@
 			});
 			this.__loader.render();
 			
-			this.__scroller = new Scroller(this.el);
+			this.__scroller = new Scroller(this.el, {
+				collection: this.collection
+			});
 		},
 
 		// @TODO : Create a new component to handle navigation
