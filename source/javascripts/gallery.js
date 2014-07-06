@@ -20,11 +20,6 @@
 	
 	Coords.prototype = {
 		
-		// @TODO : add another property 
-		// to save new size : 
-		// (default) .__size: {width: , height},
-		// (final) .size: {width: , height},
-		
 		defaults: {
 			order: 0,
 			src: null,
@@ -66,12 +61,10 @@
 		validate: function(data, options) {
 			data.format = (data.width >= data.height) ? "landscape" : "portrait";
 			
-			// @FIXME : remove empty values
-			// save no empty data
-			// var attributes = _.map(data, function(value, key) {
-			// 	
-			// 	return !_.isEmpty(value);
-			// });
+			// @TODO : add another property 
+			// to save new size : 
+			// (default) .__size: {width: , height},
+			// (final) .size: {width: , height},
 			
 			return data;
 		},
@@ -167,7 +160,6 @@
 				var el = event.target;
 				var data = this.set_data(el);
 				this.collection.add(data);
-				
 				_complete();
 			}.bind(this);
 			
@@ -201,8 +193,10 @@
 		},
 		
 		render: function() {
-			$(this.el).html("<div class=scroller></div>");
-			this.__content = $(".scroller", this.el);
+			if (!this.__content) {
+				$(this.el).html("<div class=scroller></div>");
+				this.__content = $(".scroller", this.el);
+			}
 		},
 		
 		items: function() {
@@ -301,37 +295,12 @@
 			});
 			this.__loader.render();
 			
-			
 			this.__scroller = new Scroller(this.el, {
 				collection: this.collection
 			});
 		},
-		
-		/*
-		// @TEST : test that coords are not undefined && typeof === number
-		// @ TODO : create collection/model to handle this
-		// as data (cf Loader.save)
-		coords: function(el) {
-			return {
-				width: el.offsetWidth,
-				height: el.offsetHeight
-			}
-		},
-		get_picture: function(el) {
-			if (el.get !== undefined ) el = el.get(0);
-			var tagName = el.tagName.toLowerCase();
-			if (tagName != "img") {
-				var test = $("img", el);
-				return (!test.get(0)) ? $(".image", el) : test;
-			}
-			return $(el);
-		},
 
-		items: function() {
-			return this.__scroller.items();
-		},
-*/
-
+		// @TODO : Create a new component to handle navigation
 		// @TEST : Navigation bar should exist
 		// on nonetouch resolutions
 		set_nav: function() {
@@ -372,53 +341,6 @@
 			$(this.el).off("resize");
 		},
 /*
-		// @FIXME : create a prevate method into .render
-		// and remove it
-		replace_picture: function(el, options) {
-			if (el === undefined || !el) {
-				return false;
-			}
-			if (!options) options = {};
-			var style = {
-				"width": options.coords.width,
-				"height": options.coords.height,
-				"background-repeat": "no-repeat",
-				"background-position": "50% 50%",
-				"background-image": "url('" + $(el).attr("src") + "')"
-			};
-
-			// Create a new container
-			// if el is a picture
-			var parent = $(el.parentNode);
-			if (parent.attr("data-format") !== undefined || parent.hasClass("scroller")) {
-				parent.append("<div class='image'>");
-				parent = $(".image").last();
-			} else {
-				parent.addClass("image")
-			}
-			parent.css(style);
-			parent.data("src", $(el).attr("src"));
-			// Save initaila-size
-			var coords = this.coords(el);
-			$(parent).attr("data-size", coords.width + "|" + coords.height);
-			
-			$(el).remove();
-			return parent.get(0);
-		},
-		
-		// @FIXME: replace with "model.__size"
-		// and remove this method
-		item_size: function (el) {
-			var value = $(el).attr("data-size");
-			if (value) {
-				value = value.split("|");
-				return {
-					width: value[0] * 1,
-					height: value[1] * 1
-				}
-			}
-			return this.coords(el);
-		},
 
 		background_size: function(el) {
 			var coords = this.item_size(el);
@@ -438,6 +360,7 @@
 			}
 			return coords.width + "px " + coords.height + "px";
 		},
+*/
 		
 		
 		/*
@@ -483,11 +406,15 @@
 				
 			}.bind(this);
 			
-			// Transform data into DOM
-			var plop = coords.sort_by_format(_render);
+			if (_.isEmpty($(container).html())) {
+				
+				// Transform data into DOM
+				coords.sort_by_format(_render);
+				
+				// @FIXME : Whatfor ?
+				$("body").trigger("resize");
+			}
 
-			// @FIXME : Whatfor ?
-			$("body").trigger("resize");
 		},
 		
 		destroy: function() {
