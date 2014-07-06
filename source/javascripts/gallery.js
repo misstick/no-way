@@ -184,35 +184,40 @@
 		initialize: function(el, options) {
 			this.el = el;
 			this.collection = options.collection;
+			
 			var _func = this.resize.bind(this);
 			$("body").on("resize", _.debounce(_func, 100));
 		},
 		
-		render: function() {
+		render: function(html) {
 			if (!this.__content) {
 				$(this.el).html("<div class=scroller></div>");
 				this.__content = $(".scroller", this.el);
 			}
+
+			var content = this.__content;
+			
+			if (_.isString(html)) {
+				
+				// Append new HTML
+				content.html(html)
+
+				// Display columns && rows
+				this.resize();
+			}	
 		},
-		
-		// items: function() {
-		// 	return this.__content.children();
-		// },
 		
 		resize: function() {
 			var content = this.__content;
-			
-			// Remove Previous resize
+			var collection = this.collection;
+
+			// Remove Previous resize		
 			content.css("width", "auto");
-			
-			// Get reference data
-			// @TODO : move this into Coords
-			// && defined this when data is saved (validate)
-			
-			var coords = _.find(this.collection.models, function(model) {
+
+			var coords = _.find(collection.models, function(model) {
 				return model.format == "portrait";
 			});
-			var width_max = _.reduce(this.collection.models, function(result, model) {
+			var width_max = _.reduce(collection.models, function(result, model) {
 				if (_.isObject(result)) result = result.width;
 				return result + model.width;
 			});
@@ -224,9 +229,7 @@
 			while((len / columns) > 1 && len % columns > 0) {
 				++columns;
 			}
-			
 			var rows = Math.ceil(len / columns);
-			console.log(column_min, columns, rows)
 			
 			/*
 			if (this._fill === "height") {
@@ -239,17 +242,16 @@
 					columns = column_min;
 					rows = Math.ceil(len / column);
 				}
-		
+			
 				// Add Vertical Alignement
 				var height_min = window.innerHeight;
-				var height = row * coords.height;
+				var height = rows * coords.height;
 				this.el.css({
 					"padding": Math.ceil((height_min - height) / 2) + "px 0"
 				});
 			}
 			*/
-
-
+			
 			// Resize Content
 			var width = columns * coords.width;
 			// if (width > width_max) width = width_max;
@@ -373,13 +375,12 @@
 		*/
 
 		render: function(event, options) {
+			var _all_content = '';
 			
-			// Create Container
-			this.__scroller.render();
+			var _success = _.debounce(function(data) {
+				this.__scroller.render.call(this.__scroller, _all_content)
+			}.bind(this), 200);
 			
-			var container = this.__scroller.__content;
-			var coords = this.collection;
-
 			var _render = function(data) {
 				// @TODO : handle 2 values of size
 				// it depends of screen size
@@ -390,9 +391,6 @@
 				var template1 = '<div class="image" style="background-image: url(\'<%= src %>\'); width: <%= width %>px; height: <%= height %>px;"></div>';
 				var template2 = '</div>';
 				
-				// @FIXME : create a <div> instead
-				// see "replace_picture" methods
-				
 				if (_.isArray(data)) {
 					model0 = data[0];
 					_.each(data, function(model) {
@@ -401,20 +399,15 @@
 				} else {
 					content = _.template(template1, model0);
 				}
-				content = _.template(template0, model0) + content + _.template(template2, model0);
-				container.append(content);
+				_all_content += _.template(template0, model0) + content + _.template(template2, model0);
 				
-			}.bind(this);
-			
-			if (_.isEmpty($(container).html())) {
-				
-				// Transform data into DOM
-				coords.sort_by_format(_render);
-				
-				// @FIXME : Whatfor ?
-				$("body").trigger("resize");
-			}
+				// Change Grid size
+				_success();
 
+			}.bind(this);
+				
+			// Transform data into DOM
+			this.collection.sort_by_format(_render);
 		},
 		
 		destroy: function() {
