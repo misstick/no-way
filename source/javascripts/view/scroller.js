@@ -15,7 +15,7 @@
 		initialize: function(el, options) {
 			baseView.prototype.initialize.apply(this, arguments);
 			var _func = this.resize.bind(this);
-			$("body").on("resize", _.debounce(_func, 100));
+			$(window).on("resize", _.debounce(_func, 500));
 		},
 		
 		render: function(html) {
@@ -63,6 +63,11 @@
 			}
 			var rows = Math.ceil(len / columns);
 			
+			// @FIXME : bad min-height calcul ?
+			console.log("resize", columns, rows);
+			
+			// @TODO : clean this part
+			// is it still useless ?
 			/*
 			if (this._fill === "height") {
 				// Gallery is bigger than window Size
@@ -90,7 +95,6 @@
 			content.width(width);
 			
 			// Resize Grid Items
-			// @TODO : add methods
 			_.each(grid, function(data) {
 				_.each(data, function(cid, index) {
 					var item = $('[data-cid=' + cid + ']', this.el);
