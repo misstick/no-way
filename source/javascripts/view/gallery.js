@@ -415,5 +415,5 @@
 	
 	this.PictureWall = PictureWall;
 
-})(_VIEW["base"], _COLLECTION["base"])
+})(_VIEW["base"], _COLLECTION["base"]);
 
