@@ -87,9 +87,7 @@
 			// Force Content.width
 			// to have scroller
 			var width = columns * coords.width;
-			// if (width > width_max) width = width_max;
 			content.width(width);
-			console.log(columns, coords.width, width)
 			
 			// Resize Grid Items
 			// @TODO : add methods
@@ -106,10 +104,19 @@
 					var model = _.find(collection.models, function(_model) {
 						return _model.cid == cid;
 					});
-					$(item).css({
+					
+					var _height = item.height();
+					var _width = Math.ceil(model.width * _height / model.height);
+					if (_width < coords.width) {
+						
+						_height *=  coords.width / _width;
+						_width = coords.width;
+					}
+					
+					item.css({
 						"background-size": _.template('<%= width %>px <%= height %>px', {
-							width: data.width * item.offsetHeight / data.height,
-							height: item.offsetHeight
+							width: _width,
+							height: _height
 						})
 					});
 				});
