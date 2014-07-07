@@ -1,5 +1,5 @@
-(function(baseView, navView, loaderView, scrollerView, baseCollection, gridCollection) {
-	
+(function(baseView, loaderView, scrollerView, baseCollection, gridCollection) {
+
 	var NAMESPACE = "wall";
 
 	//
@@ -28,9 +28,6 @@
 			
 			// @FIXME : put this in the future into render
 			// when all methods will be cleanedup && renamed
-			
-			this.__nav = new navView(this.el);
-			this.__nav.render();
 			
 			this.__loader = new loaderView(this.el, {
 				collection: this.collection
@@ -89,5 +86,5 @@
 	
 	_VIEW[NAMESPACE]  = wallView;
 
-})(_VIEW["base"], _VIEW["nav"], _VIEW["loader"], _VIEW["scroller"], _COLLECTION["base"], _COLLECTION["grid"]);
+})(_VIEW["base"], _VIEW["loader"], _VIEW["scroller"], _COLLECTION["base"], _COLLECTION["grid"]);
 

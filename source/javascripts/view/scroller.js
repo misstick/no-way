@@ -1,4 +1,13 @@
-(function(baseView) {
+(function(baseView, navView) {
+
+	_.mixin({
+		is_touch: function() {
+			/* Modernizr 2.6.2 (Custom Build) | MIT & BSD
+			* Build: http://modernizr.com/download/#-touch-shiv-cssclasses-teststyles-prefixes-load
+			*/
+			return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
+		}
+	});
 
 	var NAMESPACE = "scroller";
 	
@@ -33,7 +42,16 @@
 	
 				// Display columns && rows
 				this.resize();
-			}	
+			}
+			if (!_.is_touch() && this.scroll_value()) {
+				this.__nav = new navView(this.el);
+				this.__nav.render();
+			}
+		},
+		
+		scroll_value: function() {
+			var value = this.el.get(0).scrollWidth - this.el.get(0).offsetWidth;
+			return value > 0;
 		},
 		
 		resize: function() {
@@ -130,5 +148,5 @@
 
 	_VIEW[NAMESPACE]  = scrollerView;
 
-})(_VIEW["base"]);
+})(_VIEW["base"], _VIEW["nav"]);
 

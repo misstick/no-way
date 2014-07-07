@@ -5,12 +5,6 @@
 			var coords = el.offset();
 			if (!coords.top) el.addClass("affix");
 			else el.affix({ offset: coords});
-		},
-		is_touch: function() {
-			/* Modernizr 2.6.2 (Custom Build) | MIT & BSD
-			* Build: http://modernizr.com/download/#-touch-shiv-cssclasses-teststyles-prefixes-load
-			*/
-			return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 		}
 	});
 
@@ -27,8 +21,7 @@
 		// @TEST : Navigation bar should exist
 		// on nonetouch resolutions
 		render: function() {
-			
-			if (_.is_touch() || this.el.get(0).scrollWidth === this.el.get(0).offsetWidth) return;
+			console.log("menu.render")
 			
 			// Display Visibility
 			var display_buttons = function() {
