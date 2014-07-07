@@ -3,6 +3,8 @@
 	
 	var NAMESPACE = "base";
 	
+	var view_counter = 0;
+	
 	var BaseCollection = function(data) {
 		this.initialize(data || null);
 	}
@@ -19,6 +21,7 @@
 			if (data) {
 				this.add(data);
 			}
+			this.cid = "C" + (++view_counter);
 		},
 		
 		add: function(data, options) {
@@ -37,7 +40,7 @@
 			_.extend(attributes, data);
 			attributes = this.validate(attributes, options);
 			if (attributes) {
-				attributes.cid = "C" + this.models.length;
+				attributes.cid = this.cid + this.models.length;
 				this.models.push(attributes);
 			}
 		},

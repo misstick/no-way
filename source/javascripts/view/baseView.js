@@ -1,33 +1,34 @@
 (function(main) {
 	main._VIEW = {};
+
+	var view_counter = 0;
 	
 	var NAMESPACE = "base";
 	
 	var baseView = function(el, options) {
-			this.el = el;
-			options = options || {};
-			if (options.cid) {
-				this.cid = options.cid;
-			}
-			if (el) {
-				this.initialize(el, options);
-			}
+		if (el) {
+			this.initialize(el, options);
+		}
 	};
 
 	baseView.prototype = {
 
-			initialize: function(el, options) {
-				this.el = el;
-
-				options = options || {};
-				if (options.collection) {
-					this.collection = options.collection;
-				}
-			},
-
-			destroy: function() {
-				console.log("destroy")
+		initialize: function(el, options) {
+			
+			options = options || {};
+			
+			this.el = el;
+			
+			if (options.collection) {
+				this.collection = options.collection;
 			}
+			
+			this.cid = options.cid || "V" + (++view_counter);
+		},
+
+		destroy: function() {
+			console.log("destroy")
+		}
 	};
 	
 	_VIEW[NAMESPACE] = baseView;
