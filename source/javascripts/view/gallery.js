@@ -1,4 +1,4 @@
-(function(baseView, baseCollection, gridCollection) {
+(function(baseView, loaderView, baseCollection, gridCollection) {
 
 	_.mixin({
 		create_affix: function(el) {
@@ -13,78 +13,7 @@
 			return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 		}
 	});
-	
-	// 
-	// Loader
-	// Handle Content loading 
-	// 
-
-	var Loader = function(el, options) {
-		baseView.apply(this, arguments);
-	}
-
-	Loader.prototype = Object.create(baseView.prototype);
-
-	_.extend(Loader.prototype, {
 		
-		initialize: function(el, options) {
-			baseView.prototype.initialize.apply(this, arguments);
-			$(this.el).on("load:start", this.start.bind(this));
-			$(this.el).on("load:stop", this.stop.bind(this));
-		},
-
-		start: function() {
-			$(this.el).addClass("load");
-		},
-		
-		stop: function() {
-			$(this.el).removeClass("load");
-		},
-		
-		is_loaded: function(el) {
-			return !!el.offsetWidth;
-		},
-		
-		data: function(el) {
-			return {
-				src: el.src,
-				width: el.offsetWidth,
-				height: el.offsetHeight,
-				order: el._index
-			};
-		},
-		
-		render: function() {
-			$(this.el).trigger("load:start");
-			
-			var items = $("img", this.el);
-			
-			var _complete = _.after(items.length, function() {
-				this.collection.sort();
-				$(this.el).trigger("load:stop");
-			}.bind(this));
-			
-			var _save = function(event) {
-				var el = event.target;
-				var data = this.data(el);
-				this.collection.add(data);
-				_complete();
-			}.bind(this);
-			
-			// Get real picture size
-			// and launch render after that
-			items.each(function(index, el){
-				el._index = index;
-				if (!this.is_loaded(el)) {
-					el.onload = _save;
-					return;
-				}
-				_save({target: el});
-				
-			}.bind(this));
-		}
-	});
-	
 	var Scroller = function(el, options) {
 		baseView.apply(this, arguments);
 	}
@@ -228,7 +157,7 @@
 			
 			// @FIXME : put this in the future into render
 			// when all methods will be cleanedup && renamed
-			this.__loader = new Loader(this.el, {
+			this.__loader = new loaderView(this.el, {
 				collection: this.collection
 			});
 			this.__loader.render();
@@ -335,5 +264,5 @@
 	
 	this.PictureWall = PictureWall;
 
-})(_VIEW["base"], _COLLECTION["base"], _COLLECTION["grid"]);
+})(_VIEW["base"], _VIEW["loader"], _COLLECTION["base"], _COLLECTION["grid"]);
 
