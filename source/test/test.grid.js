@@ -11,7 +11,7 @@ describe('Gallery', function(){
     // to make other test possible, easier
     
     beforeEach(function() {
-        view = new PictureWall();
+        view = new _VIEW["wall"]();
     });
     
     afterEach(function() {

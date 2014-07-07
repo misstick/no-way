@@ -1,4 +1,6 @@
 (function(baseView, loaderView, scrollerView, baseCollection, gridCollection) {
+	
+	var NAMESPACE = "wall";
 
 	_.mixin({
 		create_affix: function(el) {
@@ -15,19 +17,18 @@
 	});
 
 	//
-	// View: PictureWall
 	// Handle format: landscape/portrait
 	// Set pictures close together
 	// Save picture positions
 	//
 
-	var PictureWall = function(el, options) {
+	var wallView = function(el, options) {
 		baseView.apply(this, arguments);
 	}
 
-	PictureWall.prototype = Object.create(baseView.prototype);
+	wallView.prototype = Object.create(baseView.prototype);
 
-	_.extend(PictureWall.prototype, {
+	_.extend(wallView.prototype, {
 		
 		collection: new gridCollection(),
 		
@@ -147,7 +148,7 @@
 
 	});
 	
-	this.PictureWall = PictureWall;
+	_VIEW[NAMESPACE]  = wallView;
 
 })(_VIEW["base"], _VIEW["loader"], _VIEW["scroller"], _COLLECTION["base"], _COLLECTION["grid"]);
 
