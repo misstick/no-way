@@ -1,20 +1,6 @@
-(function(baseView, loaderView, scrollerView, baseCollection, gridCollection) {
+(function(baseView, navView, loaderView, scrollerView, baseCollection, gridCollection) {
 	
 	var NAMESPACE = "wall";
-
-	_.mixin({
-		create_affix: function(el) {
-			var coords = el.offset();
-			if (!coords.top) el.addClass("affix");
-			else el.affix({ offset: coords});
-		},
-		is_touch: function() {
-			/* Modernizr 2.6.2 (Custom Build) | MIT & BSD
-			* Build: http://modernizr.com/download/#-touch-shiv-cssclasses-teststyles-prefixes-load
-			*/
-			return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
-		}
-	});
 
 	//
 	// Handle format: landscape/portrait
@@ -39,10 +25,13 @@
 			this._fill = this.el.data("fill") || "width";
 			
 			$(this.el).on("load:stop", this.render.bind(this));
-			$(this.el).on("resize", this.set_nav.bind(this));
 			
 			// @FIXME : put this in the future into render
 			// when all methods will be cleanedup && renamed
+			
+			this.__nav = new navView(this.el);
+			this.__nav.render();
+			
 			this.__loader = new loaderView(this.el, {
 				collection: this.collection
 			});
@@ -52,57 +41,7 @@
 				collection: this.collection
 			});
 		},
-
-		// @TODO : Create a new component to handle navigation
-		// @TEST : Navigation bar should exist
-		// on nonetouch resolutions
-		set_nav: function() {
-			if (_.is_touch() || this.el.get(0).scrollWidth === this.el.get(0).offsetWidth) return;
-			
-			// Display Visibility
-			var display_buttons = function() {
-				var min = 0;
-				var max = this.el.get(0).scrollWidth - this.el.get(0).offsetWidth;
-				var value = this.el.get(0).scrollLeft;
-				
-				$("[data-action=next]")[(value === max) ? "addClass" : "removeClass"]("disabled");
-				$("[data-action=back]")[(value === min) ? "addClass" : "removeClass"]("disabled");
-				
-			}.bind(this);
-			
-			var _goto = function(event) {
-				var target = event.currentTarget;
-				var action = $(target).data("action");
-				var step = this.el.width() / 2;
-				var value = (action === "next") ? this.el.get(0).scrollLeft + step : this.el.get(0).scrollLeft - step;
 		
-				// ANimation
-				this.el.animate({ "scrollLeft": value}, { complete: display_buttons});
-			}.bind(this);
-		
-			// Add navigation
-			this.el.append('<nav><button data-action="back"><button data-action="next"></nav>');
-			_.create_affix($("nav", this.el));
-			
-			// Handle Click Event
-			$("button", this.el).on("click", _goto);
-			
-			// Handle Scroll Event
-			$(this.el).on("scroll", _.throttle(display_buttons, 100))
-			
-			$(this.el).trigger("scroll");
-			$(this.el).off("resize");
-		},
-
-		/*
-			Purpose : Find the reference scale of the grid.
-			Which is : the 1st portrait element
-			
-			1. define & save each picture format into a collection/model
-			2. Find the first portrait with a method of this collection
-			3. How to handle "this._clean" ???
-		*/
-
 		render: function(event, options) {
 			
 			var _grid = [];
@@ -150,5 +89,5 @@
 	
 	_VIEW[NAMESPACE]  = wallView;
 
-})(_VIEW["base"], _VIEW["loader"], _VIEW["scroller"], _COLLECTION["base"], _COLLECTION["grid"]);
+})(_VIEW["base"], _VIEW["nav"], _VIEW["loader"], _VIEW["scroller"], _COLLECTION["base"], _COLLECTION["grid"]);
 

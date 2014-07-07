@@ -63,7 +63,7 @@
 			}
 			var rows = Math.ceil(len / columns);
 			
-			// @FIXME : bad min-height calcul ?
+			
 			console.log("resize", columns, rows);
 			
 			// @TODO : clean this part
