@@ -14,11 +14,11 @@
 		}
 	});
 	
-	var Collection = function(data) {
+	var BaseCollection = function(data) {
 		this.initialize(data || null);
 	}
 	
-	Collection.prototype = {
+	BaseCollection.prototype = {
 		
 		defaults: {
 			order: 0
@@ -78,10 +78,12 @@
 	
 	
 	var Coords = function(data) {
-		this.initialize(data || null);
+		BaseCollection.apply(this, arguments);
 	}
+
+	Coords.prototype = Object.create(BaseCollection.prototype);
 	
-	Coords.prototype = {
+	_.extend(Coords.prototype, {
 		
 		defaults: {
 			order: 0,
@@ -90,11 +92,6 @@
 			height: 0,
 			format: "portrait",
 			type: "picture"
-		},
-		initialize: function(data) {
-			if (data) {
-				this.add(data);
-			}
 		},
 		
 		validate: function(data, options) {
@@ -158,6 +155,29 @@
 				height: height
 			}
 		}
+	});
+	
+	var baseView = function(el, options) {
+	    	this.el = el;
+	    	options = options || {};
+	    	if (options.cid) {
+	    		this.cid = options.cid;
+	    	}
+	    	if (el) {
+	    		this.initialize(el, options);
+	    	}
+    };
+    
+    baseView.prototype = {
+    	
+	    	initialize: function(el, options) {
+	    		this.el = el;
+	    		
+	    		options = options || {};
+	    		if (options.collection) {
+		    		this.collection = options.collection;
+	    		}
+	    	}
 	};
 
 	// 
@@ -166,16 +186,15 @@
 	// 
 
 	var Loader = function(el, options) {
-		if (el) {
-			this.initialize(el, options);
-		}
+		baseView.apply(this, arguments);
 	}
 
-	Loader.prototype = {
+	Loader.prototype = Object.create(baseView.prototype);
+
+	_.extend(Loader.prototype, {
 		
 		initialize: function(el, options) {
-			this.el = el;
-			this.collection = options.collection;
+			baseView.prototype.initialize.apply(this, arguments);
 			$(this.el).on("load:start", this.start.bind(this));
 			$(this.el).on("load:stop", this.stop.bind(this));
 		},
@@ -230,22 +249,20 @@
 				
 			}.bind(this));
 		}
-	};
+	});
 	
 	var Scroller = function(el, options) {
-		if (el) {
-			this.initialize(el, options);
-		}
+		baseView.apply(this, arguments);
 	}
 	
-	Scroller.prototype = {
+	Scroller.prototype = Object.create(baseView.prototype);
+	
+	_.extend(Scroller.prototype, {
 		
 		grid: [],
 		
 		initialize: function(el, options) {
-			this.el = el;
-			this.collection = options.collection;
-			
+			baseView.prototype.initialize.apply(this, arguments);
 			var _func = this.resize.bind(this);
 			$("body").on("resize", _.debounce(_func, 100));
 		},
@@ -285,7 +302,6 @@
 			});
 			
 			var width_max = coords.width * grid.length;
-			console.log("GRID", grid, width_max)
 			var len = width_max / coords.width;
 			
 			// Get Column Value
@@ -317,11 +333,12 @@
 			}
 			*/
 			
-			// // Force Content.width
-			// // to have scroller
-			// var width = columns * coords.width;
-			// // if (width > width_max) width = width_max;
-			// content.width(width);
+			// Force Content.width
+			// to have scroller
+			var width = columns * coords.width;
+			// if (width > width_max) width = width_max;
+			content.width(width);
+			console.log(columns, coords.width, width)
 			
 			// Resize Grid Items
 			// @TODO : add methods
@@ -340,14 +357,14 @@
 					});
 					$(item).css({
 						"background-size": _.template('<%= width %>px <%= height %>px', {
-							width: data.width * item0.offsetHeight / data.height,
-							height: item0.offsetHeight
+							width: data.width * item.offsetHeight / data.height,
+							height: item.offsetHeight
 						})
 					});
 				});
 			});
 		}
-	}
+	});
 	
 	//
 	// View: PictureWall
@@ -357,24 +374,19 @@
 	//
 
 	var PictureWall = function(el, options) {
-		if (!options) options = {};
-		if (el) {
-			this.initialize(el, options);
-		}
+		baseView.apply(this, arguments);
 	}
-	
-	
-	// 	
-	// @TODO : transform this prototype
-	// into a BackBone.view, Backbone.model
-	// Use Events to be able to test the controller easily	
-	// 
-	PictureWall.prototype = {
+
+	PictureWall.prototype = Object.create(baseView.prototype);
+
+	_.extend(PictureWall.prototype, {
 		
 		collection: new Coords(),
 		
 		initialize: function(el, options) {
-			this.el = el;
+			
+			baseView.prototype.initialize.apply(this, arguments);
+			
 			this._fill = this.el.data("fill") || "width";
 			
 			$(this.el).on("load:stop", this.render.bind(this));
@@ -476,7 +488,9 @@
 				// Change Grid size
 				_success();
 				
-				_grid.push(_.pluck(data, "cid"));
+				// Save Grid
+				var cid = _.isArray(data) ? _.pluck(data, "cid") : [data.cid];
+				_grid.push(cid);
 
 			}.bind(this);
 				
@@ -488,7 +502,7 @@
 			console.log("destroy")
 		}
 
-	}
+	});
 	
 	window.PictureWall = PictureWall;
 })()
