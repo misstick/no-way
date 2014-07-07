@@ -1,4 +1,4 @@
-(function() {
+(function(baseView, baseCollection) {
 
 	_.mixin({
 		create_affix: function(el) {
@@ -14,74 +14,11 @@
 		}
 	});
 	
-	var BaseCollection = function(data) {
-		this.initialize(data || null);
-	}
-	
-	BaseCollection.prototype = {
-		
-		defaults: {
-			order: 0
-		},
-		
-		models: [],
-		
-		initialize: function(data) {
-			if (data) {
-				this.add(data);
-			}
-		},
-		
-		add: function(data, options) {
-			var options = options || {};
-			if (!data && data !== undefined) {
-				return;
-			}
-			if (_.isArray(data)) {
-				_.each(data, function(model) {
-					this.add(model);
-				}.bind(this));
-				return;
-			}
-			
-			var attributes = _.clone(this.defaults);
-			_.extend(attributes, data);
-			attributes = this.validate(attributes, options);
-			if (attributes) {
-				attributes.cid = "C" + this.models.length;
-				this.models.push(attributes);
-			}
-		},
-		
-		validate: function(data, options) {
-			return data;
-		},
-		
-		sort: function() {
-			this.models = _.sortBy(this.models, function(model) {
-				return model.order;
-			});
-		},
-				
-		get: function(index) {
-			return this.models[index];
-		},
-		
-		reset: function() {
-			this.models = []
-		},
-		
-		remove: function() {
-			
-		}
-	};
-	
-	
 	var Coords = function(data) {
-		BaseCollection.apply(this, arguments);
+		baseCollection.apply(this, arguments);
 	}
 
-	Coords.prototype = Object.create(BaseCollection.prototype);
+	Coords.prototype = Object.create(baseCollection.prototype);
 	
 	_.extend(Coords.prototype, {
 		
@@ -156,29 +93,6 @@
 			}
 		}
 	});
-	
-	var baseView = function(el, options) {
-	    	this.el = el;
-	    	options = options || {};
-	    	if (options.cid) {
-	    		this.cid = options.cid;
-	    	}
-	    	if (el) {
-	    		this.initialize(el, options);
-	    	}
-    };
-    
-    baseView.prototype = {
-    	
-	    	initialize: function(el, options) {
-	    		this.el = el;
-	    		
-	    		options = options || {};
-	    		if (options.collection) {
-		    		this.collection = options.collection;
-	    		}
-	    	}
-	};
 
 	// 
 	// Loader
@@ -466,7 +380,6 @@
 			}.bind(this), 200);
 			
 			var _render = function(data) {
-				// @TODO : handle 2 values of size
 				// it depends of screen size
 				// 1 screen height == 2.5 rows
 				var content = '';
@@ -485,25 +398,22 @@
 				}
 				_all_content += _.template(template0, model0) + content + _.template(template2, model0);
 				
-				// Change Grid size
-				_success();
-				
 				// Save Grid
 				var cid = _.isArray(data) ? _.pluck(data, "cid") : [data.cid];
 				_grid.push(cid);
+				
+				// Change Grid size
+				_success();
 
 			}.bind(this);
 				
 			// Transform data into DOM
 			this.collection.sort_by_format(_render);
-		},
-		
-		destroy: function() {
-			console.log("destroy")
 		}
 
 	});
 	
-	window.PictureWall = PictureWall;
-})()
+	this.PictureWall = PictureWall;
+
+})(_VIEW["base"], _COLLECTION["base"])
 
