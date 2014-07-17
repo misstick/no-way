@@ -38,15 +38,15 @@
 			
 			// Show / Hide buttons
 			var data = this.get_data(this.el.get(0));
-			$("[data-action=next]")[(data.value === data.max) ? "addClass" : "removeClass"]("disabled");
-			$("[data-action=back]")[(data.value === data.min) ? "addClass" : "removeClass"]("disabled");
+			$("[data-action=next]")[(data.scrollLeft === data.right) ? "addClass" : "removeClass"]("disabled");
+			$("[data-action=back]")[(data.scrollLeft === data.left) ? "addClass" : "removeClass"]("disabled");
 		},
 		
 		get_data: function(el) {
 			return {
-				min: 0, 
-				max: el.scrollWidth - el.offsetWidth,
-				value: el.scrollLeft
+				left: 0, 
+				right: el.scrollWidth - el.offsetWidth,
+				x: el.scrollLeft
 			}
 		},
 		
