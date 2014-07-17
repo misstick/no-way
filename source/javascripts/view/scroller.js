@@ -81,9 +81,6 @@
 			}
 			var rows = Math.ceil(len / columns);
 			
-			
-			console.log("resize", columns, rows);
-			
 			// @TODO : clean this part
 			// is it still useless ?
 			/*
