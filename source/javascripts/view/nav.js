@@ -33,7 +33,7 @@
 				$(path_content + ' button', this.el).on("click", this.goto.bind(this));
 				
 				// Handle Scroll Event
-				$(this.el).on("scroll", _.throttle(this.display_buttons.bind(this), 100));
+				$(this.el).on("scroll", _.throttle(this.render.bind(this), 100));
 			}
 			
 			// Show / Hide buttons
