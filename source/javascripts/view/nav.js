@@ -36,18 +36,18 @@
 				$(this.el).on("scroll", _.throttle(this.display_buttons.bind(this), 100));
 			}
 			
-			console.log(this.cid)
-			
-			this.display_buttons();
+			// Show / Hide buttons
+			var data = this.get_data(this.el.get(0));
+			$("[data-action=next]")[(data.value === data.max) ? "addClass" : "removeClass"]("disabled");
+			$("[data-action=back]")[(data.value === data.min) ? "addClass" : "removeClass"]("disabled");
 		},
 		
-		display_buttons: function() {
-			var min = 0;
-			var max = this.el.get(0).scrollWidth - this.el.get(0).offsetWidth;
-			var value = this.el.get(0).scrollLeft;
-			
-			$("[data-action=next]")[(value === max) ? "addClass" : "removeClass"]("disabled");
-			$("[data-action=back]")[(value === min) ? "addClass" : "removeClass"]("disabled");
+		get_data: function(el) {
+			return {
+				min: 0, 
+				max: el.scrollWidth - el.offsetWidth,
+				value: el.scrollLeft
+			}
 		},
 		
 		goto: function(event) {
