@@ -37,6 +37,7 @@
 			}
 			
 			// Show / Hide buttons
+			// @FIX : dosnt work anymore ://
 			var data = this.get_data(this.el.get(0));
 			$("[data-action=next]")[(data.scrollLeft === data.right) ? "addClass" : "removeClass"]("disabled");
 			$("[data-action=back]")[(data.scrollLeft === data.left) ? "addClass" : "removeClass"]("disabled");
