@@ -20,7 +20,7 @@
 		},
 		
 		validate: function(data, options) {
-			data.format = (data.width >= data.height) ? "landscape" : "portrait";
+			data.format = (data.width > data.height) ? "landscape" : "portrait";
 			
 			// @TODO : add another property 
 			// to save new size : 
