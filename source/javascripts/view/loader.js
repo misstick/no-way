@@ -28,18 +28,22 @@
 			if (!el) {
 				return false;
 			}
+			var content;
 			var data = {
 				order: el._index,
 				width: el.offsetWidth,
-				height: el.offsetHeight
+				height: el.offsetHeight,
+				content: (content = $(el).html())
 			}
 			if (img) {
 				_.extend(data, {
 					src: img.src,
 					width: img.offsetWidth,
-					height: img.offsetHeight
+					height: img.offsetHeight,
+					content: content.replace(/\<img [\s\w\/"'.=_-]*\/{0,1}\>/, "")
 				})
 			}
+			
 			return data;
 		},
 

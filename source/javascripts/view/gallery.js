@@ -56,7 +56,7 @@
 				var content = '';
 				var model0 = data;
 				var template0 = '<div data-content="<%= type %>">';
-				var template1 = '<div class="image <%= format %>" data-cid="<%= cid %>" style="background-image: url(\'<%= src %>\');"></div>';
+				var template1 = '<div class="image <%= format %>" data-cid="<%= cid %>" style="background-image: url(\'<%= src %>\');"><%= content %></div>';
 				var template2 = '</div>';
 				
 				if (_.isArray(data)) {
