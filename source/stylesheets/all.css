@@ -314,9 +314,8 @@ z-index: 10;
   text-transform: uppercase;
   font-size: 1em;
   font-weight: bold;
-  margin: 3em;
   position: absolute;
-  right: 0;
+  left: 0;
 }
 #tag-content [data-type=gallery] [data-content=text]:before {
   display: none;
@@ -324,8 +323,8 @@ z-index: 10;
 [data-type=gallery] [data-content=text] h2 {
   position: relative;
   font-size: 2em;
-  padding: 2em 1.5em 0;
-  top: 0!important;
+  margin: 1em 1em 0;
+  padding: 0;
 }
 [data-type=gallery] [data-content=text] h2 a {
   text-decoration: underline;
@@ -338,15 +337,20 @@ z-index: 10;
   background: #fff;
   color: #000;
 }
+
 [data-type=gallery] [data-content=text] .content {
   padding: inherit;
-  font-size: 2em;
+  font-size: 1.5em;
   line-height: 1;
   margin: 0 1.5em 1em 3em;
-  max-height: 5em;
   border: solid 1px;
   display: block;
   color: white;
+  overflow: hidden;
+  padding: 0.25em ;
+  max-height: 60%;
+  max-width: 300px;
+  float: right;
 }
 
 [data-content=text] .ellipsis {
@@ -354,12 +358,13 @@ z-index: 10;
 }
 [data-content=text] .ellipsis:after {
   content: "...";
-  display: inline-block;
+  display: block;
   position: absolute;
-  background-color: #ddd;
-  left: 0;
   bottom: 0;
   right: 0;
+  background: white;
+  color: #ccc;
+  padding: 0 0.5em 0.5em;
 }
 
 [data-type=gallery] [data-content] {
@@ -380,8 +385,6 @@ z-index: 10;
 .image.landscape {
   height: 50%;
 }
-
-
 
 #blog-content aside:before {
   display: none;
