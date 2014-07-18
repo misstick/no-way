@@ -369,9 +369,6 @@ z-index: 10;
   padding: 0;
   overflow: hidden;
 }
-[data-type=gallery].load img {
-  visibility: hidden;
-}
 .image {
   position: relative;
   background-repeat: no-repeat; 
@@ -390,7 +387,6 @@ z-index: 10;
   right: 0;
   top: 0;
   padding: 1em;
-  visibility: hidden;
 }
 
 
