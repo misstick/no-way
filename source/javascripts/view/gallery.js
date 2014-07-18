@@ -47,7 +47,8 @@
 			
 			var _success = _.debounce(function(data) {
 				this.__scroller.grid = _grid;
-				this.__scroller.render.call(this.__scroller, _all_content)
+				this.__scroller.render.call(this.__scroller, _all_content);
+				this.trigger("render:finished");
 			}.bind(this), 200);
 			
 			var _render = function(data) {

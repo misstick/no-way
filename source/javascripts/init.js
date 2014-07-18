@@ -5,7 +5,7 @@
 	
 		// Create PinIt Button
 		var pintit = false;
-		var pintit_display = function() {
+		var _pintit_display = function() {
 			if (pintit) return;
 			pintit = true;
 			var create_link = function(data) {
@@ -23,12 +23,13 @@
 		}
 	
 		// Home Links
-		var links_display = function() {
+		var _links_display = function() {
 			var goto_article = function(event) {
 				var el = event.currentTarget;
 				window.location = $(el).data("href");
 			}
 			$("[data-type=gallery] .image").each(function(index, item) {
+				console.log(item, index)
 				var link = $("a", item.parentNode);
 				if (!link.get(0)) return;
 	
@@ -72,11 +73,12 @@
 		
 		$("[data-type=gallery]").each(function(index, item) {
 			// Create Gallery
-			$(item).on("gallery:resize", links_display);
-			$(item).data("Gallery", view);
-			$(item).on("gallery:resize", _ellipsis.bind(view));
-			$(item).on("gallery:resize", pintit_display);
 			var view = new _VIEW["wall"]($(item));
+			view.on("render:finished", function() {
+				_links_display.call(this);
+				_ellipsis.call(this);
+				_pintit_display();
+			}.bind(this));
 		});
 	
 		// Contact

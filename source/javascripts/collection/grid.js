@@ -15,18 +15,12 @@
 			src: null,
 			width: 0,
 			height: 0,
-			format: "portrait",
-			type: "picture"
+			format: "portrait"
 		},
 		
 		validate: function(data, options) {
 			data.format = (data.width > data.height) ? "landscape" : "portrait";
-			
-			// @TODO : add another property 
-			// to save new size : 
-			// (default) .__size: {width: , height},
-			// (final) .size: {width: , height},
-			
+			data.type = (!data.src) ? "text": "picture";
 			return data;
 		},
 		
