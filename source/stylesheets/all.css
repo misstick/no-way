@@ -286,15 +286,14 @@ z-index: 10;
   cursor: auto;
 }
 [data-type=gallery] h2 {
-  padding: 0;
-  font-size: 1em;
+  font-size: 1.5em;
   position: absolute;
   z-index: 2;
   right: 0;
   bottom: 0;
   border: 0;
   color: white;
-  padding: 2.5em 2em;
+  padding: 0 1em 1em;
   text-align: right;
 }
 [data-type=gallery] h2 a,
@@ -375,18 +374,11 @@ z-index: 10;
   background-position: 50% 50%;
   width: 100%;
 }
-
 .image.portrait {
   height: 100%;
 }
 .image.landscape {
   height: 50%;
-}
-.image a {
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 1em;
 }
 
 
