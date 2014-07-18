@@ -25,6 +25,18 @@
 			
 			this.cid = options.cid || "V" + (++view_counter);
 		},
+		
+		on: function(name, func) {
+			$(window).on(this.cid + "::" + name, func);
+		},
+		
+		off: function(name, func) {
+			$(window).off(this.cid + "::" + name, func || null);
+		},
+		
+		trigger: function(name, data) {
+			$(window).trigger(this.cid + "::" + name, data);
+		},
 
 		destroy: function() {
 			console.log("destroy")
