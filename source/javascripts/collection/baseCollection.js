@@ -42,6 +42,7 @@
 			if (attributes) {
 				attributes.cid = this.cid + this.models.length;
 				this.models.push(attributes);
+				this.trigger("add", attributes);
 			}
 		},
 		
@@ -63,8 +64,22 @@
 			this.models = []
 		},
 		
+		on: function(name, func) {
+			$(window).on(this.cid + "::" + name, func);
+		},
+		
+		off: function(name, func) {
+			$(window).off(this.cid + "::" + name, func || null);
+		},
+		
+		trigger: function(name, data) {
+			$(window).trigger(this.cid + "::" + name, data);
+		},
+		
 		remove: function() {
-			
+			this.reset();
+			this.off("add");
+			delete this;
 		}
 	};
 	
