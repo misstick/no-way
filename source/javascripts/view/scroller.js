@@ -125,7 +125,7 @@
 					});
 					
 					var _height = item.height();
-					var _width = Math.ceil(model.width * _height / model.height);
+					var _width = model.width * _height / model.height;
 					if (_width < coords.width) {
 						
 						_height *=  coords.width / _width;
@@ -134,8 +134,8 @@
 					
 					item.css({
 						"background-size": _.template('<%= width %>px <%= height %>px', {
-							width: _width,
-							height: _height
+							width: Math.ceil(_width),
+							height: Math.ceil(_height)
 						})
 					});
 				});
