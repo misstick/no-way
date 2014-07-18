@@ -10,7 +10,6 @@
 				window.location = $(el).data("href");
 			}
 			$("[data-type=gallery] .image").each(function(index, item) {
-				console.log(item, index)
 				var link = $("a", item.parentNode);
 				if (!link.get(0)) return;
 	
