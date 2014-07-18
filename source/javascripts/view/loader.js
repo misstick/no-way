@@ -24,46 +24,68 @@
 			$(this.el).removeClass("load");
 		},
 
-		is_loaded: function(el) {
-			return !!el.offsetWidth;
-		},
-
-		data: function(el) {
-			return {
-				src: el.src,
+		data: function(el, img) {
+			if (!el) {
+				return false;
+			}
+			var data = {
+				order: el._index,
 				width: el.offsetWidth,
-				height: el.offsetHeight,
-				order: el._index
-			};
+				height: el.offsetHeight
+			}
+			if (img) {
+				_.extend(data, {
+					src: img.src,
+					width: img.offsetWidth,
+					height: img.offsetHeight
+				})
+			}
+			return data;
 		},
 
 		render: function() {
 			$(this.el).trigger("load:start");
-
-			var items = $("img", this.el);
-
-			var _complete = _.after(items.length, function() {
+			
+			var items = $(this.el).children();
+			
+			var _is_loaded = function(el) {
+				return !!el.offsetWidth;
+			}
+			
+			var _is_picture = function(el) {
+				return el.tagName.toLowerCase() == "img";
+			}
+			
+			var _get_picture = function(el) {
+				return (!_is_picture(el)) ? $("img", el).get(0) : el;
+			}
+			
+			var _complete = _.debounce(function() {
 				this.collection.sort();
 				$(this.el).trigger("load:stop");
-			}.bind(this));
-
-			var _save = function(event) {
-				var el = event.target;
-				var data = this.data(el);
+				this.collection.off("add", _complete);
+			}.bind(this), 800);
+			this.collection.on("add", _complete);
+						
+			var _save = function(el, img) {
+				var data = this.data(el, img);
 				this.collection.add(data);
-				_complete();
 			}.bind(this);
-
-			// Get real picture size
-			// and launch render after that
-			items.each(function(index, el){
+			
+			_.each(items, function(el, index) {
+				
 				el._index = index;
-				if (!this.is_loaded(el)) {
-					el.onload = _save;
+				
+				var img = _get_picture(el);
+				if (img && ! _is_loaded(img)) {
+					img.onload = function(event) {
+						_save(el, img);	
+					};
 					return;
 				}
-				_save({target: el});
-
+				
+				_save(el, img);
+				
 			}.bind(this));
 		}
 	});
