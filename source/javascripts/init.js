@@ -45,6 +45,8 @@
 				var className = "ellipsis";
 				var test = (item.scrollHeight > item.offsetHeight);
 				$(item)[test ? "addClass" : "removeClass"](className);
+				
+				// @TODO : add a height to .content not to crop a text in half height line
 	
 				// Transform shortDescription as a link
 				create_link(item);
