@@ -72,14 +72,6 @@
 			
 			var width_max = coords.width * grid.length;
 			var len = width_max / coords.width;
-			
-			// Get Column Value
-			var column_min = Math.ceil(content.width() / coords.width);
-			var columns = column_min;
-			while((len / columns) > 1 && len % columns > 0) {
-				++columns;
-			}
-			var rows = Math.ceil(len / columns);
 		
             // // Add Vertical Alignement
             // var height_min = window.innerHeight;
@@ -90,8 +82,8 @@
 			
 			// Force Content.width
 			// to have scroller
-			var width = columns * coords.width;
-			content.width(width);
+            var width = grid.length * coords.width;
+            content.width(width);
             
 			// Resize Grid Items
 			_.each(grid, function(data) {
