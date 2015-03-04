@@ -33,15 +33,17 @@
 				order: el._index,
 				width: el.offsetWidth,
 				height: el.offsetHeight,
-				content: (content = $(el).html())
+				content: (content = $(el).html()),
+                __is_picture: false
 			}
 			if (img) {
 				_.extend(data, {
 					src: img.src,
-					width: img.offsetWidth,
-					height: img.offsetHeight,
-					content: content.replace(/\<img [\s\w\/"'.=_-]*\/{0,1}\>/, "")
-				})
+					img_width: img.offsetWidth,
+					img_height: img.offsetHeight,
+					content: content.replace(/\<img [\s\w\/"'.=_-]*\/{0,1}\>/, ""),
+                    __is_picture: el == img
+				});
 			}
 			
 			return data;

@@ -125,9 +125,9 @@
 					});
 					
 					var _height = item.height();
-					var _width = model.width * _height / model.height;
+                    // FIX : clean width a model method (get_img_width, et get_img_height)
+					var _width = (model.img_width || model.width) * _height / (model.img_height || model.height);
 					if (_width < coords.width) {
-						
 						_height *=  coords.width / _width;
 						_width = coords.width;
 					}

@@ -19,7 +19,8 @@
 		},
 		
 		validate: function(data, options) {
-			data.format = (data.width > data.height) ? "landscape" : "portrait";
+            // Use "landscape" format only when the DOM is only a picture
+			data.format = (data.width > data.height && this.is_picture(data)) ? "landscape" : "portrait";
 			data.type = (!data.src) ? "text": "picture";
 			return data;
 		},
@@ -41,6 +42,10 @@
 				return callback(model);
 			});
 		},
+        
+        is_picture: function(data) {
+            return data.__is_picture || false;
+        },
 		
 		get_item_size: function(screen_coords) {
 			var width = 0;
