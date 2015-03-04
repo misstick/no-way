@@ -72,18 +72,6 @@
 			
 			var width_max = coords.width * grid.length;
 			var len = width_max / coords.width;
-		
-            // // Add Vertical Alignement
-            // var height_min = window.innerHeight;
-            // var height = rows * coords.height;
-            // this.el.css({
-            //     "padding": Math.ceil((height_min - height) / 2) + "px 0"
-            // });
-			
-			// Force Content.width
-			// to have scroller
-            var width = grid.length * coords.width;
-            content.width(width);
             
 			// Resize Grid Items
 			_.each(grid, function(data) {
@@ -133,6 +121,18 @@
 
 				});
 			});
+		
+            // // Add Vertical alignment
+            // var height_min = window.innerHeight;
+            // var height = rows * coords.height;
+            // this.el.css({
+            //     "padding": Math.ceil((height_min - height) / 2) + "px 0"
+            // });
+			
+			// Force Content.width
+			// to have horizontal alignment
+            var width = grid.length * coords.width;
+            content.width(width);
 		}
 	});
 
