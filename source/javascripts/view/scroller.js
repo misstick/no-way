@@ -80,29 +80,13 @@
 				++columns;
 			}
 			var rows = Math.ceil(len / columns);
-			
-			// @TODO : clean this part
-			// is it still useless ?
-			/*
-			if (this._fill === "height") {
-				// Gallery is bigger than window Size
-				// Lets fill it
-				var surface = coords.width * coords.height;
-				var surface_all = surface * len;
-				var surface_win = window.innerHeight * window.innerWidth;
-				if (surface_all > surface_win && row === 1) {
-					columns = column_min;
-					rows = Math.ceil(len / column);
-				}
-			
-				// Add Vertical Alignement
-				var height_min = window.innerHeight;
-				var height = rows * coords.height;
-				this.el.css({
-					"padding": Math.ceil((height_min - height) / 2) + "px 0"
-				});
-			}
-			*/
+		
+            // // Add Vertical Alignement
+            // var height_min = window.innerHeight;
+            // var height = rows * coords.height;
+            // this.el.css({
+            //     "padding": Math.ceil((height_min - height) / 2) + "px 0"
+            // });
 			
 			// Force Content.width
 			// to have scroller
