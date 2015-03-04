@@ -121,13 +121,6 @@
 
 				});
 			});
-		
-            // // Add Vertical alignment
-            // var height_min = window.innerHeight;
-            // var height = rows * coords.height;
-            // this.el.css({
-            //     "padding": Math.ceil((height_min - height) / 2) + "px 0"
-            // });
 			
 			// Force Content.width
 			// to have horizontal alignment
