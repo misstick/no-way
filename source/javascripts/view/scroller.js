@@ -119,7 +119,9 @@
                         "height": _item_ref.height,
                         "width": _item_ref.width
                     }
-                    if (model.height / model.width < _item_ref.height / _item_ref.width) {
+                    var _height =  model.img_height || model.height;
+                    var _width = model.img_width || model.width;
+                    if (_height / _width < _item_ref.height / _item_ref.width) {
                         _styles["background-size"] = "auto 100%";
                     }
                     item.css(_styles);

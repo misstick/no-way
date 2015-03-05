@@ -323,8 +323,8 @@ z-index: 10;
 [data-type=gallery] [data-content=text] h2 {
   position: relative;
   font-size: 2em;
-  margin: 1em 1em 0;
-  padding: 0;
+  padding: 1em 1em 0;
+  margin: 0;
 }
 [data-type=gallery] [data-content=text] h2 a {
   text-decoration: underline;
@@ -377,7 +377,6 @@ z-index: 10;
   position: relative;
   background-repeat: no-repeat; 
   background-position: 50% 50%;
-  width: 100%;
 }
 
 #blog-content aside:before {
@@ -388,11 +387,7 @@ z-index: 10;
   overflow: auto;
   background-color: black;
 }
-#tag-content article,
-#blog-content article {
-  width: 500px;
-  height: 500px;
-}
+
 
 /* Page Detail */
 article {

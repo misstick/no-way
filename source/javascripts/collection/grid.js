@@ -66,31 +66,32 @@
             // Get Smaller Item into the grid
             _.each(this.models, function(model) {
                 
+                var _height =  model.img_height || model.height;
+                var _width = model.img_width || model.width;
+                
                 if (!item0) {
                     item0 = {
-                        height: model.height,
-                        width: model.width
+                        height: _height,
+                        width: _width
                     }
                     return;
                 }
                 
                 if (model.format == "portrait") {
-
                     var _height = model.height;
                     var _is_landscape = this.get_format(item0) === "landscape";
                     if (_height < item0.height || _is_landscape) {
                         item0 = {
-                            height: model.height,
-                            width: model.width,
+                            height: _height,
+                            width: _width,
                             format: model.format
                         }
                     }
                 } else {
-
-                    var _height = item0.width * item0.height * 2 / model.width;
-                    if (_height < item0.height) {
+                    var _test_height = item0.width * item0.height * 2 / _width;
+                    if (_test_height < item0.height) {
                         var _old_height0 = item0.height;
-                        item0.height = model.height;
+                        item0.height = _height;
                     }
                 }
             }.bind(this));
