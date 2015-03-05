@@ -54,15 +54,21 @@
             return value > 0;
         },
         
-        get_width: function() {
-            // return this.grid.length * item_ref_size.width;
-            var width = 0;
-            _.each(this.el.find("[data-content]"), function(el, index) {
-                if (width < window.innerWidth) {
-                    width += el.offsetWidth;
+        get_width: function(item, screen, nb_items) {
+            var columns = [];
+            var column = null;
+            for (var counter=1; counter<=nb_items; counter++) {
+                if (nb_items % counter == 0) {
+                    columns.push(counter);
                 }
-            });
-            return width;
+            }
+            var counter;
+            while((counter = columns.shift()) && column == null) {
+                if(counter * item.width > screen.width) {
+                    column = counter;
+                }
+            }
+            return (column || nb_items) * item.width;
         },
         
         resize: function() {
@@ -76,10 +82,12 @@
             // Remove Previous resize
             content.css("width", "auto");
             
-            var item_ref_size = collection.get_grid_ref({
+            var screen_size = {
                 "width": window.innerWidth,
                 "height": window.innerHeight
-            });
+            };
+            var item_ref_size = collection.get_grid_ref(screen_size);
+            var items_len = this.collection.size();
             
             // Resize Grid Items
             _.each(grid, function(data) {
@@ -106,11 +114,13 @@
                             _.extend(_item_size, {
                                 "width": _item_size.width * 2
                             });
+                            ++items_len;
                         }
                         if (data.length == 2) {
                             _.extend(_item_size, {
                                 "height": _item_size.height / 2
                             });
+                            --items_len;
                         }
                     }
                     
@@ -131,8 +141,8 @@
             
             // Force Content.width
             // to have horizontal alignment
-            // var width = this.get_width();
-            // content.width(width);
+            var width = this.get_width(item_ref_size, screen_size, items_len);
+            content.width(width);
         }
     });
     
