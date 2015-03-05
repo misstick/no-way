@@ -59,6 +59,10 @@
 		get: function(index) {
 			return this.models[index];
 		},
+        
+        size: function() {
+            return this.models.length;
+        },
 		
 		reset: function() {
 			this.models = []
