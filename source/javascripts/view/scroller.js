@@ -81,66 +81,45 @@
                 "height": window.innerHeight
             });
             
-            // console.log("REF", item_ref)
-            
             // Resize Grid Items
             _.each(grid, function(data) {
                 _.each(data, function(cid, index) {
+                    
                     var item = $('[data-cid=' + cid + ']', this.el);
                     
-                    // Resize Picture
+                    var _item_ref = _.clone(item_ref);
+                    
                     var model = _.find(collection.models, function(_model) {
                         return _model.cid == cid;
                     });
                     
-                    // console.log(model.width, model.height)
-                    
-                    var is_no_portrait = model.format == "landscape" && data.length == 1 && item_ref.format != "landscape";
-                    
-                    // Resize Container
                     if (!index) {
-                        // When there is only 1 "landscape" picture, 
-                        // container is twice larger than a "portrait"
-                        if (is_no_portrait) {
+                        var _is_twice_item = item_ref.format != "landscape" && model.format == "landscape" && data.length == 1;
+                        if (_is_twice_item) {
+                            // When there is only 1 "landscape" picture, 
+                            // container is twice larger than a "portrait"
+                            
                             // @TODO : check that new width isnt too big compared to initial value
                             // This check should be done into (collection)grid.sort_by_format
-                            $(item).parent().css({
-                                "width": item_ref.width * 2,
-                                "height": item_ref.height
+                            _.extend(_item_ref, {
+                                "width": item_ref.width * 2
                             });
-                        } else {
-                            $(item).parent().css(item_ref);
                         }
+                        // Resize Container
+                        $(item).parent().css(_item_ref);
                     }
                     
+                    // Background Positionning
                     var _styles = {
-                        // "background-size": "<%= width %>px <%= height %>px",
                         "background-size": "100% auto",
                         "height": (data.length == 1) ? "100%" : "50%"
                     }
+                    var _width0 = (data.length == 1 && model.format == "landscape") ? item_ref.width * 2 : item_ref.width
+                    var _height0 = (data.length == 2) ? item_ref.height / 2 : item_ref.height;
                     
-                    if (model.format == "landscape") {
-                        // var _background_size = "auto 100%";
-                        //
-                        // var _width = Math.ceil(item_ref.width * model.height / model.width);
-                        // if (_width < model.width) {
-                        //     _background_size = "100% auto";
-                        // }
-                        //
-                        // console.log(model.order, _background_size)
-                        //
-                        // _.extend(_styles, {
-                        //     "background-size": _background_size
-                        // });
-                    } else {
-                        // _.extend(_styles, {
-                     //        "background-size": _.template('<%= width %>px <%= height %>px', {
-                     //            width: Math.ceil(item_ref.width),
-                     //            height: Math.ceil(item_ref.height)
-                     //        })
-                     //    });
+                    if (model.height / model.width < _height0 / _width0) {
+                        _styles["background-size"] = "auto 100%";
                     }
-
                     item.css(_styles);
                 });
             });
