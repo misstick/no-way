@@ -61,7 +61,7 @@
         get_grid_ref: function(screen_coords) {
             
             var item0 = null;
-            // var height_max = Math.ceil(screen_coords.height / 1.5);
+            var height_max = Math.ceil(screen_coords.height * 0.85);
             
             // Get Smaller Item into the grid
             _.each(this.models, function(model) {
@@ -95,11 +95,12 @@
                 }
             }.bind(this));
             
-            // // It should have several rows
-            // // in one page
-            // if (height0 > height_max) {
-            //     height0 = height_max;
-            // }
+            // It should have several rows
+            // in one page
+            if (item0.height > height_max) {
+                item0.width = Math.ceil(item0.width * height_max / item0.height);
+                item0.height = height_max;
+            }
             
             return _.extend(item0, {
                 format: this.get_format(item0)
