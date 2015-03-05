@@ -1,5 +1,10 @@
 @charset "utf-8";
 
+html, 
+body,
+#blog-content {
+    height: 100%;
+}
 body {
   font-family: 'Source Sans Pro';
   line-height: 1.7;
