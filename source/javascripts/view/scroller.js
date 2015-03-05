@@ -83,11 +83,12 @@
             
             // Resize Grid Items
             _.each(grid, function(data) {
+                
+                var _item_ref = _.clone(item_ref);
+                
                 _.each(data, function(cid, index) {
                     
                     var item = $('[data-cid=' + cid + ']', this.el);
-                    
-                    var _item_ref = _.clone(item_ref);
                     
                     var model = _.find(collection.models, function(_model) {
                         return _model.cid == cid;
@@ -105,19 +106,20 @@
                                 "width": item_ref.width * 2
                             });
                         }
-                        // Resize Container
-                        $(item).parent().css(_item_ref);
+                        if (data.length == 2) {
+                            _.extend(_item_ref, {
+                                "height": item_ref.height / 2
+                            });
+                        }
                     }
                     
                     // Background Positionning
                     var _styles = {
                         "background-size": "100% auto",
-                        "height": (data.length == 1) ? "100%" : "50%"
+                        "height": _item_ref.height,
+                        "width": _item_ref.width
                     }
-                    var _width0 = (data.length == 1 && model.format == "landscape") ? item_ref.width * 2 : item_ref.width
-                    var _height0 = (data.length == 2) ? item_ref.height / 2 : item_ref.height;
-                    
-                    if (model.height / model.width < _height0 / _width0) {
+                    if (model.height / model.width < _item_ref.height / _item_ref.width) {
                         _styles["background-size"] = "auto 100%";
                     }
                     item.css(_styles);
