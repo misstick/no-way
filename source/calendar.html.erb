@@ -2,7 +2,6 @@
 title: Recherche par années
 picture: "https://secure.gravatar.com/avatar/9959ecc877e288989012679976743bca?s=140&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png"
 ---
-<div id="calendar-content">
   <aside>
     <h1>Articles de
       <% case page_type
@@ -17,7 +16,7 @@ picture: "https://secure.gravatar.com/avatar/9959ecc877e288989012679976743bca?s=
   </aside>
 
 
-  <div data-type="gallery">
+  <div data-type="gallery" class="gallery-content calendar-content">
     <% page_articles.each_with_index do |article, i| %>
         <article>
           <h2><%= link_to article.title, article %><br /><span><%= article.date.strftime('%d.%m.%y') %></span></h2>
@@ -33,4 +32,3 @@ picture: "https://secure.gravatar.com/avatar/9959ecc877e288989012679976743bca?s=
         </article>
     <% end %>
   </div>
-</div>

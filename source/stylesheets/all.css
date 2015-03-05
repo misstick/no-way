@@ -2,7 +2,7 @@
 
 html, 
 body,
-#blog-content {
+section[role=main] {
     height: 100%;
 }
 body {
@@ -164,18 +164,18 @@ section aside a {
   display: inline;
   color: black;
 }
-.page-content {
+.article-content {
   padding-top: 140px;
   margin: 0 auto;
   position: relative;
   z-index: 0;
   min-height: 500px;
 }
-.page-content article{
+.article-content article{
   max-width: 800px;
   margin: 0 auto;
 }
-.page-content article{
+.article-content article{
   padding-bottom: 100px;
 }
 #home-content {
@@ -186,7 +186,7 @@ section aside a {
 }
 /* Hide top text*/
 .list-container aside:before,
-.page-content:before {
+.article-content:before {
   content: "";
   display: block;
   position: fixed;
@@ -210,13 +210,9 @@ section aside a {
   );
 }
 
-#blog-content:before {
-  display: none;
-}
-
 /* Pages de liste */
 .page-number,
-.page-content h2,
+.article-content h2,
 section[role=main] h1 {
   margin: 15px 174px 0.5em;
   font-size: 1.8em;
@@ -233,14 +229,14 @@ section[role=main] h1 {
 .page-number,
 header aside a,
 .paginate-menu li,
-.page-content h2 span,
+.article-content h2 span,
 section[role=main] h1 {
   background: white
 }
 
 .page-number,
 .paginate-menu li,
-.page-content h2,
+.article-content h2,
 section[role=main] h1 {
   z-index: 3;
 }
@@ -251,11 +247,6 @@ article:hover a,
 }
 .clickable {
   cursor: pointer;
-}
-[data-type=gallery] {
-  padding: 0;
-  width: 100%;
-  overflow: auto;
 }
 
 [data-type=gallery] nav.affix {
@@ -322,13 +313,13 @@ z-index: 10;
   position: absolute;
   left: 0;
 }
-#tag-content [data-type=gallery] [data-content=text]:before {
+/*#tag-content [data-type=gallery] [data-content=text]:before {
   display: none;
-}
+}*/
 [data-type=gallery] [data-content=text] h2 {
   position: relative;
   font-size: 2em;
-  padding: 1em 1em 0;
+  padding: 2.5em 1em 0;
   margin: 0;
 }
 [data-type=gallery] [data-content=text] h2 a {
@@ -338,14 +329,16 @@ z-index: 10;
 [data-type=gallery] [data-content=text] h2 span {
   background: none;
 }
-[data-type=gallery] [data-content=text] a:hover {
+[data-type=gallery] [data-content=text] a:hover,
+[data-content=text] .ellipsis:hover:after {
   background: #fff;
   color: #000;
+  text-decoration: underline;
 }
 
 [data-type=gallery] [data-content=text] .content {
   padding: inherit;
-  font-size: 1.5em;
+  font-size: 2em;
   line-height: 1;
   margin: 0 1.5em 1em 3em;
   border: solid 1px;
@@ -367,9 +360,10 @@ z-index: 10;
   position: absolute;
   bottom: 0;
   right: 0;
-  background: white;
-  color: #ccc;
-  padding: 0 0.5em 0.5em;
+  left: 0;
+  height: 2em;
+  background: #ddd;
+  color: fff;
 }
 
 [data-type=gallery] [data-content] {
@@ -383,14 +377,16 @@ z-index: 10;
   background-repeat: no-repeat; 
   background-position: 50% 50%;
 }
-
-#blog-content aside:before {
-  display: none;
-}
-#tag-content,
-#blog-content {
+.gallery-content {
   overflow: auto;
   background-color: black;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+.gallery-content article {
+    width: 500px;
+    height: 500px;
 }
 
 
@@ -421,7 +417,7 @@ article .content {
 }
 
 /* Mur d'images */
-.page-content figure {
+.article-content figure {
   padding: 0;
   background: black;
   position: relative;
@@ -493,7 +489,7 @@ footer p {
     position: fixed;
     top: 0;
   }
-  .page-content,
+  .article-content,
   section[role=main] {
     min-height: auto;
   }
@@ -527,20 +523,20 @@ footer p {
   }
 
   .list-container aside:before,
-  .page-content:before,
-  #blog-content:before {
+  .article-content:before,
+  .gallery-content:before {
     height: 200px;
   }
 
-  .page-content article {
+  .article-content article {
     margin: 2em 5em;
     min-height: auto;
     padding: 80px 0;
   }
-  .page-content {
+  .article-content {
     padding-top: 0;
   }
-  .page-content h2 {
+  .article-content h2 {
     margin: 0.5em 4em;
     max-height: 62px;
     overflow: hidden;
@@ -548,7 +544,7 @@ footer p {
     left: 0;
     right: 0;
   }
-  [data-type=gallery] h2 {
+  .gallery-content h2 {
     margin-bottom: 60px;
   }
 
@@ -641,7 +637,7 @@ footer p {
     font-size: 1.4em;
   }
 
-  .page-content h2 {
+  .article-content h2 {
     display: block;
     position: static;
     padding: 0;
@@ -654,7 +650,7 @@ footer p {
     margin: 1em;
   }
   .list-container aside:before,
-  .page-content:before {
+  .article-content:before {
     background-image: linear-gradient(bottom, rgba(255,255,255, 0) 0%, rgb(255,255,255) 40%);
     background-image: -o-linear-gradient(bottom, rgba(255,255,255, 0) 0%, rgb(255,255,255) 40%);
     background-image: -moz-linear-gradient(bottom, rgba(255,255,255, 0) 0%, rgb(255,255,255) 40%);
@@ -662,21 +658,20 @@ footer p {
     background-image: -ms-linear-gradient(bottom, rgba(255,255,255, 0) 0%, rgb(255,255,255) 40%);
   }
   .list-container aside:before,
-  .page-content:before,
-  #blog-content:before {
+  .article-content:before,
+  .gallery-content:before {
     height: 10em;
   }
-  .page-content article {
+  .article-content article {
     margin: 0 2em;
     min-height: auto;
     font-size: 1em;
     padding: 8em 0 0;
   }
-  .page-content figure {
+  .article-content figure {
     background: none;
   }
-  #tag-content article,
-  #blog-content article {
+  .blog article {
     width: 100%;
   }
 

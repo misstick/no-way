@@ -24,6 +24,10 @@
   </head>
 
   <body class="<%= page_classes %>">
-    <%= yield %>
+    <%= partial "header" %>
+    <section id="main" role="main">
+        <%= yield %>
+    </section>
+    <%= partial "footer" %>
   </body>
 </html>
