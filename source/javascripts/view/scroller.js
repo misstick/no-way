@@ -54,6 +54,17 @@
             return value > 0;
         },
         
+        get_width: function() {
+            // return this.grid.length * item_ref.width;
+            var width = 0;
+            _.each(this.el.find("[data-content]"), function(el, index) {
+                if (width < window.innerWidth) {
+                    width += el.offsetWidth;
+                }
+            });
+            return width;
+        },
+        
         resize: function() {
             var content = this.__content;
             
@@ -62,16 +73,15 @@
             var grid = this.grid;
             var collection = this.collection;
             
-            // Remove Previous resize        
+            // Remove Previous resize
             content.css("width", "auto");
             
-            var coords = collection.get_item_size({
-                width: window.innerWidth,
-                height: window.innerHeight
+            var item_ref = collection.get_grid_ref({
+                "width": window.innerWidth,
+                "height": window.innerHeight
             });
             
-            var width_max = coords.width * grid.length;
-            var len = width_max / coords.width;
+            // console.log("REF", item_ref)
             
             // Resize Grid Items
             _.each(grid, function(data) {
@@ -83,48 +93,62 @@
                         return _model.cid == cid;
                     });
                     
+                    // console.log(model.width, model.height)
+                    
+                    var is_no_portrait = model.format == "landscape" && data.length == 1 && item_ref.format != "landscape";
+                    
                     // Resize Container
                     if (!index) {
-                        
                         // When there is only 1 "landscape" picture, 
                         // container is twice larger than a "portrait"
-                        if (model.format == "landscape" && data.length == 1) {
+                        if (is_no_portrait) {
+                            // @TODO : check that new width isnt too big compared to initial value
+                            // This check should be done into (collection)grid.sort_by_format
                             $(item).parent().css({
-                                width: coords.width * 2,
-                                height: coords.height
+                                "width": item_ref.width * 2,
+                                "height": item_ref.height
                             });
-                            item.css({
-                                "background-size": "auto 100%",
-                                "height": coords.height
-                            });
-                            return;
-                        } 
-                        
-                        $(item).parent().css(coords);
+                        } else {
+                            $(item).parent().css(item_ref);
+                        }
                     }
                     
-                    var _height = item.height();
-                    
-                    // FIX : clean width a model method (get_img_width, et get_img_height)
-                    var _width = (model.img_width || model.width) * _height / (model.img_height || model.height);
-                    if (_width < coords.width) {
-                        _height *=  coords.width / _width;
-                        _width = coords.width;
+                    var _styles = {
+                        // "background-size": "<%= width %>px <%= height %>px",
+                        "background-size": "100% auto",
+                        "height": (data.length == 1) ? "100%" : "50%"
                     }
                     
-                    item.css({
-                        "background-size": _.template('<%= width %>px <%= height %>px', {
-                            width: Math.ceil(_width),
-                            height: Math.ceil(_height)
-                        })
-                    });
+                    if (model.format == "landscape") {
+                        // var _background_size = "auto 100%";
+                        //
+                        // var _width = Math.ceil(item_ref.width * model.height / model.width);
+                        // if (_width < model.width) {
+                        //     _background_size = "100% auto";
+                        // }
+                        //
+                        // console.log(model.order, _background_size)
+                        //
+                        // _.extend(_styles, {
+                        //     "background-size": _background_size
+                        // });
+                    } else {
+                        // _.extend(_styles, {
+                     //        "background-size": _.template('<%= width %>px <%= height %>px', {
+                     //            width: Math.ceil(item_ref.width),
+                     //            height: Math.ceil(item_ref.height)
+                     //        })
+                     //    });
+                    }
+
+                    item.css(_styles);
                 });
             });
             
             // Force Content.width
             // to have horizontal alignment
-            var width = grid.length * coords.width;
-            content.width(width);
+            // var width = this.get_width();
+            // content.width(width);
         }
     });
     

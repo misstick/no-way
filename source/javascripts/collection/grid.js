@@ -18,27 +18,37 @@
             format: "portrait"
         },
         
+        get_format: function(data) {
+            return (data.width > data.height) ? "landscape" : "portrait";
+        },
+        
         validate: function(data, options) {
             // Use "landscape" format only when the DOM is only a picture
-            data.format = (data.width > data.height && this.is_picture(data)) ? "landscape" : "portrait";
+            if (this.is_picture(data)) {
+                data.format = this.get_format(data);
+            }
             data.type = (!data.src) ? "text": "picture";
             return data;
         },
         
         sort_by_format: function(callback) {
+            
             var models = _.clone(this.models);
+            
+            var is_portrait = _.findWhere(models, {format: "portrait"}) || false;
+
             var callback = callback || function(data) { return data; };
             return _.map(models, function(model, index, list) {
-                if (model.format != "portrait") {
-                    
+                if (model.format == "landscape" && is_portrait) {
                     var _list = list.slice(index + 1, list.length);
                     var next = _.findWhere(_list, {format: "landscape"});
                     if (next) {
                         list.splice(_.indexOf(list, next), 1);
                         return callback([model, next]);
                     }
-                    return callback([model]);
+                    return callback(model);
                 }
+                
                 return callback(model);
             });
         },
@@ -47,37 +57,53 @@
             return data.__is_picture || false;
         },
         
-        get_item_size: function(screen_coords) {
-            var width = 0;
-            var height = 0;
-            var height_max = Math.ceil(screen_coords.height / 1.5);
-            var model0 = null;
+        
+        get_grid_ref: function(screen_coords) {
+            
+            var item0 = null;
+            // var height_max = Math.ceil(screen_coords.height / 1.5);
             
             // Get Smaller Item into the grid
             _.each(this.models, function(model) {
-                if (!model0 && model.format == "portrait") {
-                    model0 = model;
-                }
-                var _height = (model.format == "portrait") ? model.height : model.height * 2;
-                if(!height) {
-                    height = _height;
+                
+                if (!item0) {
+                    item0 = {
+                        height: model.height,
+                        width: model.width
+                    }
                     return;
                 }
-                if (_height < height) {
-                    height = _height;
+                
+                if (model.format == "portrait") {
+
+                    var _height = model.height;
+                    var _is_landscape = this.get_format(item0) === "landscape";
+                    if (_height < item0.height || _is_landscape) {
+                        item0 = {
+                            height: model.height,
+                            width: model.width,
+                            format: model.format
+                        }
+                    }
+                } else {
+
+                    var _height = item0.width * item0.height * 2 / model.width;
+                    if (_height < item0.height) {
+                        var _old_height0 = item0.height;
+                        item0.height = model.height;
+                    }
                 }
+            }.bind(this));
+            
+            // // It should have several rows
+            // // in one page
+            // if (height0 > height_max) {
+            //     height0 = height_max;
+            // }
+            
+            return _.extend(item0, {
+                format: this.get_format(item0)
             });
-            
-            // It should have several rows
-            // in one page
-            if (height > height_max) {
-                height = height_max;
-            }
-            
-            return {
-                width: Math.ceil(model0.width * height / model0.height),
-                height: height
-            }
         }
     });
 
