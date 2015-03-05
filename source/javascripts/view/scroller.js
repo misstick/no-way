@@ -55,7 +55,7 @@
         },
         
         get_width: function() {
-            // return this.grid.length * item_ref.width;
+            // return this.grid.length * item_ref_size.width;
             var width = 0;
             _.each(this.el.find("[data-content]"), function(el, index) {
                 if (width < window.innerWidth) {
@@ -76,7 +76,7 @@
             // Remove Previous resize
             content.css("width", "auto");
             
-            var item_ref = collection.get_grid_ref({
+            var item_ref_size = collection.get_grid_ref({
                 "width": window.innerWidth,
                 "height": window.innerHeight
             });
@@ -84,7 +84,8 @@
             // Resize Grid Items
             _.each(grid, function(data) {
                 
-                var _item_ref = _.clone(item_ref);
+                // Item Real Size
+                var _item_size = _.clone(item_ref_size);
                 
                 _.each(data, function(cid, index) {
                     
@@ -95,20 +96,20 @@
                     });
                     
                     if (!index) {
-                        var _is_twice_item = item_ref.format != "landscape" && model.format == "landscape" && data.length == 1;
+                        var _is_twice_item = _item_size.format != "landscape" && model.format == "landscape" && data.length == 1;
                         if (_is_twice_item) {
                             // When there is only 1 "landscape" picture, 
                             // container is twice larger than a "portrait"
                             
                             // @TODO : check that new width isnt too big compared to initial value
                             // This check should be done into (collection)grid.sort_by_format
-                            _.extend(_item_ref, {
-                                "width": item_ref.width * 2
+                            _.extend(_item_size, {
+                                "width": _item_size.width * 2
                             });
                         }
                         if (data.length == 2) {
-                            _.extend(_item_ref, {
-                                "height": item_ref.height / 2
+                            _.extend(_item_size, {
+                                "height": _item_size.height / 2
                             });
                         }
                     }
@@ -116,12 +117,12 @@
                     // Background Positionning
                     var _styles = {
                         "background-size": "100% auto",
-                        "height": _item_ref.height,
-                        "width": _item_ref.width
+                        "height": _item_size.height,
+                        "width": _item_size.width
                     }
                     var _height =  model.img_height || model.height;
                     var _width = model.img_width || model.width;
-                    if (_height / _width < _item_ref.height / _item_ref.width) {
+                    if (_height / _width < _item_size.height / _item_size.width) {
                         _styles["background-size"] = "auto 100%";
                     }
                     item.css(_styles);
