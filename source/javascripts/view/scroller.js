@@ -54,18 +54,12 @@
             return _value > 0;
         },
         
-        top: function(item, screen) {
-            var _content = this.__content;
-            var _value = _content.height() + _content.offset().top;
-            var value = Math.ceil((screen.height - _value) / 2);
-            return (value > 0) ? value : 0;
-        },
-        
-        width: function(item, screen, nb_items) {
+        columns: function(item, len) {
             var columns = [];
             var column = null;
-            for (var counter=1; counter<=nb_items; counter++) {
-                if (nb_items % counter == 0) {
+
+            for (var counter=1; counter<=len; counter++) {
+                if (len % counter == 0) {
                     columns.push(counter);
                 }
             }
@@ -75,7 +69,27 @@
                     column = counter;
                 }
             }
-            return (column || nb_items) * item.width;
+            return column || len;
+        },
+        
+        top: function(item, screen) {
+            var _content = this.__content;
+            var _value = _content.height() + _content.offset().top;
+            var value = Math.ceil((screen.height - _value) / 2);
+            return (value > 0) ? value : 0;
+        },
+        
+        width: function(item, screen, len) {
+            var columns = this.columns(item, len);
+            var columns_min = Math.ceil(screen.width / item.width);
+            
+            // Ne pas avoir trop de colonnes
+            var too_many_columns = columns / columns_min > 1.25;
+            if (too_many_columns) {
+                return columns_min * item.width;
+            }
+            
+            return columns * item.width;
         },
         
         resize: function() {
