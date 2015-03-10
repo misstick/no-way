@@ -50,12 +50,14 @@
         },
         
         scroll_value: function() {
-            var value = this.el.get(0).scrollWidth - this.el.get(0).offsetWidth;
-            return value > 0;
+            var _value = this.el.get(0).scrollWidth - this.el.get(0).offsetWidth;
+            return _value > 0;
         },
         
         top: function(item, screen) {
-            var value = Math.ceil((screen.height - this.__content.height()) / 2);
+            var _content = this.__content;
+            var _value = _content.height() + _content.offset().top;
+            var value = Math.ceil((screen.height - _value) / 2);
             return (value > 0) ? value : 0;
         },
         
