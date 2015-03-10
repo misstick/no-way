@@ -54,22 +54,25 @@
             return _value > 0;
         },
         
-        columns: function(item, len) {
-            var columns = [];
+        columns: function(len, max) {
             var column = null;
-
-            for (var counter=1; counter<=len; counter++) {
+            // Get full lines
+            for (var counter=1; counter <= max; counter++) {
                 if (len % counter == 0) {
-                    columns.push(counter);
-                }
-            }
-            var counter;
-            while((counter = columns.shift()) && column == null) {
-                if(counter * item.width > screen.width) {
                     column = counter;
                 }
             }
-            return column || len;
+            // Try to catch the more full lines as possible
+            if (column == 1 && len > max) {
+                for (var counter=max - 2; counter <= max; counter++) {
+                    var _full_rows = Math.trunc(len / counter);
+                    var _last_row_items = len - _full_rows * counter;
+                    if (counter - _last_row_items == 1) {
+                        column = counter;
+                    }
+                }
+            }
+            return column || column_max;
         },
         
         top: function(item, screen) {
@@ -80,14 +83,11 @@
         },
         
         width: function(item, screen, len) {
-            var columns = this.columns(item, len);
-            var columns_min = Math.ceil(screen.width / item.width);
-            
-            // Ne pas avoir trop de colonnes
-            var too_many_columns = columns / columns_min > 1.25;
-            if (too_many_columns) {
-                return columns_min * item.width;
-            }
+            var columns_max = Math.ceil(screen.width / item.width);
+            var rows_min = Math.ceil(screen.height / item.height);
+
+            var columns = this.columns(len, columns_max_visible);
+            // var rows = Math.ceil(len / columns);
             
             return columns * item.width;
         },
@@ -165,8 +165,8 @@
             
             // Force Content.width
             // to have horizontal alignment
-            this.el.width(this.width(item_ref_size, screen_size, items_len));
-            this.el.css({
+            content.width(this.width(item_ref_size, screen_size, items_len));
+            content.css({
                 "padding-top": this.top(item_ref_size, screen_size)
             });
         }
