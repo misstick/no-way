@@ -62,6 +62,7 @@
                     column = counter;
                 }
             }
+
             // Try to catch the more full lines as possible
             if (column == 1 && len > max) {
                 for (var counter=max - 2; counter <= max; counter++) {
@@ -83,10 +84,10 @@
         },
         
         width: function(item, screen, len) {
-            var columns_max = Math.ceil(screen.width / item.width);
-            var rows_min = Math.ceil(screen.height / item.height);
-
+            var columns_max_visible = Math.ceil(screen.width * 1.5 / item.width);
             var columns = this.columns(len, columns_max_visible);
+
+            // var rows_min = Math.ceil(screen.height / item.height);
             // var rows = Math.ceil(len / columns);
             
             return columns * item.width;
