@@ -54,7 +54,12 @@
             return value > 0;
         },
         
-        get_width: function(item, screen, nb_items) {
+        top: function(item, screen) {
+            var value = Math.ceil((screen.height - this.__content.height()) / 2);
+            return (value > 0) ? value : 0;
+        },
+        
+        width: function(item, screen, nb_items) {
             var columns = [];
             var column = null;
             for (var counter=1; counter<=nb_items; counter++) {
@@ -72,15 +77,18 @@
         },
         
         resize: function() {
-            var content = this.__content;
             
             // Grid is a table with CID references
             // of models of collection
+            var content = this.__content;
             var grid = this.grid;
             var collection = this.collection;
             
             // Remove Previous resize
-            content.css("width", "auto");
+            content.css({
+                "width": "auto",
+                "padding-top": "0"
+            });
             
             var screen_size = {
                 "width": window.innerWidth,
@@ -141,8 +149,10 @@
             
             // Force Content.width
             // to have horizontal alignment
-            var width = this.get_width(item_ref_size, screen_size, items_len);
-            content.width(width);
+            this.el.width(this.width(item_ref_size, screen_size, items_len));
+            this.el.css({
+                "padding-top": this.top(item_ref_size, screen_size)
+            });
         }
     });
     
