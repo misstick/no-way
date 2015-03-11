@@ -76,23 +76,6 @@
             return column || column_max;
         },
         
-        top: function(item, screen) {
-            var _content = this.__content;
-            var _value = _content.height() + _content.offset().top;
-            var value = Math.ceil((screen.height - _value) / 2);
-            return (value > 0) ? value : 0;
-        },
-        
-        width: function(item, screen, len) {
-            var columns_max_visible = Math.ceil(screen.width * 1.5 / item.width);
-            var columns = this.columns(len, columns_max_visible);
-
-            // var rows_min = Math.ceil(screen.height / item.height);
-            // var rows = Math.ceil(len / columns);
-            
-            return columns * item.width;
-        },
-        
         styles: function(item, screen, len) {
             if (arguments.length == 0) {
                 return {
@@ -100,11 +83,15 @@
                     "padding-top": "0"
                 };
             }
-            var _width = this.width(item, screen, len);
-            var _top = this.top(item, screen, len);
+            
+            var columns_max_visible = Math.ceil(screen.width * 1.5 / item.width);
+            var columns = this.columns(len, columns_max_visible);
+            var rows_min = Math.ceil(screen.height / item.height);
+            var rows = Math.ceil(len / columns);
+            
             return {
-                "width": _width,
-                "padding-top": _top
+                "width": columns * item.width,
+                "padding-top": Math.round((screen.height - rows * item.height) / 2)
             };
         },
         
