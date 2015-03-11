@@ -57,7 +57,7 @@
 			var value = (action === "next") ? this.el.get(0).scrollLeft + step : this.el.get(0).scrollLeft - step;
 			
 			// ANimation
-			this.el.animate({ "scrollLeft": value}, { complete: display_buttons});
+			this.el.animate({ "scrollLeft": value}, { complete: this.render.bind(this)});
 		},
 	});
 
