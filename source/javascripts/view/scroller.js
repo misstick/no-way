@@ -93,6 +93,21 @@
             return columns * item.width;
         },
         
+        styles: function(item, screen, len) {
+            if (arguments.length == 0) {
+                return {
+                    "width": "auto",
+                    "padding-top": "0"
+                };
+            }
+            var _width = this.width(item, screen, len);
+            var _top = this.top(item, screen, len);
+            return {
+                "width": _width,
+                "padding-top": _top
+            };
+        },
+        
         resize: function() {
             
             // Grid is a table with CID references
@@ -102,10 +117,8 @@
             var collection = this.collection;
             
             // Remove Previous resize
-            content.css({
-                "width": "auto",
-                "padding-top": "0"
-            });
+            var _default_styles = this.styles();
+            content.css(_default_styles);
             
             var screen_size = {
                 "width": window.innerWidth,
@@ -166,10 +179,13 @@
             
             // Force Content.width
             // to have horizontal alignment
-            content.width(this.width(item_ref_size, screen_size, items_len));
-            content.css({
-                "padding-top": this.top(item_ref_size, screen_size)
-            });
+            
+            // @TODO : add a method "this.styles"
+            // remove "this.width" et "top"
+            // déduire la hauteur en fonction de 
+            // la variable "row" présent dans la methode "width"
+            var _styles = this.styles(item_ref_size, screen_size, items_len);
+            content.css(_styles);
         }
     });
     
