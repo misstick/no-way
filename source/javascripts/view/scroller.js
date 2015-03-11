@@ -179,11 +179,6 @@
             
             // Force Content.width
             // to have horizontal alignment
-            
-            // @TODO : add a method "this.styles"
-            // remove "this.width" et "top"
-            // déduire la hauteur en fonction de 
-            // la variable "row" présent dans la methode "width"
             var _styles = this.styles(item_ref_size, screen_size, items_len);
             content.css(_styles);
         }
