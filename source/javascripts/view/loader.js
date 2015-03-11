@@ -83,7 +83,7 @@
                 el._index = index;
                 
                 var img = _get_picture(el);
-                if (img && ! _is_loaded(img)) {
+                if (img) {
                     img.onload = function(event) {
                         _save(el, img);    
                     };
