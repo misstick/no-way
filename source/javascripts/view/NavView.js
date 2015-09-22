@@ -1,9 +1,8 @@
+import BaseView from './view/BaseView';
+export default NavView;
+
 (() => {
     "use strict";
-
-    const main = window;
-    const baseView = main._VIEW["base"];
-	const NAMESPACE = "nav";
 
 	_.mixin({
 		create_affix: function(el) {
@@ -14,22 +13,22 @@
 	});
 
 
-	var navView = function(el, options) {
-		baseView.apply(this, arguments);
+	var NavView = function(el, options) {
+		BaseView.apply(this, arguments);
 	}
 
-	navView.prototype = Object.create(baseView.prototype);
+	NavView.prototype = Object.create(BaseView.prototype);
 
-	_.extend(navView.prototype, {
+	_.extend(NavView.prototype, {
 		
 		template: '<nav data-view="scroll_nav"><button data-action="back"><button data-action="next"></nav>',
 
 		// @TEST : Navigation bar should exist
 		// on nonetouch resolutions
 		render: function() {
-			var path_content = '[data-view="scroll_nav"]';
+			var path_content = '[data-view="scroll_nav "]';
 			if (!$(path_content, this.el).get(0)) {
-				// Add navigation
+				// Add navigation 
 				this.el.append(this.template);
 				_.create_affix($("nav", this.el));
 				
@@ -64,7 +63,4 @@
 			this.el.animate({ "scrollLeft": value}, { complete: display_buttons});
 		},
 	});
-
-	main._VIEW[NAMESPACE]  = navView;
-
 })();

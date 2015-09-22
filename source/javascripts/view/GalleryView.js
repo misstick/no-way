@@ -1,14 +1,12 @@
+import BaseView from '../view/BaseView';
+import LoaderView from '../view/LoaderView';
+import ScrollerView from '../view/ScrollerView';
+import BaseCollection from '../collection/BaseCollection';
+import GridCollection from '../collection/GridCollection';
+export default GalleryView;
+
 (() => {
     "use strict";
-
-    const main = window;
-    const baseView = main._VIEW["base"];
-    const loaderView = main._VIEW["loader"];
-    const scrollerView = main._VIEW["scroller"];
-    const baseCollection = main._COLLECTION["base"];
-    const gridCollection = main._COLLECTION["grid"];
-
-	const NAMESPACE = "wall";
 
 	//
 	// Handle format: landscape/portrait
@@ -16,13 +14,13 @@
 	// Save picture positions
 	//
 
-	var wallView = function(el, options) {
-		baseView.apply(this, arguments);
+	var GalleryView = function(el, options) {
+		BaseView.apply(this, arguments);
 	}
 
-	wallView.prototype = Object.create(baseView.prototype);
+	GalleryView.prototype = Object.create(baseView.prototype);
 
-	_.extend(wallView.prototype, {
+	_.extend(GalleryView.prototype, {
 		
 		collection: new gridCollection(),
 		
@@ -37,12 +35,12 @@
 			// @FIXME : put this in the future into render
 			// when all methods will be cleanedup && renamed
 			
-			this.__loader = new loaderView(this.el, {
+			this.__loader = new LoaderView(this.el, {
 				collection: this.collection
 			});
 			this.__loader.render();
 			
-			this.__scroller = new scrollerView(this.el, {
+			this.__scroller = new ScrollerView(this.el, {
 				collection: this.collection
 			});
 		},
@@ -92,7 +90,4 @@
 		}
 
 	});
-	
-	main._VIEW[NAMESPACE]  = wallView;
-
 })();

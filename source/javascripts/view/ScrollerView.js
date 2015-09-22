@@ -1,10 +1,9 @@
+import BaseView from '../view/BaseView';
+import NavView from '../view/NavView';
+export default ScrollerView;
+
 (() => {
     "use strict";
-
-    const main = window;
-    const baseView = main._VIEW["base"];
-    const navView = main._VIEW["nav"];
-    const NAMESPACE = "scroller";
 
     _.mixin({
         is_touch: function() {
@@ -15,18 +14,18 @@
         }
     });
 
-    var scrollerView = function(el, options) {
-        baseView.apply(this, arguments);
+    var ScrollerView = function(el, options) {
+        BaseView.apply(this, arguments);
     }
     
-    scrollerView.prototype = Object.create(baseView.prototype);
+    ScrollerView.prototype = Object.create(BaseView.prototype);
     
-    _.extend(scrollerView.prototype, {
+    _.extend(ScrollerView.prototype, {
         
         grid: [],
         
         initialize: function(el, options) {
-            baseView.prototype.initialize.apply(this, arguments);
+            BaseView.prototype.initialize.apply(this, arguments);
             var _func = this.resize.bind(this);
             $(window).on("resize", _.debounce(_func, 500));
         },
@@ -48,7 +47,7 @@
                 this.resize();
             }
             if (!_.is_touch() && this.scroll_value()) {
-                this.__nav = new navView(this.el);
+                this.__nav = new NavView(this.el);
                 this.__nav.render();
             }
         },
@@ -187,7 +186,4 @@
             content.css(_styles);
         }
     });
-    
-    main._VIEW[NAMESPACE]  = scrollerView;
-    
 })();

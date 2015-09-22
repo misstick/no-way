@@ -1,21 +1,19 @@
+import BaseView from './view/BaseView';
+export default LoaderView;
+
 (() => {
     "use strict";
 
-    const main = window;
-    const baseView = main._VIEW["base"];
-
-	const NAMESPACE = "loader";
-
-	var loaderView = function(el, options) {
-		baseView.apply(this, arguments);
+	var LoaderView = function(el, options) {
+		BaseView.apply(this, arguments);
 	}
 
-	loaderView.prototype = Object.create(baseView.prototype);
+	LoaderView.prototype = Object.create(BaseView.prototype);
 
-	_.extend(loaderView.prototype, {
+	_.extend(LoaderView.prototype, {
 
 		initialize: function(el, options) {
-			baseView.prototype.initialize.apply(this, arguments);
+			BaseView.prototype.initialize.apply(this, arguments);
 			$(this.el).on("load:start", this.start.bind(this));
 			$(this.el).on("load:stop", this.stop.bind(this));
 		},
@@ -99,7 +97,4 @@
 			}.bind(this));
 		}
 	});
-	
-	main._VIEW[NAMESPACE]  = loaderView;
-
 })();

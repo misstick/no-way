@@ -1,8 +1,7 @@
+export default BaseCollection;
+
 (() => {
     "use strict";
-
-    const main = window;
-	const NAMESPACE = "base";
 
 	let view_counter = 0;
 
@@ -87,7 +86,4 @@
 			delete this;
 		}
 	};
-
-	main._COLLECTION = {};
-	main._COLLECTION[NAMESPACE]  = BaseCollection;
 })();

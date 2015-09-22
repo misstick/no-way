@@ -1,19 +1,17 @@
+export default BaseView;
+
 (() => {
     "use strict";
 
-    const main = window;
-	const NAMESPACE = "base";
-
 	let view_counter = 0;
 
-	
-	var baseView = function(el, options) {
+	var BaseView = function(el, options) {
 		if (el) {
 			this.initialize(el, options);
 		}
 	};
 
-	baseView.prototype = {
+	BaseView.prototype = {
 
 		initialize: function(el, options) {
 			
@@ -44,7 +42,4 @@
 			console.log("destroy")
 		}
 	};
-
-	main._VIEW = {};	
-	main._VIEW[NAMESPACE] = baseView;
 })();

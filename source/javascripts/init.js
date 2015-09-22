@@ -1,3 +1,5 @@
+import GalleryView from 'view/GalleryView';
+
 (() => {
     "use strict";
 
@@ -53,13 +55,13 @@
 		
 		$("[data-type=gallery]").each(function(index, item) {
 			// Create Gallery
-			var view = new _VIEW["wall"]($(item));
+			var view = new GalleryView($(item));
 			view.on("render:finished", function() {
 				_links_display.call(this);
 				_ellipsis.call(this);
 			}.bind(this));
 		});
-	
+
 		// Contact
 		var email =  $("footer .email");
 		if (email.get(0)) {

@@ -1,9 +1,8 @@
+import BaseCollection from '../collection/baseCollection';
+export default GridCollection;
+
 (() => {
     "use strict";
-
-    const main = window;
-    const baseCollection = main._COLLECTION["base"];
-    const NAMESPACE = "grid";
 
     var GridCollection = function(data) {
         baseCollection.apply(this, arguments);
@@ -111,6 +110,4 @@
             });
         }
     });
-
-    main._COLLECTION[NAMESPACE]  = GridCollection;
 })();
