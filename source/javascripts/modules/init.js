@@ -1,4 +1,4 @@
-import GalleryView from 'view/GalleryView';
+import GalleryView from './view/GalleryView';
 
 (() => {
     "use strict";

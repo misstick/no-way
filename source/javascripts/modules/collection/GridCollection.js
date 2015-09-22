@@ -1,4 +1,4 @@
-import BaseCollection from '../collection/baseCollection';
+import BaseCollection from './baseCollection';
 export default GridCollection;
 
 (() => {

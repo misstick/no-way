@@ -1,4 +1,4 @@
-import BaseView from './view/BaseView';
+import BaseView from './BaseView';
 export default NavView;
 
 (() => {

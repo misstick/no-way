@@ -1,5 +1,5 @@
-import BaseView from '../view/BaseView';
-import NavView from '../view/NavView';
+import BaseView from './BaseView';
+import NavView from './NavView';
 export default ScrollerView;
 
 (() => {

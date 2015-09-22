@@ -1,8 +1,8 @@
-import BaseView from '../view/BaseView';
-import LoaderView from '../view/LoaderView';
-import ScrollerView from '../view/ScrollerView';
-import BaseCollection from '../collection/BaseCollection';
-import GridCollection from '../collection/GridCollection';
+import BaseView from './BaseView';
+import LoaderView from './LoaderView';
+import ScrollerView from './ScrollerView';
+import BaseCollection from './../collection/BaseCollection';
+import GridCollection from './../collection/GridCollection';
 export default GalleryView;
 
 (() => {
