@@ -1,9 +1,6 @@
 import BaseView from './BaseView';
 export default LoaderView;
 
-(() => {
-    "use strict";
-
 	var LoaderView = function(el, options) {
 		BaseView.apply(this, arguments);
 	}
@@ -97,4 +94,3 @@ export default LoaderView;
 			}.bind(this));
 		}
 	});
-})();

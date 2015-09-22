@@ -1,6 +1,5 @@
 import GalleryView from './view/GalleryView';
 
-(() => {
     "use strict";
 
 		// Home Links
@@ -70,4 +69,3 @@ import GalleryView from './view/GalleryView';
 			email.remove();
 			$(parent).html('<a href="mailto:' + value.replace("[AT]", "@").replace("[DOT]", ".") + '">' + $(parent).html() + '</a>')
 		}
-})();

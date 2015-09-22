@@ -1,8 +1,5 @@
 export default BaseCollection;
 
-(() => {
-    "use strict";
-
 	let view_counter = 0;
 
 	var BaseCollection = function(data) {
@@ -86,4 +83,3 @@ export default BaseCollection;
 			delete this;
 		}
 	};
-})();

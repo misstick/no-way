@@ -2,9 +2,6 @@ import BaseView from './BaseView';
 import NavView from './NavView';
 export default ScrollerView;
 
-(() => {
-    "use strict";
-
     _.mixin({
         is_touch: function() {
             /* Modernizr 2.6.2 (Custom Build) | MIT & BSD
@@ -186,4 +183,3 @@ export default ScrollerView;
             content.css(_styles);
         }
     });
-})();

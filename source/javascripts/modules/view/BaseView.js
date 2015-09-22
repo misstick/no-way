@@ -1,8 +1,5 @@
 export default BaseView;
 
-(() => {
-    "use strict";
-
 	let view_counter = 0;
 
 	var BaseView = function(el, options) {
@@ -42,4 +39,3 @@ export default BaseView;
 			console.log("destroy")
 		}
 	};
-})();

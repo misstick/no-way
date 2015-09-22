@@ -1,9 +1,6 @@
 import BaseView from './BaseView';
 export default NavView;
 
-(() => {
-    "use strict";
-
 	_.mixin({
 		create_affix: function(el) {
 			var coords = el.offset();
@@ -63,4 +60,3 @@ export default NavView;
 			this.el.animate({ "scrollLeft": value}, { complete: display_buttons});
 		},
 	});
-})();

@@ -1,9 +1,6 @@
 import BaseCollection from './baseCollection';
 export default GridCollection;
 
-(() => {
-    "use strict";
-
     var GridCollection = function(data) {
         baseCollection.apply(this, arguments);
     }
@@ -110,4 +107,3 @@ export default GridCollection;
             });
         }
     });
-})();
