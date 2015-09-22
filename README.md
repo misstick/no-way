@@ -8,6 +8,7 @@ To install all front-end frameworks, launch before start
 npm install bower
 bower install
 npm install -g mocha-phantomjs
+npm install babel-core
 ```
 To launch unit-test : 
 ```
