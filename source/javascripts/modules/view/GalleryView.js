@@ -5,9 +5,6 @@ import BaseCollection from './../collection/BaseCollection';
 import GridCollection from './../collection/GridCollection';
 export default GalleryView;
 
-(() => {
-    "use strict";
-
 	//
 	// Handle format: landscape/portrait
 	// Set pictures close together
@@ -90,4 +87,3 @@ export default GalleryView;
 		}
 
 	});
-})();
