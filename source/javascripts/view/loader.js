@@ -1,7 +1,10 @@
-(function(baseView) {
+(() => {
     "use strict";
-	
-	var NAMESPACE = "loader";
+
+    const main = window;
+    const baseView = main._VIEW["base"];
+
+	const NAMESPACE = "loader";
 
 	var loaderView = function(el, options) {
 		baseView.apply(this, arguments);
@@ -97,7 +100,6 @@
 		}
 	});
 	
-	_VIEW[NAMESPACE]  = loaderView;
+	main._VIEW[NAMESPACE]  = loaderView;
 
-})(_VIEW["base"]);
-
+})();

@@ -1,8 +1,6 @@
-(function() {
+(() => {
     "use strict";
-	
-	$(document).on("ready", function() {
-	
+
 		// Home Links
 		var _links_display = function() {
 			var goto_article = function(event) {
@@ -70,6 +68,4 @@
 			email.remove();
 			$(parent).html('<a href="mailto:' + value.replace("[AT]", "@").replace("[DOT]", ".") + '">' + $(parent).html() + '</a>')
 		}
-	
-	});
-})()
+})();

@@ -1,11 +1,11 @@
-(function(main) {
+(() => {
     "use strict";
 
-	main._VIEW = {};
+    const main = window;
+	const NAMESPACE = "base";
 
-	var view_counter = 0;
-	
-	var NAMESPACE = "base";
+	let view_counter = 0;
+
 	
 	var baseView = function(el, options) {
 		if (el) {
@@ -44,6 +44,7 @@
 			console.log("destroy")
 		}
 	};
-	
-	_VIEW[NAMESPACE] = baseView;
-})(this);
+
+	main._VIEW = {};	
+	main._VIEW[NAMESPACE] = baseView;
+})();

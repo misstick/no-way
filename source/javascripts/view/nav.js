@@ -1,5 +1,9 @@
-(function(baseView) {
+(() => {
     "use strict";
+
+    const main = window;
+    const baseView = main._VIEW["base"];
+	const NAMESPACE = "nav";
 
 	_.mixin({
 		create_affix: function(el) {
@@ -9,7 +13,6 @@
 		}
 	});
 
-	var NAMESPACE = "nav";
 
 	var navView = function(el, options) {
 		baseView.apply(this, arguments);
@@ -62,7 +65,6 @@
 		},
 	});
 
-	_VIEW[NAMESPACE]  = navView;
+	main._VIEW[NAMESPACE]  = navView;
 
-})(_VIEW["base"]);
-
+})();

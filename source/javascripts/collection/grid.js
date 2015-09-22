@@ -1,7 +1,9 @@
-(function(baseCollection) {
+(() => {
     "use strict";
 
-    var NAMESPACE = "grid";
+    const main = window;
+    const baseCollection = main._COLLECTION["base"];
+    const NAMESPACE = "grid";
 
     var GridCollection = function(data) {
         baseCollection.apply(this, arguments);
@@ -110,5 +112,5 @@
         }
     });
 
-    _COLLECTION[NAMESPACE]  = GridCollection;
-})(_COLLECTION["base"]);
+    main._COLLECTION[NAMESPACE]  = GridCollection;
+})();

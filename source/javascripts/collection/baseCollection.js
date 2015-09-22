@@ -1,12 +1,11 @@
-(function(main) {    
+(() => {
     "use strict";
 
-	main._COLLECTION = {};
-	
-	var NAMESPACE = "base";
-	
-	var view_counter = 0;
-	
+    const main = window;
+	const NAMESPACE = "base";
+
+	let view_counter = 0;
+
 	var BaseCollection = function(data) {
 		this.initialize(data || null);
 	}
@@ -88,6 +87,7 @@
 			delete this;
 		}
 	};
-	
-	_COLLECTION[NAMESPACE]  = BaseCollection;
-})(this);
+
+	main._COLLECTION = {};
+	main._COLLECTION[NAMESPACE]  = BaseCollection;
+})();

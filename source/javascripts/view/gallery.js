@@ -1,7 +1,14 @@
-(function(baseView, loaderView, scrollerView, baseCollection, gridCollection) {
+(() => {
     "use strict";
 
-	var NAMESPACE = "wall";
+    const main = window;
+    const baseView = main._VIEW["base"];
+    const loaderView = main._VIEW["loader"];
+    const scrollerView = main._VIEW["scroller"];
+    const baseCollection = main._COLLECTION["base"];
+    const gridCollection = main._COLLECTION["grid"];
+
+	const NAMESPACE = "wall";
 
 	//
 	// Handle format: landscape/portrait
@@ -86,7 +93,6 @@
 
 	});
 	
-	_VIEW[NAMESPACE]  = wallView;
+	main._VIEW[NAMESPACE]  = wallView;
 
-})(_VIEW["base"], _VIEW["loader"], _VIEW["scroller"], _COLLECTION["base"], _COLLECTION["grid"]);
-
+})();

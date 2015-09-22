@@ -1,5 +1,10 @@
-(function(baseView, navView) {
+(() => {
     "use strict";
+
+    const main = window;
+    const baseView = main._VIEW["base"];
+    const navView = main._VIEW["nav"];
+    const NAMESPACE = "scroller";
 
     _.mixin({
         is_touch: function() {
@@ -9,9 +14,7 @@
             return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
         }
     });
-    
-    var NAMESPACE = "scroller";
-    
+
     var scrollerView = function(el, options) {
         baseView.apply(this, arguments);
     }
@@ -175,8 +178,8 @@
                         _styles["background-size"] = "auto 100%";
                     }
                     item.css(_styles);
-                });
-            });
+                }.bind(this));
+            }.bind(this));
             
             // Force Content.width
             // to have horizontal alignment
@@ -185,7 +188,6 @@
         }
     });
     
-    _VIEW[NAMESPACE]  = scrollerView;
+    main._VIEW[NAMESPACE]  = scrollerView;
     
-})(_VIEW["base"], _VIEW["nav"]);
-
+})();
