@@ -1,4 +1,5 @@
 (function(baseView, loaderView, scrollerView, baseCollection, gridCollection) {
+    "use strict";
 
 	var NAMESPACE = "wall";
 

@@ -1,4 +1,6 @@
 (function(main) {
+    "use strict";
+
 	main._VIEW = {};
 
 	var view_counter = 0;

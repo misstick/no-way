@@ -1,4 +1,5 @@
 (function(baseView) {
+    "use strict";
 	
 	var NAMESPACE = "loader";
 

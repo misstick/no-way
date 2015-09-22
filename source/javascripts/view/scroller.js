@@ -1,4 +1,5 @@
 (function(baseView, navView) {
+    "use strict";
 
     _.mixin({
         is_touch: function() {

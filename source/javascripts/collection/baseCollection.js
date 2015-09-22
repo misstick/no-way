@@ -1,4 +1,6 @@
-(function(main) {
+(function(main) {    
+    "use strict";
+
 	main._COLLECTION = {};
 	
 	var NAMESPACE = "base";

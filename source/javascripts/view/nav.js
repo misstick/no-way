@@ -1,4 +1,5 @@
 (function(baseView) {
+    "use strict";
 
 	_.mixin({
 		create_affix: function(el) {

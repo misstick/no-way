@@ -1,4 +1,5 @@
 (function(baseCollection) {
+    "use strict";
 
     var NAMESPACE = "grid";
 
