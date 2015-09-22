@@ -21,3 +21,5 @@
 /source/bower_components
 /source/node_modules*
 /source/vendor/*
+/source/javascripts/compiled
+/source/javascripts/bundle.js
