@@ -1,85 +1,78 @@
-export default BaseCollection;
+const defaultModel = {
+    order: 0,
+};
 
-let view_counter = 0;
+let viewCounter = 0;
 
-var BaseCollection = function(data) {
-    this.initialize(data || null);
-}
+class BaseCollection {
+    constructor(data = null) {
+        this.models = [];
+        this.cid = "C" + (++viewCounter);
 
-BaseCollection.prototype = {
-
-    defaults: {
-        order: 0
-    },
-
-    models: [],
-
-    initialize: function(data) {
         if (data) {
             this.add(data);
         }
-        this.cid = "C" + (++view_counter);
-    },
+    }
 
-    add: function(data, options) {
-        var options = options || {};
-        if (!data && data !== undefined) {
-            return;
-        }
+    add(data, options = {}) {
+        if (!data) return;
+
+        // Multiple data : Recursive call
         if (_.isArray(data)) {
-            _.each(data, function(model) {
+            _.each(data, (model) => {
                 this.add(model);
-            }.bind(this));
+            });
             return;
         }
 
-        var attributes = _.clone(this.defaults);
-        _.extend(attributes, data);
-        attributes = this.validate(attributes, options);
-        if (attributes) {
-            attributes.cid = this.cid + this.models.length;
-            this.models.push(attributes);
-            this.trigger("add", attributes);
+        let model = _.extend(defaultModel, data);
+        model = this.validate(model, options);
+        if (model) {
+            model.cid = this.cid + this.models.length;
+            this.models.push(model);
+            this.trigger("add", model);
         }
-    },
+    }
 
-    validate: function(data, options) {
+    validate(data) {
         return data;
-    },
+    }
 
-    sort: function() {
+    sort() {
         this.models = _.sortBy(this.models, function(model) {
             return model.order;
         });
-    },
+    }
 
-    get: function(index) {
+    get(index) {
         return this.models[index];
-    },
+    }
 
-    size: function() {
+    getSize() {
         return this.models.length;
-    },
+    }
 
-    reset: function() {
+    reset() {
         this.models = []
-    },
+    }
 
-    on: function(name, func) {
+    on(name, func = null) {
         $(window).on(this.cid + "::" + name, func);
-    },
+    }
 
-    off: function(name, func) {
+    off(name, func = null) {
         $(window).off(this.cid + "::" + name, func || null);
-    },
+    }
 
-    trigger: function(name, data) {
+    trigger(name, data = {}) {
         $(window).trigger(this.cid + "::" + name, data);
-    },
+    }
 
-    remove: function() {
+    remove() {
         this.reset();
         this.off("add");
         delete this;
     }
 };
+
+export default BaseCollection;

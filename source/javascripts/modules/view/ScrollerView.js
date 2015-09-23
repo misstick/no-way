@@ -1,9 +1,8 @@
 import BaseView from './BaseView';
 import NavView from './NavView';
-export default ScrollerView;
 
 _.mixin({
-    is_touch: function() {
+    is_touch() {
         /* Modernizr 2.6.2 (Custom Build) | MIT & BSD
         * Build: http://modernizr.com/download/#-touch-shiv-cssclasses-teststyles-prefixes-load
         */
@@ -11,52 +10,45 @@ _.mixin({
     }
 });
 
-var ScrollerView = function(el, options) {
-    BaseView.apply(this, arguments);
-}
+class ScrollerView extends BaseView {
+    constructor(el, options = {}) {
+        super(el, options);
 
-ScrollerView.prototype = Object.create(BaseView.prototype);
+        $(window).on("resize", _.debounce(this.resize.bind(this), 500));
+    }
 
-_.extend(ScrollerView.prototype, {
-
-    grid: [],
-
-    initialize: function(el, options) {
-        BaseView.prototype.initialize.apply(this, arguments);
-        var _func = this.resize.bind(this);
-        $(window).on("resize", _.debounce(_func, 500));
-    },
-
-    render: function(html) {
-        if (!this.__content) {
+    render(html = '') {
+        if (!this._content) {
             $(this.el).html("<div class=scroller></div>");
-            this.__content = $(".scroller", this.el);
+            this._content = $(".scroller", this.el);
         }
 
-        var content = this.__content;
-
+        let content = this._content;
         if (_.isString(html)) {
-
             // Append new HTML
             content.html(html)
 
             // Display columns && rows
             this.resize();
         }
+
         if (!_.is_touch() && this.scroll_value()) {
-            this.__nav = new NavView(this.el);
-            this.__nav.render();
+            if (!this.navView) this.navView = new NavView(this.el);
+            this.navView.render();
         }
-    },
+    }
 
-    scroll_value: function() {
-        var _value = this.el.get(0).scrollWidth - this.el.get(0).offsetWidth;
-        return _value > 0;
-    },
+    saveGrid(grid = {}) {
+        this.grid = grid;
+    }
 
-    columns: function(len, max) {
+    scroll_value() {
+        return (this.el.get(0).scrollWidth - this.el.get(0).offsetWidth) > 0;
+    }
+
+    // Get full lines
+    columns(len, max) {
         var column = null;
-        // Get full lines
         for (var counter=1; counter <= max; counter++) {
             if (len % counter == 0) {
                 column = counter;
@@ -74,70 +66,64 @@ _.extend(ScrollerView.prototype, {
             }
         }
         return column || column_max;
-    },
+    }
 
-    top: function(item, screen) {
-        var _content = this.__content;
-        var _value = _content.height() + _content.offset().top;
-        var value = Math.ceil((screen.height - _value) / 2);
+    top(item, screen) {
+        const _content = this._content;
+        const _value = _content.height() + _content.offset().top;
+        const value = Math.ceil((screen.height - _value) / 2);
         return (value > 0) ? value : 0;
-    },
+    }
 
-    width: function(item, screen, len) {
-        var columns_max_visible = Math.ceil(screen.width * 1.5 / item.width);
-        var columns = this.columns(len, columns_max_visible);
+    width(item, screen, len) {
+        const columns_max_visible = Math.ceil(screen.width * 1.5 / item.width);
+        const columns = this.columns(len, columns_max_visible);
 
         // var rows_min = Math.ceil(screen.height / item.height);
         // var rows = Math.ceil(len / columns);
 
         return columns * item.width;
-    },
+    }
 
-    styles: function(item, screen, len) {
-        if (arguments.length == 0) {
+    styles(item, screen, len) {
+        if (!arguments.length) {
             return {
                 "width": "auto",
-                "padding-top": "0"
+                "padding-top": "0",
             };
         }
-        var _width = this.width(item, screen, len);
-        var _top = this.top(item, screen, len);
         return {
-            "width": _width,
-            "padding-top": _top
+            "width": this.width(item, screen, len),
+            "padding-top": this.top(item, screen, len),
         };
-    },
+    }
 
-    resize: function() {
-
+    resize() {
         // Grid is a table with CID references
         // of models of collection
-        var content = this.__content;
-        var grid = this.grid;
-        var collection = this.collection;
+        const content = this._content;
+        const grid = this.grid;
+        const collection = this.collection;
 
         // Remove Previous resize
-        var _default_styles = this.styles();
+        const _default_styles = this.styles();
         content.css(_default_styles);
 
         var screen_size = {
             "width": window.innerWidth,
             "height": window.innerHeight
         };
-        var item_ref_size = collection.get_grid_ref(screen_size);
-        var items_len = this.collection.size();
+        var item_ref_size = collection.getRefererSize(screen_size);
+        var items_len = this.collection.getSize();
 
         // Resize Grid Items
-        _.each(grid, function(data) {
-
+        _.each(grid, (data) => {
             // Item Real Size
-            var _item_size = _.clone(item_ref_size);
+            const _item_size = _.clone(item_ref_size);
 
-            _.each(data, function(cid, index) {
-
-                var item = $('[data-cid=' + cid + ']', this.el);
-
-                var model = _.find(collection.models, function(_model) {
+            _.each(data, (cid, index) => {
+                const item = $('[data-cid=' + cid + ']', this.el);
+                const model = _.find(collection.models, function(_model) {
                     return _model.cid == cid;
                 });
 
@@ -148,7 +134,7 @@ _.extend(ScrollerView.prototype, {
                         // container is twice larger than a "portrait"
 
                         // @TODO : check that new width isnt too big compared to initial value
-                        // This check should be done into (collection)grid.sort_by_format
+                        // This check should be done into (collection)grid.sortByFormat
                         _.extend(_item_size, {
                             "width": _item_size.width * 2
                         });
@@ -163,23 +149,25 @@ _.extend(ScrollerView.prototype, {
                 }
 
                 // Background Positionning
-                var _styles = {
+                const _styles = {
                     "background-size": "100% auto",
                     "height": _item_size.height,
                     "width": _item_size.width
-                }
-                var _height =  model.img_height || model.height;
-                var _width = model.img_width || model.width;
+                };
+                const _height =  model.img_height || model.height;
+                const _width = model.img_width || model.width;
                 if (_height / _width < _item_size.height / _item_size.width) {
                     _styles["background-size"] = "auto 100%";
                 }
                 item.css(_styles);
-            }.bind(this));
-        }.bind(this));
+            });
+        });
 
         // Force Content.width
         // to have horizontal alignment
-        var _styles = this.styles(item_ref_size, screen_size, items_len);
+        const _styles = this.styles(item_ref_size, screen_size, items_len);
         content.css(_styles);
     }
-});
+};
+
+export default ScrollerView;

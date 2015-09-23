@@ -1,39 +1,32 @@
 import BaseView from './BaseView';
-export default LoaderView;
 
-var LoaderView = function(el, options) {
-    BaseView.apply(this, arguments);
-}
+class LoaderView extends BaseView {
+    constructor(el, options = {}) {
+        super(el, options);
 
-LoaderView.prototype = Object.create(BaseView.prototype);
+        this.on("load:start", this.start.bind(this));
+        this.on("load:stop", this.stop.bind(this));
+    }
 
-_.extend(LoaderView.prototype, {
-
-    initialize: function(el, options) {
-        BaseView.prototype.initialize.apply(this, arguments);
-        $(this.el).on("load:start", this.start.bind(this));
-        $(this.el).on("load:stop", this.stop.bind(this));
-    },
-
-    start: function() {
+    start() {
         $(this.el).addClass("load");
-    },
+    }
 
-    stop: function() {
+    stop() {
         $(this.el).removeClass("load");
-    },
+    }
 
-    data: function(el, img) {
+    getData(el, img) {
         if (!el) {
             return false;
         }
-        var content;
-        var data = {
+        let content = $(el).html();
+        let data = {
             order: el._index,
             width: el.offsetWidth,
             height: el.offsetHeight,
-            content: (content = $(el).html()),
-            __is_picture: false
+            content: content,
+            _isPicture: false,
         }
         if (img) {
             _.extend(data, {
@@ -41,56 +34,55 @@ _.extend(LoaderView.prototype, {
                 img_width: img.offsetWidth,
                 img_height: img.offsetHeight,
                 content: content.replace(/\<img [\s\w\/"'.=_-]*\/{0,1}\>/, ""),
-                __is_picture: el == img
+                _isPicture: el == img,
             });
         }
-
         return data;
-    },
+    }
 
-    render: function() {
-        $(this.el).trigger("load:start");
+    render() {
+        const items = $(this.el).children();
 
-        var items = $(this.el).children();
+        // End of prec
+        this.collection.on("add", _.after(items.length, renderComplete.bind(this)));
 
-        var _is_loaded = function(el) {
+        // Load && process content
+        this.trigger("load:start");
+        _.each(items, renderItem.bind(this));
+
+        function isLoaded(el) {
             return !!el.offsetWidth;
         }
 
-        var _is_picture = function(el) {
+        function isPicture(el) {
             return el.tagName.toLowerCase() == "img";
         }
 
-        var _get_picture = function(el) {
-            return (!_is_picture(el)) ? $("img", el).get(0) : el;
+        function getPicture(el) {
+            return (!isPicture(el)) ? $("img", el).get(0) : el;
         }
 
-        var _complete = _.debounce(function() {
-            this.collection.sort();
-            $(this.el).trigger("load:stop");
-            this.collection.off("add", _complete);
-        }.bind(this), 800);
-        this.collection.on("add", _complete);
-
-        var _save = function(el, img) {
-            var data = this.data(el, img);
+        function savePicture(el, img) {
+            var data = this.getData(el, img);
             this.collection.add(data);
-        }.bind(this);
+        };
 
-        _.each(items, function(el, index) {
-
+        function renderItem(el, index) {
             el._index = index;
-
-            var img = _get_picture(el);
-            if (img && ! _is_loaded(img)) {
-                img.onload = function(event) {
-                    _save(el, img);	
-                };
+            let img = getPicture(el);
+            if (img && ! isLoaded(img)) {
+                img.onload = (event) => savePicture.call(this, el, img);
                 return;
             }
+            savePicture.call(this, el, img);
+        }
 
-            _save(el, img);
-
-        }.bind(this));
+        function renderComplete() {
+            this.collection.sort();
+            this.trigger("load:stop");
+            this.collection.off("add", renderComplete);
+        };
     }
-});
+};
+
+export default LoaderView;

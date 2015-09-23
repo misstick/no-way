@@ -1,19 +1,7 @@
-export default BaseView;
-
 let view_counter = 0;
 
-var BaseView = function(el, options) {
-    if (el) {
-        this.initialize(el, options);
-    }
-};
-
-BaseView.prototype = {
-
-    initialize: function(el, options) {
-
-        options = options || {};
-
+class BaseView {
+    constructor(el, options = {}) {
         this.el = el;
 
         if (options.collection) {
@@ -21,21 +9,21 @@ BaseView.prototype = {
         }
 
         this.cid = options.cid || "V" + (++view_counter);
-    },
-
-    on: function(name, func) {
-        $(window).on(this.cid + "::" + name, func);
-    },
-
-    off: function(name, func) {
-        $(window).off(this.cid + "::" + name, func || null);
-    },
-
-    trigger: function(name, data) {
-        $(window).trigger(this.cid + "::" + name, data);
-    },
-
-    destroy: function() {
-        console.log("destroy")
     }
+
+    on(name, func) {
+        $(window).on(this.cid + "::" + name, func);
+    }
+
+    off(name, func) {
+        $(window).off(this.cid + "::" + name, func);
+    }
+
+    trigger(name, data = {}) {
+        $(window).trigger(this.cid + "::" + name, data);
+    }
+
+    destroy() {}
 };
+
+export default BaseView;

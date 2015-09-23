@@ -1,70 +1,47 @@
 import BaseCollection from './baseCollection';
-export default GridCollection;
 
-var GridCollection = function(data) {
-    baseCollection.apply(this, arguments);
+const defaultModel = {
+    order: 0,
+    src: '',
+    width: 0,
+    height: 0,
+    format: "portrait",
 }
 
-GridCollection.prototype = Object.create(baseCollection.prototype);
-
-_.extend(GridCollection.prototype, {
-
-    defaults: {
-        order: 0,
-        src: null,
-        width: 0,
-        height: 0,
-        format: "portrait"
-    },
-
-    get_format: function(data) {
+class GridCollection extends BaseCollection {
+    getFormat(data = { width: 0, height: 0}) {
         return (data.width > data.height) ? "landscape" : "portrait";
-    },
+    }
 
-    validate: function(data, options) {
-        // Use "landscape" format only when the DOM is only a picture
-        if (this.is_picture(data)) {
-            data.format = this.get_format(data);
-        }
+    validate(data = { width: 0, height: 0}, option = {}) {
+        data.format = this.getFormat(data);
         data.type = (!data.src) ? "text": "picture";
         return data;
-    },
+    }
 
-    sort_by_format: function(callback) {
-
-        var models = _.clone(this.models);
-
-        var is_portrait = _.findWhere(models, {format: "portrait"}) || false;
-
-        var callback = callback || function(data) { return data; };
-        return _.map(models, function(model, index, list) {
-            if (model.format == "landscape" && is_portrait) {
+    sortByFormat(callback) {
+        const models = _.clone(this.models);
+        const hasPortrait = _.findWhere(models, {format: "portrait"}) || false;
+        return _.map(models, (model, index, list) => {
+            if (model.format === "landscape" && hasPortrait) {
                 var _list = list.slice(index + 1, list.length);
-                var next = _.findWhere(_list, {format: "landscape"});
+                var next = _.findWhere(_list, {format: "landscape" });
                 if (next) {
                     list.splice(_.indexOf(list, next), 1);
                     return callback([model, next]);
                 }
                 return callback(model);
             }
-
             return callback(model);
         });
-    },
+    }
 
-    is_picture: function(data) {
-        return data.__is_picture || false;
-    },
-
-
-    get_grid_ref: function(screen_coords) {
-
-        var item0 = null;
-        var height_max = Math.ceil(screen_coords.height * 0.85);
+    getRefererSize(screen_coords = { width: 0, height: 0}) {
+        let item0 = null;
+        const height_max = Math.ceil(screen_coords.height * 0.85);
 
         // Get Smaller Item into the grid
-        _.each(this.models, function(model) {
-
+        _.each(this.models, (model = {}) => {
             var _height =  model.img_height || model.height;
             var _width = model.img_width || model.width;
 
@@ -78,7 +55,7 @@ _.extend(GridCollection.prototype, {
 
             if (model.format == "portrait") {
                 var _height = model.height;
-                var _is_landscape = this.get_format(item0) === "landscape";
+                var _is_landscape = this.getFormat(item0) === "landscape";
                 if (_height < item0.height || _is_landscape) {
                     item0 = {
                         height: _height,
@@ -93,7 +70,7 @@ _.extend(GridCollection.prototype, {
                     item0.height = _height;
                 }
             }
-        }.bind(this));
+        });
 
         // It should have several rows
         // in one page
@@ -103,7 +80,9 @@ _.extend(GridCollection.prototype, {
         }
 
         return _.extend(item0, {
-            format: this.get_format(item0)
+            format: this.getFormat(item0)
         });
     }
-});
+};
+
+export default GridCollection;
