@@ -34,21 +34,20 @@ class GalleryView extends BaseView {
         this.loaderView.render.call(this.loaderView);
     }
 
-    render(event, options) {
+    render() {
         const success = _.after(this.collection.getSize(), successCallback.bind(this));
 
         let _grid = [];
         let _allContent = '';
-        console.log("Gallery.Render", this.collection.getSize(), this.collection.models);
 
         // Transform data into DOM
-        this.collection.sortByFormat(renderFormatCallback);
+        this.collection.groupByFormat(renderCallback.bind(this));
 
-        function renderFormatCallback(data) {
+        function renderCallback(data) {
             // it depends of screen size
             // 1 screen height == 2.5 rows
-            var content = '';
-            var model0 = data;
+            let content = '';
+            let model0 = data;
             
             if (_.isArray(data)) {
                 model0 = data[0];
@@ -61,7 +60,7 @@ class GalleryView extends BaseView {
             _allContent += _.template(templateHeader, model0) + content + _.template(templateFooter, model0);
 
             // Save Grid
-            var cid = _.isArray(data) ? _.pluck(data, "cid") : [data.cid];
+            const cid = _.isArray(data) ? _.pluck(data, "cid") : [data.cid];
             _grid.push(cid);
 
             // Change Grid size

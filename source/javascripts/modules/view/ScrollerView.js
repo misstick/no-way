@@ -29,7 +29,7 @@ class ScrollerView extends BaseView {
             content.html(html)
 
             // Display columns && rows
-            this.resize();
+            this.resize.call(this);
         }
 
         if (!_.is_touch() && this.scroll_value()) {
@@ -85,7 +85,7 @@ class ScrollerView extends BaseView {
         return columns * item.width;
     }
 
-    styles(item, screen, len) {
+    getStyles(item, screen, len) {
         if (!arguments.length) {
             return {
                 "width": "auto",
@@ -101,25 +101,22 @@ class ScrollerView extends BaseView {
     resize() {
         // Grid is a table with CID references
         // of models of collection
-        const content = this._content;
         const grid = this.grid;
         const collection = this.collection;
-
-        // Remove Previous resize
-        const _default_styles = this.styles();
-        content.css(_default_styles);
-
-        var screen_size = {
-            "width": window.innerWidth,
-            "height": window.innerHeight
+        const screenSize = {
+            width: window.innerWidth,
+            height: window.innerHeight,
         };
-        var item_ref_size = collection.getRefererSize(screen_size);
-        var items_len = this.collection.getSize();
+        const itemReferer = this.collection.getRefererSize(screenSize);
+
+        // Reset container size
+        this._content.css(this.getStyles());
 
         // Resize Grid Items
+        let itemsLength = this.collection.getSize();
         _.each(grid, (data) => {
             // Item Real Size
-            const _item_size = _.clone(item_ref_size);
+            let _itemSize = _.clone(itemReferer);
 
             _.each(data, (cid, index) => {
                 const item = $('[data-cid=' + cid + ']', this.el);
@@ -128,35 +125,35 @@ class ScrollerView extends BaseView {
                 });
 
                 if (!index) {
-                    var _is_twice_item = _item_size.format != "landscape" && model.format == "landscape" && data.length == 1;
-                    if (_is_twice_item) {
+                    var _isTweenItem = _itemSize.format != "landscape" && model.format == "landscape" && data.length == 1;
+                    if (_isTweenItem) {
                         // When there is only 1 "landscape" picture, 
                         // container is twice larger than a "portrait"
 
                         // @TODO : check that new width isnt too big compared to initial value
-                        // This check should be done into (collection)grid.sortByFormat
-                        _.extend(_item_size, {
-                            "width": _item_size.width * 2
+                        // This check should be done into (collection)grid.groupByFormat
+                        _.extend(_itemSize, {
+                            "width": _itemSize.width * 2
                         });
-                        ++items_len;
+                        ++itemsLength;
                     }
                     if (data.length == 2) {
-                        _.extend(_item_size, {
-                            "height": _item_size.height / 2
+                        _.extend(_itemSize, {
+                            "height": _itemSize.height / 2
                         });
-                        --items_len;
+                        --itemsLength;
                     }
                 }
 
                 // Background Positionning
-                const _styles = {
+                let _styles = {
                     "background-size": "100% auto",
-                    "height": _item_size.height,
-                    "width": _item_size.width
+                    "height": _itemSize.height,
+                    "width": _itemSize.width
                 };
                 const _height =  model.img_height || model.height;
                 const _width = model.img_width || model.width;
-                if (_height / _width < _item_size.height / _item_size.width) {
+                if (_height / _width < _itemSize.height / _itemSize.width) {
                     _styles["background-size"] = "auto 100%";
                 }
                 item.css(_styles);
@@ -165,8 +162,8 @@ class ScrollerView extends BaseView {
 
         // Force Content.width
         // to have horizontal alignment
-        const _styles = this.styles(item_ref_size, screen_size, items_len);
-        content.css(_styles);
+        const styles = this.getStyles(itemReferer, screenSize, itemsLength);
+        this._content.css(styles);
     }
 };
 

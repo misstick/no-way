@@ -26,7 +26,7 @@ class LoaderView extends BaseView {
             width: el.offsetWidth,
             height: el.offsetHeight,
             content: content,
-            _isPicture: false,
+            src: '',
         }
         if (img) {
             _.extend(data, {
@@ -34,7 +34,6 @@ class LoaderView extends BaseView {
                 img_width: img.offsetWidth,
                 img_height: img.offsetHeight,
                 content: content.replace(/\<img [\s\w\/"'.=_-]*\/{0,1}\>/, ""),
-                _isPicture: el == img,
             });
         }
         return data;
@@ -69,7 +68,7 @@ class LoaderView extends BaseView {
 
         function renderItem(el, index) {
             el._index = index;
-            let img = getPicture(el);
+            const img = getPicture(el);
             if (img && ! isLoaded(img)) {
                 img.onload = (event) => savePicture.call(this, el, img);
                 return;

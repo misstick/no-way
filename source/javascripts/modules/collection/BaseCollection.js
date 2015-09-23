@@ -24,11 +24,11 @@ class BaseCollection {
             });
             return;
         }
-
-        let model = _.extend(defaultModel, data);
+        var model = _.clone(defaultModel);
+        model = _.extend(model, data);
         model = this.validate(model, options);
         if (model) {
-            model.cid = this.cid + this.models.length;
+            model.cid = this.cid + this.getSize();
             this.models.push(model);
             this.trigger("add", model);
         }

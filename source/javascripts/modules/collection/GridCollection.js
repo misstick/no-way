@@ -13,16 +13,21 @@ class GridCollection extends BaseCollection {
         return (data.width > data.height) ? "landscape" : "portrait";
     }
 
-    validate(data = { width: 0, height: 0}, option = {}) {
+    getType(data = {}) {
+        return (!data.src) ? "text": "picture";
+    }
+
+    validate(data, option = {}) {
         data.format = this.getFormat(data);
-        data.type = (!data.src) ? "text": "picture";
+        data.type = this.getType(data);
         return data;
     }
 
-    sortByFormat(callback) {
+    groupByFormat(callback) {
         const models = _.clone(this.models);
         const hasPortrait = _.findWhere(models, {format: "portrait"}) || false;
         return _.map(models, (model, index, list) => {
+            // Group landscape contents
             if (model.format === "landscape" && hasPortrait) {
                 var _list = list.slice(index + 1, list.length);
                 var next = _.findWhere(_list, {format: "landscape" });
