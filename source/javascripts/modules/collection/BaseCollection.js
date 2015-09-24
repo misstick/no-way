@@ -24,7 +24,7 @@ class BaseCollection {
             });
             return;
         }
-        var model = _.clone(defaultModel);
+        let model = _.clone(defaultModel);
         model = Object.assign(model, data);
         model = this.validate(model, options);
         if (model) {

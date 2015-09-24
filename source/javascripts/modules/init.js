@@ -4,7 +4,7 @@ import GalleryView from './view/GalleryView';
 
 // Create Gallery
 $("[data-type=gallery]").each(function(index, item) {
-    var view = new GalleryView($(item));
+    let view = new GalleryView($(item));
     view.on("render:finished", () => {
         displayLinks();
         setEllipsis(this);
@@ -12,7 +12,7 @@ $("[data-type=gallery]").each(function(index, item) {
 });
 
 // Contact
-var email =  $("footer .email");
+let email =  $("footer .email");
 if (email.get(0)) {
     const parent = email.get(0).parentNode;
     const value = email.html();
@@ -66,7 +66,7 @@ function setEllipsis(el) {
         });
 
         // Create Link Element
-        var link = $("a.content", el.parentNode);
+        let link = $("a.content", el.parentNode);
         link.html($(el).html());
         $(el).remove();
     }

@@ -5,7 +5,7 @@ const template = '<nav data-view="scroll_nav"><button data-action="back"><button
 
 _.mixin({
     create_affix(el) {
-        var coords = el.offset();
+        const coords = el.offset();
         if (!coords.top) el.addClass("affix");
         else el.affix({ offset: coords});
     }

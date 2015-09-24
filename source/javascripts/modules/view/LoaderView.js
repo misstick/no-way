@@ -31,8 +31,8 @@ class LoaderView extends BaseView {
         if (img) {
             Object.assign(data, {
                 src: img.src,
-                img_width: img.offsetWidth,
-                img_height: img.offsetHeight,
+                imgWidth: img.offsetWidth,
+                imgHeight: img.offsetHeight,
                 content: content.replace(/\<img [\s\w\/"'.=_-]*\/{0,1}\>/, ""),
             });
         }
@@ -62,7 +62,7 @@ class LoaderView extends BaseView {
         }
 
         function savePicture(el, img) {
-            var data = this.getData(el, img);
+            const data = this.getData(el, img);
             this.collection.add(data);
         };
 

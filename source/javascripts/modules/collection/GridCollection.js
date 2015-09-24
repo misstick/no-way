@@ -26,13 +26,13 @@ class GridCollection extends BaseCollection {
     groupByFormat(callback) {
         const models = _.clone(this.models);
         const hasPortrait = _.findWhere(models, {format: "portrait"}) || false;
-        return models.map((model, index, list) => {
+        return models.map((model, index, _models) => {
             // Group landscape contents
             if (model.format === "landscape" && hasPortrait) {
-                var _list = list.slice(index + 1, list.length);
-                var next = _.findWhere(_list, {format: "landscape" });
+                const __models = _models.slice(index + 1, _models.length);
+                const next = _.findWhere(__models, {format: "landscape" });
                 if (next) {
-                    list.splice(_.indexOf(list, next), 1);
+                    _models.splice(_.indexOf(_models, next), 1);
                     return callback([model, next]);
                 }
                 return callback(model);
@@ -41,47 +41,48 @@ class GridCollection extends BaseCollection {
         });
     }
 
-    getRefererSize(screen_coords = { width: 0, height: 0}) {
+    getRefererSize(screenCoords = { width: 0, height: 0}) {
         let item0 = null;
-        const height_max = Math.ceil(screen_coords.height * 0.85);
+        const heightMax = Math.ceil(screenCoords.height * 0.85);
 
         // Get Smaller Item into the grid
         this.models.forEach((model = {}) => {
-            var _height =  model.img_height || model.height;
-            var _width = model.img_width || model.width;
+            let height =  model.imgHeight || model.height;
+            let width = model.imgWidth || model.width;
 
+            // Default value
             if (!item0) {
                 item0 = {
-                    height: _height,
-                    width: _width
+                    height: height,
+                    width: width
                 }
                 return;
             }
 
+            // Find a shorter value
             if (model.format == "portrait") {
-                var _height = model.height;
-                var _is_landscape = this.getFormat(item0) === "landscape";
-                if (_height < item0.height || _is_landscape) {
+                height = model.height;
+                const isLandscape = this.getFormat(item0) === "landscape";
+                if (height < item0.height || isLandscape) {
                     item0 = {
-                        height: _height,
-                        width: _width,
+                        height: height,
+                        width: width,
                         format: model.format
                     }
                 }
             } else {
-                var _test_height = item0.width * item0.height * 2 / _width;
-                if (_test_height < item0.height) {
-                    var _old_height0 = item0.height;
-                    item0.height = _height;
+                const testHeight = item0.width * item0.height * 2 / width;
+                if (testHeight < item0.height) {
+                    item0.height = height;
                 }
             }
         });
 
         // It should have several rows
         // in one page
-        if (item0.height > height_max) {
-            item0.width = Math.ceil(item0.width * height_max / item0.height);
-            item0.height = height_max;
+        if (item0.height > heightMax) {
+            item0.width = Math.ceil(item0.width * heightMax / item0.height);
+            item0.height = heightMax;
         }
 
         return Object.assign(item0, {

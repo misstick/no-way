@@ -47,25 +47,25 @@ class ScrollerView extends BaseView {
     }
 
     // Get full lines
-    columns(len, max) {
-        var column = null;
-        for (var counter=1; counter <= max; counter++) {
-            if (len % counter == 0) {
+    columns(length, max) {
+        let column = null;
+        for (let counter = 1; counter <= max; counter++) {
+            if (length % counter == 0) {
                 column = counter;
             }
         }
 
         // Try to catch the more full lines as possible
-        if (column == 1 && len > max) {
-            for (var counter=max - 2; counter <= max; counter++) {
-                var _full_rows = Math.trunc(len / counter);
-                var _last_row_items = len - _full_rows * counter;
-                if (counter - _last_row_items == 1) {
+        if (column == 1 && length > max) {
+            for (let counter = max - 2; counter <= max; counter++) {
+                const fullRows = Math.trunc(length / counter);
+                const lastRow = length - fullRows * counter;
+                if (counter - lastRow == 1) {
                     column = counter;
                 }
             }
         }
-        return column || column_max;
+        return column || max;
     }
 
     top(item, screen) {
@@ -78,10 +78,6 @@ class ScrollerView extends BaseView {
     width(item, screen, len) {
         const columns_max_visible = Math.ceil(screen.width * 1.5 / item.width);
         const columns = this.columns(len, columns_max_visible);
-
-        // var rows_min = Math.ceil(screen.height / item.height);
-        // var rows = Math.ceil(len / columns);
-
         return columns * item.width;
     }
 
@@ -116,7 +112,7 @@ class ScrollerView extends BaseView {
         let itemsLength = this.collection.getSize();
         grid.forEach((data) => {
             // Item Real Size
-            let _itemSize = _.clone(itemReferer);
+            let itemSize = _.clone(itemReferer);
 
             data.forEach((cid, index) => {
                 const item = $('[data-cid=' + cid + ']', this.el);
@@ -125,38 +121,38 @@ class ScrollerView extends BaseView {
                 });
 
                 if (!index) {
-                    var _isTweenItem = _itemSize.format != "landscape" && model.format == "landscape" && data.length == 1;
-                    if (_isTweenItem) {
+                    const isTween = itemSize.format != "landscape" && model.format == "landscape" && data.length == 1;
+                    if (isTween) {
                         // When there is only 1 "landscape" picture, 
                         // container is twice larger than a "portrait"
 
                         // @TODO : check that new width isnt too big compared to initial value
                         // This check should be done into (collection)grid.groupByFormat
-                        Object.assign(_itemSize, {
-                            "width": _itemSize.width * 2
+                        Object.assign(itemSize, {
+                            "width": itemSize.width * 2
                         });
                         ++itemsLength;
                     }
                     if (data.length == 2) {
-                        Object.assign(_itemSize, {
-                            "height": _itemSize.height / 2
+                        Object.assign(itemSize, {
+                            "height": itemSize.height / 2
                         });
                         --itemsLength;
                     }
                 }
 
                 // Background Positionning
-                let _styles = {
+                let styles = {
                     "background-size": "100% auto",
-                    "height": _itemSize.height,
-                    "width": _itemSize.width
+                    "height": itemSize.height,
+                    "width": itemSize.width
                 };
-                const _height =  model.img_height || model.height;
-                const _width = model.img_width || model.width;
-                if (_height / _width < _itemSize.height / _itemSize.width) {
-                    _styles["background-size"] = "auto 100%";
+                const height =  model.imgHeight || model.height;
+                const width = model.imgWidth || model.width;
+                if (height / width < itemSize.height / itemSize.width) {
+                    styles["background-size"] = "auto 100%";
                 }
-                item.css(_styles);
+                item.css(styles);
             });
         });
 
