@@ -4,10 +4,6 @@ import ScrollerView from './ScrollerView';
 import BaseCollection from './../collection/BaseCollection';
 import GridCollection from './../collection/GridCollection';
 
-const templateHeader = '<div data-content="<%= type %>">';
-const templateContent = '<div class="image <%= format %>" data-cid="<%= cid %>" style="background-image: url(\'<%= src %>\');"><%= content %></div>';
-const templateFooter = '</div>';
-
 //
 // Handle format: landscape/portrait
 // Set pictures close together
@@ -35,41 +31,48 @@ class GalleryView extends BaseView {
     }
 
     render() {
-        const success = _.after(this.collection.getSize(), successCallback.bind(this));
-
-        let _grid = [];
-        let _allContent = '';
+        let html = '';
+        let coords = [];
+        let type = null;
 
         // Transform data into DOM
+        const success = _.after(this.collection.getSize(), successCallback.bind(this));
         this.collection.groupByFormat(renderCallback.bind(this));
 
-        function renderCallback(data) {
-            // it depends of screen size
-            // 1 screen height == 2.5 rows
-            let content = '';
-            let model0 = data;
-            
-            if (_.isArray(data)) {
-                model0 = data[0];
-                _.each(data, function(model) {
-                    content += _.template(templateContent, model);
-                });
-            } else {
-                content = _.template(templateContent, model0);
-            }
-            _allContent += _.template(templateHeader, model0) + content + _.template(templateFooter, model0);
+        function renderCallback(data = {}) {
+            html += `<div data-content="${getType(data)}">${getContent(data)}</div>`;
 
             // Save Grid
-            const cid = _.isArray(data) ? _.pluck(data, "cid") : [data.cid];
-            _grid.push(cid);
+            coords.push(getCoords(data));
 
-            // Change Grid size
-            success();
+            // Update View Layout
+            success({ 
+                responseText: html, 
+                coords: coords,
+            });
         };
 
-        function successCallback() {
-            this.scrollerView.saveGrid(_grid);
-            this.scrollerView.render(_allContent);
+        function getCoords(data) {
+            return _.isArray(data) ? _.pluck(data, "cid") : [data.cid];
+        }
+
+        function getType(data) {
+            const model = _.isArray(data) ? data[0] : data;
+            return model.type;
+        }
+
+        function getContent(data) {
+            if (_.isArray(data)) {
+                return data.map((model) => {
+                    return getContent(model);
+                }).join("");
+            }
+            return `<div class="image ${data.format}" data-cid="${data.cid}" style="background-image: url('${data.src}');">${data.content}</div>`;
+        }
+
+        function successCallback(response) {
+            this.scrollerView.saveGrid(response.coords);
+            this.scrollerView.render(response.responseText);
             this.trigger("render:stop");
         };
     }
