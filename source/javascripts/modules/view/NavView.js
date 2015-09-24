@@ -22,7 +22,7 @@ class NavView extends BaseView {
         }
 
         // Handle Click Event
-        $(pathContent + ' button', this.el).on('click', this.goto.bind(this));
+        $(`${pathContent} button`, this.el).on('click', this.goto.bind(this));
         
         // Handle Scroll Event
         $(this.el).on('scroll', _.debounce(this.render.bind(this), 500));

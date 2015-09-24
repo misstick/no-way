@@ -7,7 +7,7 @@ let viewCounter = 0;
 class BaseCollection {
     constructor(data = null) {
         this.models = [];
-        this.cid = 'C' + (++viewCounter);
+        this.cid = `C${++viewCounter}`;
 
         if (data) {
             this.add(data);
@@ -57,15 +57,15 @@ class BaseCollection {
     }
 
     on(name, func = null) {
-        $(window).on(this.cid + '::' + name, func);
+        $(window).on(`${this.cid}::${name}`, func);
     }
 
     off(name, func = null) {
-        $(window).off(this.cid + '::' + name, func || null);
+        $(window).off(`${this.cid}::${name}`, func);
     }
 
     trigger(name, data = {}) {
-        $(window).trigger(this.cid + '::' + name, data);
+        $(window).trigger(`${this.cid}::${name}`, data);
     }
 
     remove() {

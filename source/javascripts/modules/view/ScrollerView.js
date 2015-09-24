@@ -20,7 +20,7 @@ class ScrollerView extends BaseView {
     render(html = '') {
         if (!this._content) {
             $(this.el).html('<div class="scroller"></div>');
-            this._content = $(".scroller", this.el);
+            this._content = $('.scroller', this.el);
         }
 
         let content = this._content;
@@ -115,7 +115,7 @@ class ScrollerView extends BaseView {
             let itemSize = _.clone(itemReferer);
 
             data.forEach((cid, index) => {
-                const item = $('[data-cid=' + cid + ']', this.el);
+                const item = $(`[data-cid=${cid}]`, this.el);
                 const model = _.find(collection.models, function(_model) {
                     return _model.cid == cid;
                 });
@@ -143,9 +143,9 @@ class ScrollerView extends BaseView {
 
                 // Background Positionning
                 let styles = {
-                    "background-size": '100% auto',
-                    "height": itemSize.height,
-                    "width": itemSize.width
+                    backgroundSize: '100% auto',
+                    height: itemSize.height,
+                    width: itemSize.width
                 };
                 const height =  model.imgHeight || model.height;
                 const width = model.imgWidth || model.width;

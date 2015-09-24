@@ -5,7 +5,7 @@ import GalleryView from './view/GalleryView';
 // Create Gallery
 $('[data-type=gallery]').each(function(index, item) {
     let view = new GalleryView($(item));
-    view.on("render:finished", () => {
+    view.on('render:finished', () => {
         displayLinks();
         setEllipsis(this);
     });
@@ -15,9 +15,9 @@ $('[data-type=gallery]').each(function(index, item) {
 let email =  $('footer .email');
 if (email.get(0)) {
     const parent = email.get(0).parentNode;
-    const value = email.html();
+    const value = email.html().replace('[AT]', '@').replace('[DOT]', '.');
     email.remove();
-    $(parent).html('<a href="mailto:' + value.replace('[AT]', '@').replace('[DOT]', '.') + '">' + $(parent).html() + '</a>')
+    $(parent).html('<a href="mailto:${value}">${$(parent).html()}</a>');
 }
 
 // Home Links
@@ -56,7 +56,7 @@ function setEllipsis(el) {
         if (el.tagName.toLowerCase() === 'A') return;
 
         const url = $('h2 a', el.parentNode).first().attr('href');
-        $(el.parentNode).append('<a href="' + url + '" class="' + el.className + '">');
+        $(el.parentNode).append(`<a href="${url}" class="${el.className}">`);
 
         // Remove linked Children
         $('a', el).each((index, item) => {
