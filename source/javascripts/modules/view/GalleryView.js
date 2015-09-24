@@ -41,22 +41,26 @@ class GalleryView extends BaseView {
         let html = '';
         let coords = [];
         let type = null;
+        const length = this.collection.getSize();
 
         // Group landscape pictures together
-        const success = _.after(this.collection.getSize(), successCallback.bind(this));
         this.collection.groupByFormat(renderCallback.bind(this));
 
-        function renderCallback(data = {}) {
+        function renderCallback(data, index, models) {
             html += `<div data-content="${getType(data)}">${getContent(data)}</div>`;
 
             // Save grid coords
             coords.push(getCoords(data));
 
             // Update other views
-            success({ 
-                responseText: html, 
-                coords: coords,
-            });
+            if (index === (models.length - 1)) {
+                successCallback.call(this, { 
+                    responseText: html, 
+                    coords: coords,
+                });
+            }
+
+            return true;
         };
 
         function getCoords(data) {

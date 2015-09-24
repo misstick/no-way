@@ -25,7 +25,7 @@ class GridCollection extends BaseCollection {
 
     groupByFormat(callback) {
         const models = _.clone(this.models);
-        const hasPortrait = _.findWhere(models, {format: 'portrait'}) || false;
+        const hasPortrait = !!_.findWhere(models, {format: 'portrait'}) || false;
         return models.map((model, index, _models) => {
             // Group landscape contents
             if (model.format === 'landscape' && hasPortrait) {
@@ -33,11 +33,11 @@ class GridCollection extends BaseCollection {
                 const next = _.findWhere(__models, { format: 'landscape' });
                 if (next) {
                     _models.splice(_.indexOf(_models, next), 1);
-                    return callback([model, next]);
+                    return callback([model, next], index, _models);
                 }
-                return callback(model);
+                return callback(model, index, _models);
             }
-            return callback(model);
+            return callback(model, index, _models);
         });
     }
 
