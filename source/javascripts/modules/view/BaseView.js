@@ -9,21 +9,31 @@ class BaseView {
         }
 
         this.cid = options.cid || `V${++view_counter}`;
+
+        return this;
     }
 
     on(name, func) {
         $(window).on(`${this.cid}::${name}`, func);
+
+        return this;
     }
 
     off(name, func) {
         $(window).off(`${this.cid}::${name}`, func);
+
+        return this;
     }
 
     trigger(name, data = {}) {
         $(window).trigger(`${this.cid}::${name}`, data);
+
+        return this;
     }
 
-    destroy() {}
+    destroy() {
+        return this;
+    }
 };
 
 export default BaseView;

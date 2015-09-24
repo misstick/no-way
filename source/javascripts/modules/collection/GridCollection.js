@@ -45,12 +45,12 @@ class GridCollection extends BaseCollection {
         let item0 = null;
         const heightMax = Math.ceil(screenCoords.height * 0.85);
 
-        // Get Smaller Item into the grid
+        // Get smaller item into the grid
         this.models.forEach((model = {}) => {
             let height =  model.imgHeight || model.height;
             let width = model.imgWidth || model.width;
 
-            // Default value
+            // Default coords
             if (!item0) {
                 item0 = {
                     height: height,
@@ -59,7 +59,7 @@ class GridCollection extends BaseCollection {
                 return;
             }
 
-            // Find a shorter value
+            // Find smaller coords
             if (model.format == 'portrait') {
                 height = model.height;
                 const isLandscape = this.getFormat(item0) === 'landscape';
@@ -78,8 +78,7 @@ class GridCollection extends BaseCollection {
             }
         });
 
-        // It should have several rows
-        // in one page
+        // Coords should be smaller than screen size
         if (item0.height > heightMax) {
             item0.width = Math.ceil(item0.width * heightMax / item0.height);
             item0.height = heightMax;

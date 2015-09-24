@@ -10,44 +10,85 @@ _.mixin({
     }
 });
 
+/*
+ * new ScrollerView()
+ * 
+ *
+ * @param {DOMElement} el
+ * @param {object} options
+ * @return {ScrollerView} this
+ */
 class ScrollerView extends BaseView {
     constructor(el, options = {}) {
         super(el, options);
 
         $(window).on('resize', _.debounce(this.resize.bind(this), 500));
+
+        return this;
     }
 
+    /*
+     * .render() dispath content
+     *
+     * @param {String} html
+     * @return {ScrollerView} this
+     */
     render(html = '') {
+        // Move all content into a container
         if (!this._content) {
             $(this.el).html('<div class="scroller"></div>');
             this._content = $('.scroller', this.el);
         }
 
+        // Update content
         let content = this._content;
         if (_.isString(html)) {
-            // Append new HTML
             content.html(html)
-
-            // Display columns && rows
             this.resize.call(this);
         }
 
-        if (!_.is_touch() && this.scroll_value()) {
+        // Add Navigation for noTouchScreen
+        if (!_.is_touch() && this.isScroll()) {
             if (!this.navView) this.navView = new NavView(this.el);
             this.navView.render();
         }
+
+        return this;
     }
 
-    saveGrid(grid = {}) {
+    /*
+     * .saveGrid() save rows/columns coords
+     * the value is a table of CID Models References
+     * each `index` is a line, each `value` is a column
+     *
+     * {Array}value could contain one or several {String}CID
+     * it occurs for `landscape` items
+     *
+     * @param {Array} grid coords
+     * @return {ScrollerView} this
+     */
+    saveGrid(grid = []) {
         this.grid = grid;
+
+        return this;
     }
 
-    scroll_value() {
+    /*
+     * .isScroll() get horizontal scroll value
+     *
+     * @return {Boolean} value
+     */
+    isScroll() {
         return (this.el.get(0).scrollWidth - this.el.get(0).offsetWidth) > 0;
     }
 
-    // Get full lines
-    columns(length, max) {
+    /*
+     * .getColumns() get how many items 
+     * could fullfill containerWidth
+     *
+     * @return {Number} value
+     */
+    getColumns(length, max) {
         let column = null;
         for (let counter = 1; counter <= max; counter++) {
             if (length % counter == 0) {
@@ -68,19 +109,12 @@ class ScrollerView extends BaseView {
         return column || max;
     }
 
-    top(item, screen) {
-        const _content = this._content;
-        const _value = _content.height() + _content.offset().top;
-        const value = Math.ceil((screen.height - _value) / 2);
-        return (value > 0) ? value : 0;
-    }
-
-    width(item, screen, len) {
-        const columns_max_visible = Math.ceil(screen.width * 1.5 / item.width);
-        const columns = this.columns(len, columns_max_visible);
-        return columns * item.width;
-    }
-
+    /*
+     * .getStyles() get CSS for the container
+     * It handle vertical/horizontal screen alignement
+     *
+     * @return {Number} value
+     */
     getStyles(item, screen, len) {
         if (!arguments.length) {
             return {
@@ -88,15 +122,34 @@ class ScrollerView extends BaseView {
                 paddingTop: '0',
             };
         }
+
+        function getTop() {
+            const element = this._content;
+            const height = element.height() + element.offset().top;
+            const top = Math.ceil((screen.height - height) / 2);
+            return (top > 0) ? top : 0;
+        }
+
+        function getWidth() {
+            const maxVisible = Math.ceil(screen.width * 1.5 / item.width);
+            const columns = this.getColumns(len, maxVisible);
+            return columns * item.width;
+        }
+
         return {
-            width: this.width(item, screen, len),
-            paddingTop: this.top(item, screen, len),
+            width: getWidth.call(this),
+            paddingTop: getTop.call(this),
         };
     }
 
+    /*
+     * .resize() Apply Grid to items
+     * Add CSS Layout (size, alignement, background)
+     * Fix some spacial case
+     *
+     * @return {Number} value
+     */
     resize() {
-        // Grid is a table with CID references
-        // of models of collection
         const grid = this.grid;
         const collection = this.collection;
         const screenSize = {
@@ -123,11 +176,15 @@ class ScrollerView extends BaseView {
                 if (!index) {
                     const isTween = itemSize.format != 'landscape' && model.format == 'landscape' && data.length == 1;
                     if (isTween) {
-                        // When there is only 1 'landscape' picture, 
-                        // container is twice larger than a "portrait"
+                        /*
+                         * When there is only 1 'landscape' picture, 
+                         * container is twice larger than a "portrait"
+                         */
 
-                        // @TODO : check that new width isnt too big compared to initial value
-                        // This check should be done into (collection)grid.groupByFormat
+                        /*
+                         * @TODO : check that new width isnt too big compared to initial value
+                         * This check should be done into (collection) grid.groupByFormat
+                         */
                         Object.assign(itemSize, {
                             "width": itemSize.width * 2
                         });
@@ -156,10 +213,11 @@ class ScrollerView extends BaseView {
             });
         });
 
-        // Force Content.width
-        // to have horizontal alignment
+        // Force Content.width to have horizontal alignment
         const styles = this.getStyles(itemReferer, screenSize, itemsLength);
         this._content.css(styles);
+
+        return this;
     }
 };
 

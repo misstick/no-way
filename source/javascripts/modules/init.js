@@ -2,7 +2,7 @@ import GalleryView from './view/GalleryView';
 
 'use strict';
 
-// Create Gallery
+// Create Gallery View
 $('[data-type=gallery]').each(function(index, item) {
     let view = new GalleryView($(item));
     view.on('render:finished', () => {
@@ -11,7 +11,7 @@ $('[data-type=gallery]').each(function(index, item) {
     });
 });
 
-// Contact
+// Write contact email
 let email =  $('footer .email');
 if (email.get(0)) {
     const parent = email.get(0).parentNode;
@@ -20,7 +20,7 @@ if (email.get(0)) {
     $(parent).html('<a href="mailto:${value}">${$(parent).html()}</a>');
 }
 
-// Home Links
+// Transform all gallery items into a single link
 function displayLinks() {
     $('[data-type=gallery] .image').each(function(index, item) {
         const link = $('a', item.parentNode);
@@ -38,8 +38,7 @@ function displayLinks() {
     }
 }
 
-// Gallery
-
+// Shortten items description
 function setEllipsis(el) {
     $('[data-content=text] .content', el).each((index, item) => {
         const className = 'ellipsis';

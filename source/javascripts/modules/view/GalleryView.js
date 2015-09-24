@@ -4,11 +4,16 @@ import ScrollerView from './ScrollerView';
 import BaseCollection from './../collection/BaseCollection';
 import GridCollection from './../collection/GridCollection';
 
-//
-// Handle format: landscape/portrait
-// Set pictures close together
-// Save picture positions
-//
+/*
+ * Main View
+ * Save data into a Collection,
+ * Re-order items, save it into an Array (Grid),
+ * Apply new order to DOMElements,
+ *
+ * @param {DOMElement} el
+ * @param {object} options
+ * @return {GalleryView} this
+ */
 
 class GalleryView extends BaseView {
     constructor(el, options = {}) {
@@ -17,17 +22,19 @@ class GalleryView extends BaseView {
         this.collection = new GridCollection();
         this._fill = this.el.data('fill') || 'width';
 
-        // Container size
+        // Container
         this.scrollerView = new ScrollerView(this.el, {
             collection: this.collection
         });
 
-        // Push content into .collection
+        // Save data from DOM
         this.loaderView = new LoaderView(this.el, {
             collection: this.collection
         });
         this.loaderView.on('load:stop', this.render.bind(this));
         this.loaderView.render.call(this.loaderView);
+
+        return this;
     }
 
     render() {
@@ -35,17 +42,17 @@ class GalleryView extends BaseView {
         let coords = [];
         let type = null;
 
-        // Transform data into DOM
+        // Group landscape pictures together
         const success = _.after(this.collection.getSize(), successCallback.bind(this));
         this.collection.groupByFormat(renderCallback.bind(this));
 
         function renderCallback(data = {}) {
             html += `<div data-content="${getType(data)}">${getContent(data)}</div>`;
 
-            // Save Grid
+            // Save grid coords
             coords.push(getCoords(data));
 
-            // Update View Layout
+            // Update other views
             success({ 
                 responseText: html, 
                 coords: coords,
@@ -75,6 +82,8 @@ class GalleryView extends BaseView {
             this.scrollerView.render(response.responseText);
             this.trigger('render:stop');
         };
+
+        return this;
     }
 };
 

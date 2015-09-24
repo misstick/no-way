@@ -11,6 +11,15 @@ _.mixin({
     }
 });
 
+/*
+ * new NavView()
+ * handle horizontal scroll
+ * for noTouchScreen
+ *
+ * @param {DOMElement} el
+ * @param {object} options
+ * @return {NavView} this
+ */
 class NavView extends BaseView {
     constructor(el, options = {}) {
         super(el, options);
@@ -26,17 +35,35 @@ class NavView extends BaseView {
         
         // Handle Scroll Event
         $(this.el).on('scroll', _.debounce(this.render.bind(this), 500));
+
+        return this;
     }
 
-    // @TEST : Navigation bar should exist
-    // on nonetouch resolutions
+    /*
+     * .render() Nav should be visible 
+     * only for noTouchScreen
+     *
+     * @test Navigation bar should exist
+     * on nonetouch resolutions
+     *
+     * @return {NavView} this
+     */
     render() {
         // Show / Hide buttons
         const data = this.getData(this.el.get(0));
         $('[data-action=next]')[(data.scrollLeft === data.right) ? 'addClass' : 'removeClass']('disabled');
         $('[data-action=back]')[(data.scrollLeft === data.left) ? 'addClass' : 'removeClass']('disabled');
+
+        return this;
     }
 
+    /*
+     * .getData() get data from {DOMElement} container
+     * 
+     * @param {DOMElement} container element
+     * @param {DOMElement} img that belongs to previousElement
+     * @return {object} data
+     */
     getData(el) {
         return {
             left: 0, 
@@ -45,6 +72,12 @@ class NavView extends BaseView {
         }
     }
 
+    /*
+     * .goto() go next/back on horizontal axes
+     * 
+     * @param {Event} event object
+     * @return {NavView} this
+     */
     goto(event) {
         const target = event.currentTarget;
         const action = $(target).data('action');
@@ -53,6 +86,8 @@ class NavView extends BaseView {
 
         // Animation
         this.el.animate({ scrollLeft: value}, { complete: display_buttons});
+
+        return this;
     }
 };
 

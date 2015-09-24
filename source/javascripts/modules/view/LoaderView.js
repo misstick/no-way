@@ -1,21 +1,53 @@
 import BaseView from './BaseView';
 
+/*
+ * new LoaderView()
+ * save data from DOMElements
+ * send event at the beginning & the end
+ *
+ * @param {DOMElement} el
+ * @param {object} options
+ * @return {LoaderView} this
+ */
 class LoaderView extends BaseView {
     constructor(el, options = {}) {
         super(el, options);
 
         this.on('load:start', this.start.bind(this));
         this.on('load:stop', this.stop.bind(this));
+
+        return this;
     }
 
+    /*
+     * .start() send a startEvent
+     * 
+     * @return {LoaderView} this
+     */
     start() {
         $(this.el).addClass('load');
+
+        return this;
     }
 
+    /*
+     * .stop() send a endEvent
+     * 
+     * @return {LoaderView} this
+     */
     stop() {
         $(this.el).removeClass('load');
+
+        return this;
     }
 
+    /*
+     * .getData() get data from {DOMElement} container
+     * 
+     * @param {DOMElement} container element
+     * @param {DOMElement} img that belongs to previousElement
+     * @return {object} data
+     */
     getData(el, img) {
         if (!el) {
             return false;
@@ -36,9 +68,15 @@ class LoaderView extends BaseView {
                 content: content.replace(/\<img [\s\w\/"'.=_-]*\/{0,1}\>/, ''),
             });
         }
+
         return data;
     }
 
+    /*
+     * .render() display getData() && Events
+     * 
+     * @return {LoaderView} this
+     */
     render() {
         const items = Array.from($(this.el).children());
 
@@ -81,6 +119,8 @@ class LoaderView extends BaseView {
             this.trigger('load:stop');
             this.collection.off('add', renderComplete);
         };
+
+        return this;
     }
 };
 
