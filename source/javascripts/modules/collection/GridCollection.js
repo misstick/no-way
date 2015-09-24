@@ -54,7 +54,7 @@ class GridCollection extends BaseCollection {
             if (!item0) {
                 item0 = {
                     height: height,
-                    width: width
+                    width: width,
                 }
                 return;
             }
@@ -67,7 +67,7 @@ class GridCollection extends BaseCollection {
                     item0 = {
                         height: height,
                         width: width,
-                        format: model.format
+                        format: model.format,
                     }
                 }
             } else {
@@ -86,7 +86,7 @@ class GridCollection extends BaseCollection {
         }
 
         return Object.assign(item0, {
-            format: this.getFormat(item0)
+            format: this.getFormat(item0),
         });
     }
 };

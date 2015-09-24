@@ -53,7 +53,7 @@ class BaseCollection {
     }
 
     reset() {
-        this.models = []
+        this.models = [];
     }
 
     on(name, func = null) {

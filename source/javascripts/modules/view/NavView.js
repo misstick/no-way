@@ -52,7 +52,7 @@ class NavView extends BaseView {
         const value = (action === 'next') ? this.el.get(0).scrollLeft + step : this.el.get(0).scrollLeft - step;
 
         // Animation
-        this.el.animate({ "scrollLeft": value}, { complete: display_buttons});
+        this.el.animate({ scrollLeft: value}, { complete: display_buttons});
     }
 };
 

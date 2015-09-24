@@ -29,7 +29,7 @@ function displayLinks() {
         item = $(item);
         item.addClass('clickable');
         item.data('href', link.attr('href'));
-        item.on('click', goto_article)
+        item.on('click', goto_article);
     });
 
     function goto_article(event) {

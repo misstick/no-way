@@ -145,7 +145,7 @@ class ScrollerView extends BaseView {
                 let styles = {
                     backgroundSize: '100% auto',
                     height: itemSize.height,
-                    width: itemSize.width
+                    width: itemSize.width,
                 };
                 const height =  model.imgHeight || model.height;
                 const width = model.imgWidth || model.width;
