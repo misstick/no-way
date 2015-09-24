@@ -114,11 +114,11 @@ class ScrollerView extends BaseView {
 
         // Resize Grid Items
         let itemsLength = this.collection.getSize();
-        _.each(grid, (data) => {
+        grid.forEach((data) => {
             // Item Real Size
             let _itemSize = _.clone(itemReferer);
 
-            _.each(data, (cid, index) => {
+            data.forEach((cid, index) => {
                 const item = $('[data-cid=' + cid + ']', this.el);
                 const model = _.find(collection.models, function(_model) {
                     return _model.cid == cid;

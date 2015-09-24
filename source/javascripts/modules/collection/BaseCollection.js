@@ -19,7 +19,7 @@ class BaseCollection {
 
         // Multiple data : Recursive call
         if (_.isArray(data)) {
-            _.each(data, (model) => {
+            data.forEach((model) => {
                 this.add(model);
             });
             return;

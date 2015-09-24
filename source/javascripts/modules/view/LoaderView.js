@@ -40,14 +40,14 @@ class LoaderView extends BaseView {
     }
 
     render() {
-        const items = $(this.el).children();
+        const items = Array.from($(this.el).children());
 
         // End of prec
         this.collection.on("add", _.after(items.length, renderComplete.bind(this)));
 
         // Load && process content
         this.trigger("load:start");
-        _.each(items, renderItem.bind(this));
+        items.forEach(renderItem.bind(this));
 
         function isLoaded(el) {
             return !!el.offsetWidth;

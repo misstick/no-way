@@ -46,7 +46,7 @@ class GridCollection extends BaseCollection {
         const height_max = Math.ceil(screen_coords.height * 0.85);
 
         // Get Smaller Item into the grid
-        _.each(this.models, (model = {}) => {
+        this.models.forEach((model = {}) => {
             var _height =  model.img_height || model.height;
             var _width = model.img_width || model.width;
 
