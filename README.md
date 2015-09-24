@@ -7,17 +7,26 @@ To install all front-end frameworks, launch before start
 ``` 
 npm install bower
 bower install
-npm install -g mocha-phantomjs
-npm install babel-core
+npm install --global mocha-phantomjs
+npm install --save-dev babel-core
+npm install --global browserify
 ```
-To launch unit-test : 
+## Compiling
+````
+babel --optional reactCompat source/javascripts/modules --out-dir source/javascripts/compiled
+browserify source/javascripts/compiled/init.js -o source/javascripts/bundle.js
+```
+
+## Unit-test : 
 ```
 mocha-phantomjs source/test/index.html
 ```
 
 To upgrade these frameworks :
 ``` 
-npm install -g npm@latest
+npm install --global npm@latest
 bower update
-npm update -g mocha-phantomjs
+npm update --global mocha-phantomjs
+npm install babel-core
+npm update --global browserify
 ```
