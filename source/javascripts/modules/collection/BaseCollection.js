@@ -7,7 +7,7 @@ let viewCounter = 0;
 class BaseCollection {
     constructor(data = null) {
         this.models = [];
-        this.cid = "C" + (++viewCounter);
+        this.cid = 'C' + (++viewCounter);
 
         if (data) {
             this.add(data);
@@ -30,7 +30,7 @@ class BaseCollection {
         if (model) {
             model.cid = this.cid + this.getSize();
             this.models.push(model);
-            this.trigger("add", model);
+            this.trigger('add', model);
         }
     }
 
@@ -57,20 +57,20 @@ class BaseCollection {
     }
 
     on(name, func = null) {
-        $(window).on(this.cid + "::" + name, func);
+        $(window).on(this.cid + '::' + name, func);
     }
 
     off(name, func = null) {
-        $(window).off(this.cid + "::" + name, func || null);
+        $(window).off(this.cid + '::' + name, func || null);
     }
 
     trigger(name, data = {}) {
-        $(window).trigger(this.cid + "::" + name, data);
+        $(window).trigger(this.cid + '::' + name, data);
     }
 
     remove() {
         this.reset();
-        this.off("add");
+        this.off('add');
         delete this;
     }
 };

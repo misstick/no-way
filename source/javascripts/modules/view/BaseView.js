@@ -8,19 +8,19 @@ class BaseView {
             this.collection = options.collection;
         }
 
-        this.cid = options.cid || "V" + (++view_counter);
+        this.cid = options.cid || 'V' + (++view_counter);
     }
 
     on(name, func) {
-        $(window).on(this.cid + "::" + name, func);
+        $(window).on(this.cid + '::' + name, func);
     }
 
     off(name, func) {
-        $(window).off(this.cid + "::" + name, func);
+        $(window).off(this.cid + '::' + name, func);
     }
 
     trigger(name, data = {}) {
-        $(window).trigger(this.cid + "::" + name, data);
+        $(window).trigger(this.cid + '::' + name, data);
     }
 
     destroy() {}

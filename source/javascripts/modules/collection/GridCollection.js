@@ -5,16 +5,16 @@ const defaultModel = {
     src: '',
     width: 0,
     height: 0,
-    format: "portrait",
+    format: 'portrait',
 }
 
 class GridCollection extends BaseCollection {
     getFormat(data = { width: 0, height: 0}) {
-        return (data.width > data.height) ? "landscape" : "portrait";
+        return (data.width > data.height) ? 'landscape' : 'portrait';
     }
 
     getType(data = {}) {
-        return (!data.src) ? "text": "picture";
+        return (!data.src) ? 'text': 'picture';
     }
 
     validate(data, option = {}) {
@@ -25,12 +25,12 @@ class GridCollection extends BaseCollection {
 
     groupByFormat(callback) {
         const models = _.clone(this.models);
-        const hasPortrait = _.findWhere(models, {format: "portrait"}) || false;
+        const hasPortrait = _.findWhere(models, {format: 'portrait'}) || false;
         return models.map((model, index, _models) => {
             // Group landscape contents
-            if (model.format === "landscape" && hasPortrait) {
+            if (model.format === 'landscape' && hasPortrait) {
                 const __models = _models.slice(index + 1, _models.length);
-                const next = _.findWhere(__models, {format: "landscape" });
+                const next = _.findWhere(__models, { format: 'landscape' });
                 if (next) {
                     _models.splice(_.indexOf(_models, next), 1);
                     return callback([model, next]);
@@ -60,9 +60,9 @@ class GridCollection extends BaseCollection {
             }
 
             // Find a shorter value
-            if (model.format == "portrait") {
+            if (model.format == 'portrait') {
                 height = model.height;
-                const isLandscape = this.getFormat(item0) === "landscape";
+                const isLandscape = this.getFormat(item0) === 'landscape';
                 if (height < item0.height || isLandscape) {
                     item0 = {
                         height: height,

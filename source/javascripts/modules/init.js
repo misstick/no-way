@@ -1,9 +1,9 @@
 import GalleryView from './view/GalleryView';
 
-"use strict";
+'use strict';
 
 // Create Gallery
-$("[data-type=gallery]").each(function(index, item) {
+$('[data-type=gallery]').each(function(index, item) {
     let view = new GalleryView($(item));
     view.on("render:finished", () => {
         displayLinks();
@@ -12,39 +12,39 @@ $("[data-type=gallery]").each(function(index, item) {
 });
 
 // Contact
-let email =  $("footer .email");
+let email =  $('footer .email');
 if (email.get(0)) {
     const parent = email.get(0).parentNode;
     const value = email.html();
     email.remove();
-    $(parent).html('<a href="mailto:' + value.replace("[AT]", "@").replace("[DOT]", ".") + '">' + $(parent).html() + '</a>')
+    $(parent).html('<a href="mailto:' + value.replace('[AT]', '@').replace('[DOT]', '.') + '">' + $(parent).html() + '</a>')
 }
 
 // Home Links
 function displayLinks() {
-    $("[data-type=gallery] .image").each(function(index, item) {
-        const link = $("a", item.parentNode);
+    $('[data-type=gallery] .image').each(function(index, item) {
+        const link = $('a', item.parentNode);
         if (!link.get(0)) return;
 
         item = $(item);
-        item.addClass("clickable");
-        item.data("href", link.attr("href"));
-        item.on("click", goto_article)
+        item.addClass('clickable');
+        item.data('href', link.attr('href'));
+        item.on('click', goto_article)
     });
 
     function goto_article(event) {
         let el = event.currentTarget;
-        window.location = $(el).data("href");
+        window.location = $(el).data('href');
     }
 }
 
 // Gallery
 
 function setEllipsis(el) {
-    $("[data-content=text] .content", el).each((index, item) => {
-        const className = "ellipsis";
+    $('[data-content=text] .content', el).each((index, item) => {
+        const className = 'ellipsis';
         const test = (item.scrollHeight > item.offsetHeight);
-        $(item)[test ? "addClass" : "removeClass"](className);
+        $(item)[test ? 'addClass' : 'removeClass'](className);
 
         // @TODO : add a height to .content not to crop a text in half height line
 
@@ -53,20 +53,20 @@ function setEllipsis(el) {
     
     // Set description as a link
     function createLink(el) {
-        if (el.tagName.toLowerCase() === "A") return;
+        if (el.tagName.toLowerCase() === 'A') return;
 
-        const url = $("h2 a", el.parentNode).first().attr("href");
-        $(el.parentNode).append("<a href='" + url + "' class='" + el.className + "'>");
+        const url = $('h2 a', el.parentNode).first().attr('href');
+        $(el.parentNode).append('<a href="' + url + '" class="' + el.className + '">');
 
         // Remove linked Children
-        $("a", el).each((index, item) => {
+        $('a', el).each((index, item) => {
             const text = $(item).html();
             $(item).after(text);
             item.remove();
         });
 
         // Create Link Element
-        let link = $("a.content", el.parentNode);
+        let link = $('a.content', el.parentNode);
         link.html($(el).html());
         $(el).remove();
     }

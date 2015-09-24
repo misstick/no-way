@@ -14,12 +14,12 @@ class ScrollerView extends BaseView {
     constructor(el, options = {}) {
         super(el, options);
 
-        $(window).on("resize", _.debounce(this.resize.bind(this), 500));
+        $(window).on('resize', _.debounce(this.resize.bind(this), 500));
     }
 
     render(html = '') {
         if (!this._content) {
-            $(this.el).html("<div class=scroller></div>");
+            $(this.el).html('<div class="scroller"></div>');
             this._content = $(".scroller", this.el);
         }
 
@@ -84,13 +84,13 @@ class ScrollerView extends BaseView {
     getStyles(item, screen, len) {
         if (!arguments.length) {
             return {
-                "width": "auto",
-                "padding-top": "0",
+                width: 'auto',
+                paddingTop: '0',
             };
         }
         return {
-            "width": this.width(item, screen, len),
-            "padding-top": this.top(item, screen, len),
+            width: this.width(item, screen, len),
+            paddingTop: this.top(item, screen, len),
         };
     }
 
@@ -121,9 +121,9 @@ class ScrollerView extends BaseView {
                 });
 
                 if (!index) {
-                    const isTween = itemSize.format != "landscape" && model.format == "landscape" && data.length == 1;
+                    const isTween = itemSize.format != 'landscape' && model.format == 'landscape' && data.length == 1;
                     if (isTween) {
-                        // When there is only 1 "landscape" picture, 
+                        // When there is only 1 'landscape' picture, 
                         // container is twice larger than a "portrait"
 
                         // @TODO : check that new width isnt too big compared to initial value
@@ -143,14 +143,14 @@ class ScrollerView extends BaseView {
 
                 // Background Positionning
                 let styles = {
-                    "background-size": "100% auto",
+                    "background-size": '100% auto',
                     "height": itemSize.height,
                     "width": itemSize.width
                 };
                 const height =  model.imgHeight || model.height;
                 const width = model.imgWidth || model.width;
                 if (height / width < itemSize.height / itemSize.width) {
-                    styles["background-size"] = "auto 100%";
+                    styles['background-size'] = 'auto 100%';
                 }
                 item.css(styles);
             });

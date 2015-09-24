@@ -15,7 +15,7 @@ class GalleryView extends BaseView {
         super(el, options);
 
         this.collection = new GridCollection();
-        this._fill = this.el.data("fill") || "width";
+        this._fill = this.el.data('fill') || 'width';
 
         // Container size
         this.scrollerView = new ScrollerView(this.el, {
@@ -26,7 +26,7 @@ class GalleryView extends BaseView {
         this.loaderView = new LoaderView(this.el, {
             collection: this.collection
         });
-        this.loaderView.on("load:stop", this.render.bind(this));
+        this.loaderView.on('load:stop', this.render.bind(this));
         this.loaderView.render.call(this.loaderView);
     }
 
@@ -53,7 +53,7 @@ class GalleryView extends BaseView {
         };
 
         function getCoords(data) {
-            return _.isArray(data) ? _.pluck(data, "cid") : [data.cid];
+            return _.isArray(data) ? _.pluck(data, 'cid') : [data.cid];
         }
 
         function getType(data) {
@@ -73,7 +73,7 @@ class GalleryView extends BaseView {
         function successCallback(response) {
             this.scrollerView.saveGrid(response.coords);
             this.scrollerView.render(response.responseText);
-            this.trigger("render:stop");
+            this.trigger('render:stop');
         };
     }
 };

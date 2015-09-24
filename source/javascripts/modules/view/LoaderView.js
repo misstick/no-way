@@ -4,16 +4,16 @@ class LoaderView extends BaseView {
     constructor(el, options = {}) {
         super(el, options);
 
-        this.on("load:start", this.start.bind(this));
-        this.on("load:stop", this.stop.bind(this));
+        this.on('load:start', this.start.bind(this));
+        this.on('load:stop', this.stop.bind(this));
     }
 
     start() {
-        $(this.el).addClass("load");
+        $(this.el).addClass('load');
     }
 
     stop() {
-        $(this.el).removeClass("load");
+        $(this.el).removeClass('load');
     }
 
     getData(el, img) {
@@ -33,7 +33,7 @@ class LoaderView extends BaseView {
                 src: img.src,
                 imgWidth: img.offsetWidth,
                 imgHeight: img.offsetHeight,
-                content: content.replace(/\<img [\s\w\/"'.=_-]*\/{0,1}\>/, ""),
+                content: content.replace(/\<img [\s\w\/"'.=_-]*\/{0,1}\>/, ''),
             });
         }
         return data;
@@ -43,10 +43,10 @@ class LoaderView extends BaseView {
         const items = Array.from($(this.el).children());
 
         // End of prec
-        this.collection.on("add", _.after(items.length, renderComplete.bind(this)));
+        this.collection.on('add', _.after(items.length, renderComplete.bind(this)));
 
         // Load && process content
-        this.trigger("load:start");
+        this.trigger('load:start');
         items.forEach(renderItem.bind(this));
 
         function isLoaded(el) {
@@ -54,11 +54,11 @@ class LoaderView extends BaseView {
         }
 
         function isPicture(el) {
-            return el.tagName.toLowerCase() == "img";
+            return el.tagName.toLowerCase() == 'img';
         }
 
         function getPicture(el) {
-            return (!isPicture(el)) ? $("img", el).get(0) : el;
+            return (!isPicture(el)) ? $('img', el).get(0) : el;
         }
 
         function savePicture(el, img) {
@@ -78,8 +78,8 @@ class LoaderView extends BaseView {
 
         function renderComplete() {
             this.collection.sort();
-            this.trigger("load:stop");
-            this.collection.off("add", renderComplete);
+            this.trigger('load:stop');
+            this.collection.off('add', renderComplete);
         };
     }
 };

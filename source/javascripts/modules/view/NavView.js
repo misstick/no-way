@@ -6,7 +6,7 @@ const template = '<nav data-view="scroll_nav"><button data-action="back"><button
 _.mixin({
     create_affix(el) {
         const coords = el.offset();
-        if (!coords.top) el.addClass("affix");
+        if (!coords.top) el.addClass('affix');
         else el.affix({ offset: coords});
     }
 });
@@ -18,14 +18,14 @@ class NavView extends BaseView {
         if (!$(pathContent, this.el).get(0)) {
             // Add Navigation Template
             this.el.append(template);
-            _.create_affix($("nav", this.el));
+            _.create_affix($('nav', this.el));
         }
 
         // Handle Click Event
-        $(pathContent + ' button', this.el).on("click", this.goto.bind(this));
+        $(pathContent + ' button', this.el).on('click', this.goto.bind(this));
         
         // Handle Scroll Event
-        $(this.el).on("scroll", _.debounce(this.render.bind(this), 500));
+        $(this.el).on('scroll', _.debounce(this.render.bind(this), 500));
     }
 
     // @TEST : Navigation bar should exist
@@ -33,8 +33,8 @@ class NavView extends BaseView {
     render() {
         // Show / Hide buttons
         const data = this.getData(this.el.get(0));
-        $("[data-action=next]")[(data.scrollLeft === data.right) ? "addClass" : "removeClass"]("disabled");
-        $("[data-action=back]")[(data.scrollLeft === data.left) ? "addClass" : "removeClass"]("disabled");
+        $('[data-action=next]')[(data.scrollLeft === data.right) ? 'addClass' : 'removeClass']('disabled');
+        $('[data-action=back]')[(data.scrollLeft === data.left) ? 'addClass' : 'removeClass']('disabled');
     }
 
     getData(el) {
@@ -47,9 +47,9 @@ class NavView extends BaseView {
 
     goto(event) {
         const target = event.currentTarget;
-        const action = $(target).data("action");
+        const action = $(target).data('action');
         const step = this.el.width() / 2;
-        const value = (action === "next") ? this.el.get(0).scrollLeft + step : this.el.get(0).scrollLeft - step;
+        const value = (action === 'next') ? this.el.get(0).scrollLeft + step : this.el.get(0).scrollLeft - step;
 
         // Animation
         this.el.animate({ "scrollLeft": value}, { complete: display_buttons});
