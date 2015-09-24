@@ -1,21 +1,28 @@
 no-way
 ======
 
-Create blog based on middleman
+# Blog based on middleman
 
-To install all front-end frameworks, launch before start 
+## Installation
 ``` 
 npm install bower
 bower install
 npm install -g mocha-phantomjs
 npm install babel-core
+npm install -g browserify
 ```
-To launch unit-test : 
+## Compiling
+````
+babel javascripts/modules --out-dir javascripts/compiled
+browserify javascripts/compiled/init.js -o javascripts/bundle.js
+```
+
+## Unit-test : 
 ```
 mocha-phantomjs source/test/index.html
 ```
 
-To upgrade these frameworks :
+## Upgrade environement
 ``` 
 npm install -g npm@latest
 bower update
