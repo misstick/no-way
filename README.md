@@ -10,6 +10,7 @@ bower install
 npm install --global mocha-phantomjs
 npm install --save-dev babel-core
 npm install --global browserify
+npm install react
 ```
 ## Compiling
 ````
@@ -29,4 +30,5 @@ bower update
 npm update --global mocha-phantomjs
 npm install babel-core
 npm update --global browserify
+npm update react
 ```
