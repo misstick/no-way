@@ -17,7 +17,7 @@ if (email.get(0)) {
     const parent = email.get(0).parentNode;
     const value = email.html().replace('[AT]', '@').replace('[DOT]', '.');
     email.remove();
-    $(parent).html('<a href="mailto:${value}">${$(parent).html()}</a>');
+    $(parent).html(`<a href="mailto:${value}">${$(parent).html()}</a>`);
 }
 
 // Transform all gallery items into a single link
