@@ -9,15 +9,16 @@
 
 # Ignore the build directory
 /build
-/source/node_modules/*
-/source/vendor/*
-/source/images/*
 
 # Ignore Sass' cache
 /.sass-cache
 
 *.DS_Store
 
+# Ignore static, external && compiled files
+/source/node_modules
+/source/vendor
+/source/images
 /source/bower_components
-/source/node_modules*
-/source/vendor/*
+/source/javascripts/compiled
+/source/javascripts/bundle.js
