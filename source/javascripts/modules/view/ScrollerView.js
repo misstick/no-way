@@ -132,13 +132,13 @@ class ScrollerView extends BaseView {
 
                         // @TODO : check that new width isnt too big compared to initial value
                         // This check should be done into (collection)grid.groupByFormat
-                        _.extend(_itemSize, {
+                        Object.assign(_itemSize, {
                             "width": _itemSize.width * 2
                         });
                         ++itemsLength;
                     }
                     if (data.length == 2) {
-                        _.extend(_itemSize, {
+                        Object.assign(_itemSize, {
                             "height": _itemSize.height / 2
                         });
                         --itemsLength;

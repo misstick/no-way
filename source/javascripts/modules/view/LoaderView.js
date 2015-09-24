@@ -29,7 +29,7 @@ class LoaderView extends BaseView {
             src: '',
         }
         if (img) {
-            _.extend(data, {
+            Object.assign(data, {
                 src: img.src,
                 img_width: img.offsetWidth,
                 img_height: img.offsetHeight,

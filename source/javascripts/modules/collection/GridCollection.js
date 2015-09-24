@@ -84,7 +84,7 @@ class GridCollection extends BaseCollection {
             item0.height = height_max;
         }
 
-        return _.extend(item0, {
+        return Object.assign(item0, {
             format: this.getFormat(item0)
         });
     }

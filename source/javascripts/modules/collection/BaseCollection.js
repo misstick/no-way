@@ -25,7 +25,7 @@ class BaseCollection {
             return;
         }
         var model = _.clone(defaultModel);
-        model = _.extend(model, data);
+        model = Object.assign(model, data);
         model = this.validate(model, options);
         if (model) {
             model.cid = this.cid + this.getSize();
