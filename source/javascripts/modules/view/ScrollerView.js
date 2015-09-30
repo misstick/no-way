@@ -90,7 +90,7 @@ class ScrollerView extends BaseView {
     }
 
     setGrid(array = []) {
-        this._grid = (array || []).map((model) => {
+        this._grid = array.map((model) => {
             return _.isArray(model) ? model : [model];
         });
 
@@ -98,7 +98,6 @@ class ScrollerView extends BaseView {
     }
 
     getGrid() {
-        if (!this._grid) this.setGrid();
         return this._grid;
     }
 
