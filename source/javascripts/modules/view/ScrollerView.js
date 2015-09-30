@@ -158,7 +158,7 @@ class ScrollerView extends BaseView {
                 // Background alignment into its container
                 Object.assign(styles, {
                     backgroundImage: `url(${ model.src })`,
-                    backgroundSize: isFullFill(model) ? '100% auto' : 'auto 100%',
+                    backgroundSize: isFullFill(model, styles) ? '100% auto' : 'auto 100%',
                 });
 
                 return Object.assign(_.clone(model), { styles: styles });
@@ -170,7 +170,7 @@ class ScrollerView extends BaseView {
             styles: this.getOffset(itemSize), 
         });
 
-        function isFullFill(model) {
+        function isFullFill(model, itemSize) {
             const imgHeight =  model.imgHeight || model.height;
             const imgWidth = model.imgWidth || model.width;
             return imgHeight / imgWidth >= itemSize.height / itemSize.width;
