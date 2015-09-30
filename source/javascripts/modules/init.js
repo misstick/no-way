@@ -4,8 +4,8 @@ import GalleryView from './view/GalleryView';
 
 // Create Gallery View
 $('[data-type=gallery]').each(function(index, item) {
-    let view = new GalleryView($(item));
-    view.on('render:finished', () => {
+    let view = new GalleryView(item);
+    view.on('complete', () => {
         displayLinks();
         setEllipsis(this);
     });

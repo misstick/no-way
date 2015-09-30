@@ -5,6 +5,80 @@ import BaseCollection from './../collection/BaseCollection';
 import GridCollection from './../collection/GridCollection';
 
 /*
+ * TODO : transform BaseView into baseController
+ * Remove all references to DOM
+ * Use events/callback to send Data mainView
+ * Rename files & move files from 'view/' to 'controller/'
+ */
+
+/*
+ * TODO : define state
+ * to update ReactViews insteadof 
+ * overwrite them eachtime
+ */
+
+var NavView = React.createClass({
+  render: function() {
+    return (
+        <nav>
+            <button data-action="back" />
+            <button data-action="next" />
+        </nav>
+    );
+  }
+});
+
+var GalleryView = React.createClass({
+  render: function() {
+    return (
+        <div data-type="gallery">
+            <NavView {...this.props} />
+            <GalleryView.Scroller {...this.props} />
+        </div>
+    );
+  }
+});
+
+GalleryView.Scroller = React.createClass({
+  render: function() {
+    const items = ((models) => {
+        return models.map((model) => {
+            return <GalleryView.Item models={ model } />;
+        });
+    })(this.props.models);
+
+    return (
+        <div className="scroller" style={ this.props.styles }>
+            { items }
+        </div>
+    );
+  }
+});
+
+GalleryView.Item = React.createClass({
+  render: function() {
+    const models = this.props.models;
+    const type = _.pluck(models, 'type')[0];
+    const items = _.map(models, (model) => {
+        const className = `image ${model.format}`;
+        return (
+            <div className={ className } 
+                data-cid={ model.cid } 
+                style={ model.styles }
+                dangerouslySetInnerHTML={{__html: model.content}} >
+            </div>
+        );
+    });
+
+    return (
+        <div data-content={ type }>
+            { items }
+        </div>
+    );
+  }
+});
+
+/*
  * Main View
  * Save data into a Collection,
  * Re-order items, save it into an Array (Grid),
@@ -12,83 +86,60 @@ import GridCollection from './../collection/GridCollection';
  *
  * @param {DOMElement} el
  * @param {object} options
- * @return {GalleryView} this
+ * @return {GalleryController} this
  */
-
-class GalleryView extends BaseView {
+class GalleryController extends BaseView {
     constructor(el, options = {}) {
         super(el, options);
 
         this.collection = new GridCollection();
-        this._fill = this.el.data('fill') || 'width';
+
+        // Dispatch events
+        this.on('change:_props', this.render.bind(this));
+        this.on('change:collection', this.update.bind(this));
 
         // Container
         this.scrollerView = new ScrollerView(this.el, {
             collection: this.collection
+        });
+        this.scrollerView.on('update', (event, response) => {
+            // Update ReactViews properties
+            this._props = response;
         });
 
         // Save data from DOM
         this.loaderView = new LoaderView(this.el, {
             collection: this.collection
         });
-        this.loaderView.on('load:stop', this.render.bind(this));
-        this.loaderView.render.call(this.loaderView);
+        this.loaderView.on('start', () => {
+            $(this.el).addClass('load');
+        });
+        this.loaderView.on('complete', () => {
+            $(this.el).addClass('load');
+        });
+        this.loaderView.render();
+
+        return this;
+    }
+
+    update() {
+        // Group landscape pictures together
+        const items = this.collection.groupByFormat();
+        this.scrollerView.setGrid(items);
 
         return this;
     }
 
     render() {
-        let html = '';
-        let coords = [];
-        let type = null;
-        const length = this.collection.getSize();
+        React.render(
+            <GalleryView {...this._props} />,
+            this.el
+        );
 
-        // Group landscape pictures together
-        this.collection.groupByFormat(renderCallback.bind(this));
-
-        function renderCallback(data, index, models) {
-            html += `<div data-content="${getType(data)}">${getContent(data)}</div>`;
-
-            // Save grid coords
-            coords.push(getCoords(data));
-
-            // Update other views
-            if (index === (models.length - 1)) {
-                successCallback.call(this, { 
-                    responseText: html, 
-                    coords: coords,
-                });
-            }
-
-            return true;
-        };
-
-        function getCoords(data) {
-            return _.isArray(data) ? _.pluck(data, 'cid') : [data.cid];
-        }
-
-        function getType(data) {
-            const model = _.isArray(data) ? data[0] : data;
-            return model.type;
-        }
-
-        function getContent(data) {
-            if (_.isArray(data)) {
-                return data.map((model) => {
-                    return getContent(model);
-                }).join("");
-            }
-            return `<div class="image ${data.format}" data-cid="${data.cid}" style="background-image: url('${data.src}');">${data.content}</div>`;
-        }
-
-        function successCallback(response) {
-            this.scrollerView.saveGrid(response.coords);
-            this.scrollerView.render(response.responseText);
-            this.trigger('render:stop');
-        };
+        this.trigger('complete');
 
         return this;
     }
 };
 
-export default GalleryView;
+export default GalleryController;

@@ -23,7 +23,7 @@ class GridCollection extends BaseCollection {
         return data;
     }
 
-    groupByFormat(callback) {
+    groupByFormat(callback = function (model) { return model; }) {
         const models = _.clone(this.models);
         const hasPortrait = !!_.findWhere(models, {format: 'portrait'}) || false;
         return models.map((model, index, _models) => {
@@ -41,7 +41,7 @@ class GridCollection extends BaseCollection {
         });
     }
 
-    getRefererSize(screenCoords = { width: 0, height: 0}) {
+    getItemSize(screenCoords) {
         let item0 = null;
         const heightMax = Math.ceil(screenCoords.height * 0.85);
 
@@ -67,7 +67,6 @@ class GridCollection extends BaseCollection {
                     item0 = {
                         height: height,
                         width: width,
-                        format: model.format,
                     }
                 }
             } else {
@@ -84,9 +83,7 @@ class GridCollection extends BaseCollection {
             item0.height = heightMax;
         }
 
-        return Object.assign(item0, {
-            format: this.getFormat(item0),
-        });
+        return item0;
     }
 };
 

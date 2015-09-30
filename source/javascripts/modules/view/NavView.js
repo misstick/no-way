@@ -4,12 +4,27 @@ const pathContent = '[data-view="scroll_nav "]';
 const template = '<nav data-view="scroll_nav"><button data-action="back"><button data-action="next"></nav>';
 
 _.mixin({
+    is_touch() {
+        /* Modernizr 2.6.2 (Custom Build) | MIT & BSD
+        * Build: http://modernizr.com/download/#-touch-shiv-cssclasses-teststyles-prefixes-load
+        */
+        return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
+    },
     create_affix(el) {
         const coords = el.offset();
         if (!coords.top) el.addClass('affix');
         else el.affix({ offset: coords});
-    }
+    },
 });
+
+//    /*
+//     * .isScroll() get horizontal scroll value
+//     *
+//     * @return {Boolean} value
+//     */
+//    isScroll() {
+//        return (this.el.scrollWidth - this.el.offsetWidth) > 0;
+//    }
 
 /*
  * new NavView()
@@ -39,23 +54,23 @@ class NavView extends BaseView {
         return this;
     }
 
-    /*
-     * .render() Nav should be visible 
-     * only for noTouchScreen
-     *
-     * @test Navigation bar should exist
-     * on nonetouch resolutions
-     *
-     * @return {NavView} this
-     */
-    render() {
-        // Show / Hide buttons
-        const data = this.getData(this.el.get(0));
-        $('[data-action=next]')[(data.scrollLeft === data.right) ? 'addClass' : 'removeClass']('disabled');
-        $('[data-action=back]')[(data.scrollLeft === data.left) ? 'addClass' : 'removeClass']('disabled');
-
-        return this;
-    }
+//    /*
+//     * .render() Nav should be visible 
+//     * only for noTouchScreen
+//     *
+//     * @test Navigation bar should exist
+//     * on nonetouch resolutions
+//     *
+//     * @return {NavView} this
+//     */
+//    render() {
+//        // Show / Hide buttons
+//        const data = this.getData(this.el.get(0));
+//        $('[data-action=next]')[(data.scrollLeft === data.right) ? 'addClass' : 'removeClass']('disabled');
+//        $('[data-action=back]')[(data.scrollLeft === data.left) ? 'addClass' : 'removeClass']('disabled');
+//
+//        return this;
+//    }
 
     /*
      * .getData() get data from {DOMElement} container

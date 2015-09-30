@@ -1,14 +1,7 @@
 import BaseView from './BaseView';
 import NavView from './NavView';
 
-_.mixin({
-    is_touch() {
-        /* Modernizr 2.6.2 (Custom Build) | MIT & BSD
-        * Build: http://modernizr.com/download/#-touch-shiv-cssclasses-teststyles-prefixes-load
-        */
-        return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
-    }
-});
+// TODO : renommer
 
 /*
  * new ScrollerView()
@@ -22,64 +15,15 @@ class ScrollerView extends BaseView {
     constructor(el, options = {}) {
         super(el, options);
 
-        $(window).on('resize', _.debounce(this.resize.bind(this), 500));
+        ['_grid', '_screen'].forEach((name) => {
+            this.on(`change:${name}`, (event, changes) => {
+                this.update.call(this);
+            });
+        });
+
+        $(window).on('resize', _.debounce(this.setScreenSize.bind(this), 500));
 
         return this;
-    }
-
-    /*
-     * .render() dispath content
-     *
-     * @param {String} html
-     * @return {ScrollerView} this
-     */
-    render(html = '') {
-        // Move all content into a container
-        if (!this._content) {
-            $(this.el).html('<div class="scroller"></div>');
-            this._content = $('.scroller', this.el);
-        }
-
-        // Update content
-        let content = this._content;
-        if (_.isString(html)) {
-            content.html(html)
-            this.resize.call(this);
-        }
-
-        // Add Navigation for noTouchScreen
-        if (!_.is_touch() && this.isScroll()) {
-            if (!this.navView) this.navView = new NavView(this.el);
-            this.navView.render();
-        }
-
-        return this;
-    }
-
-    /*
-     * .saveGrid() save rows/columns coords
-     * the value is a table of CID Models References
-     * each `index` is a line, each `value` is a column
-     *
-     * {Array}value could contain one or several {String}CID
-     * it occurs for `landscape` items
-     *
-     * @param {Array} grid coords
-     * @return {ScrollerView} this
-     */
-    saveGrid(grid = []) {
-        this.grid = grid;
-
-        return this;
-    }
-
-    /*
-     * .isScroll() get horizontal scroll value
-     *
-     * @return {Boolean} value
-     */
-    isScroll() {
-        return (this.el.get(0).scrollWidth - this.el.get(0).offsetWidth) > 0;
     }
 
     /*
@@ -88,15 +32,17 @@ class ScrollerView extends BaseView {
      *
      * @return {Number} value
      */
-    getColumns(length, max) {
+    getColumns(max) {
+        const length = (this.getGrid() || []).length;
         let column = null;
+
         for (let counter = 1; counter <= max; counter++) {
             if (length % counter == 0) {
                 column = counter;
             }
         }
 
-        // Try to catch the more full lines as possible
+        // Try to catch the more fulllines as possible
         if (column == 1 && length > max) {
             for (let counter = max - 2; counter <= max; counter++) {
                 const fullRows = Math.trunc(length / counter);
@@ -110,12 +56,12 @@ class ScrollerView extends BaseView {
     }
 
     /*
-     * .getStyles() get CSS for the container
+     * .getOffset() get CSS for the container
      * It handle vertical/horizontal screen alignement
      *
      * @return {Number} value
      */
-    getStyles(item, screen, len) {
+    getOffset(item) {
         if (!arguments.length) {
             return {
                 width: 'auto',
@@ -123,16 +69,17 @@ class ScrollerView extends BaseView {
             };
         }
 
+        const screen = this.getScreenSize();
+
         function getTop() {
-            const element = this._content;
-            const height = element.height() + element.offset().top;
+            const height = $(this.el).height() + $(this.el).offset().top;
             const top = Math.ceil((screen.height - height) / 2);
             return (top > 0) ? top : 0;
         }
 
         function getWidth() {
             const maxVisible = Math.ceil(screen.width * 1.5 / item.width);
-            const columns = this.getColumns(len, maxVisible);
+            const columns = this.getColumns(maxVisible);
             return columns * item.width;
         }
 
@@ -142,81 +89,89 @@ class ScrollerView extends BaseView {
         };
     }
 
-    /*
-     * .resize() Apply Grid to items
-     * Add CSS Layout (size, alignement, background)
-     * Fix some spacial case
-     *
-     * @return {Number} value
-     */
-    resize() {
-        const grid = this.grid;
-        const collection = this.collection;
-        const screenSize = {
+    setGrid(array = []) {
+        this._grid = (array || []).map((model) => {
+            return _.isArray(model) ? model : [model];
+        });
+
+        return this;
+    }
+
+    getGrid() {
+        if (!this._grid) this.setGrid();
+        return this._grid;
+    }
+
+    setScreenSize() {  
+        this._screen = {
             width: window.innerWidth,
             height: window.innerHeight,
         };
-        const itemReferer = this.collection.getRefererSize(screenSize);
 
-        // Reset container size
-        this._content.css(this.getStyles());
+        return this;
+    }
 
-        // Resize Grid Items
-        let itemsLength = this.collection.getSize();
-        grid.forEach((data) => {
-            // Item Real Size
-            let itemSize = _.clone(itemReferer);
+    getScreenSize() {
+        if (!this._screen) this.setScreenSize();
+        return this._screen;
+    }
 
-            data.forEach((cid, index) => {
-                const item = $(`[data-cid=${cid}]`, this.el);
-                const model = _.find(collection.models, function(_model) {
-                    return _model.cid == cid;
+    /*
+     * .update()
+     * Define CSS with new Grid layout
+     * Fix some spacial case
+     *
+     * @return {ScrollerView} this
+     */
+    update() {
+        const grid = this.getGrid();
+        const screenSize = this.getScreenSize();
+        const itemSize = this.collection.getItemSize(screenSize);
+        const models = grid.map((models) => {
+            return models.map((model, index) => {
+                let styles = _.clone(itemSize);
+
+                /*
+                 * When there is only one 'landscape' picture, 
+                 * container must be twice bigger than a "portrait"
+                 */
+                const isLonelyLandscape = itemSize.format != 'landscape' && model.format === 'landscape' && models.length === 1;
+                if (isLonelyLandscape) {
+                    Object.assign(styles, {
+                        width: styles.width * 2,
+                    });
+                }
+
+                /*
+                 * When there are 2 landscape in the same item, 
+                 * height must be half smaller
+                 */
+                if (model.format === 'landscape') {
+                    Object.assign(styles, {
+                        height: styles.height / 2,
+                    });
+                }
+
+                // Background alignment into its container
+                Object.assign(styles, {
+                    backgroundImage: `url(${ model.src })`,
+                    backgroundSize: isFullFill(model) ? '100% auto' : 'auto 100%',
                 });
 
-                if (!index) {
-                    const isTween = itemSize.format != 'landscape' && model.format == 'landscape' && data.length == 1;
-                    if (isTween) {
-                        /*
-                         * When there is only 1 'landscape' picture, 
-                         * container is twice larger than a "portrait"
-                         */
-
-                        /*
-                         * @TODO : check that new width isnt too big compared to initial value
-                         * This check should be done into (collection) grid.groupByFormat
-                         */
-                        Object.assign(itemSize, {
-                            "width": itemSize.width * 2
-                        });
-                        ++itemsLength;
-                    }
-                    if (data.length == 2) {
-                        Object.assign(itemSize, {
-                            "height": itemSize.height / 2
-                        });
-                        --itemsLength;
-                    }
-                }
-
-                // Background Positionning
-                let styles = {
-                    backgroundSize: '100% auto',
-                    height: itemSize.height,
-                    width: itemSize.width,
-                };
-                const height =  model.imgHeight || model.height;
-                const width = model.imgWidth || model.width;
-                if (height / width < itemSize.height / itemSize.width) {
-                    styles['background-size'] = 'auto 100%';
-                }
-                item.css(styles);
+                return Object.assign(_.clone(model), { styles: styles });
             });
         });
+        
+        this.trigger('update', {
+            models: models,
+            styles: this.getOffset(itemSize), 
+        });
 
-        // Force Content.width to have horizontal alignment
-        const styles = this.getStyles(itemReferer, screenSize, itemsLength);
-        this._content.css(styles);
-
+        function isFullFill(model) {
+            const imgHeight =  model.imgHeight || model.height;
+            const imgWidth = model.imgWidth || model.width;
+            return imgHeight / imgWidth >= itemSize.height / itemSize.width;
+        }
         return this;
     }
 };

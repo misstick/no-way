@@ -10,37 +10,6 @@ import BaseView from './BaseView';
  * @return {LoaderView} this
  */
 class LoaderView extends BaseView {
-    constructor(el, options = {}) {
-        super(el, options);
-
-        this.on('load:start', this.start.bind(this));
-        this.on('load:stop', this.stop.bind(this));
-
-        return this;
-    }
-
-    /*
-     * .start() send a startEvent
-     * 
-     * @return {LoaderView} this
-     */
-    start() {
-        $(this.el).addClass('load');
-
-        return this;
-    }
-
-    /*
-     * .stop() send a endEvent
-     * 
-     * @return {LoaderView} this
-     */
-    stop() {
-        $(this.el).removeClass('load');
-
-        return this;
-    }
-
     /*
      * .getData() get data from {DOMElement} container
      * 
@@ -81,10 +50,11 @@ class LoaderView extends BaseView {
         const items = Array.from($(this.el).children());
 
         // End of prec
-        this.collection.on('add', _.after(items.length, renderComplete.bind(this)));
+        const addCallback = _.after(items.length, renderComplete.bind(this));
+        this.collection.on('add', addCallback);
 
         // Load && process content
-        this.trigger('load:start');
+        this.trigger('start');
         items.forEach(renderItem.bind(this));
 
         function isLoaded(el) {
@@ -115,9 +85,8 @@ class LoaderView extends BaseView {
         }
 
         function renderComplete() {
+            this.collection.off('add', addCallback);
             this.collection.sort();
-            this.trigger('load:stop');
-            this.collection.off('add', renderComplete);
         };
 
         return this;
