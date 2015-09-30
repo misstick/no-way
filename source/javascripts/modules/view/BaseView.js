@@ -10,6 +10,13 @@ class BaseView {
 
         this.cid = options.cid || `V${++view_counter}`;
 
+        // Listen to each property/method changes
+        Object.observe(this, (changes) => {
+            changes.forEach((change) => {
+                this.trigger(`change:${change.name}`, change);
+            });
+        });
+
         return this;
     }
 
