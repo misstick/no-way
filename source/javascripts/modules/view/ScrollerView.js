@@ -127,29 +127,32 @@ class ScrollerView extends BaseView {
         const grid = this.getGrid();
         const screenSize = this.getScreenSize();
         const itemSize = this.collection.getItemSize(screenSize);
-        const models = grid.map((models) => {
-            return models.map((model, index) => {
+        const isPortrait = itemSize.height >= itemSize.width;
+        const models = grid.map((_models) => {
+            return _models.map((model, index) => {
                 let styles = _.clone(itemSize);
 
-                /*
-                 * When there is only one 'landscape' picture, 
-                 * container must be twice bigger than a "portrait"
-                 */
-                const isLonelyLandscape = itemSize.format != 'landscape' && model.format === 'landscape' && models.length === 1;
-                if (isLonelyLandscape) {
-                    Object.assign(styles, {
-                        width: styles.width * 2,
-                    });
-                }
-
-                /*
-                 * When there are 2 landscape in the same item, 
-                 * height must be half smaller
-                 */
                 if (model.format === 'landscape') {
-                    Object.assign(styles, {
-                        height: styles.height / 2,
-                    });
+                    /*
+                     * When there is only one 'landscape' picture, 
+                     * container must be twice bigger than a "portrait"
+                     */
+                    const isLonelyLandscape = isPortrait && _models.length === 1;
+                    if (isLonelyLandscape) {
+                        Object.assign(styles, {
+                            width: styles.width * 2,
+                        });
+                    }
+
+                    /*
+                     * When there are 2 landscape in the same item, 
+                     * height must be half smaller
+                     */
+                    if (_models.length === 2) {
+                        Object.assign(styles, {
+                            height: styles.height / 2,
+                        });
+                    }
                 }
 
                 // Background alignment into its container
