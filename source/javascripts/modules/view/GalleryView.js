@@ -30,10 +30,12 @@ var NavView = React.createClass({
 
 var GalleryView = React.createClass({
   render: function() {
+    const navKey = `collection${ this.props.cid }-nav`;
+    const scrollerKey = `collection${ this.props.cid }-scroller`;
     return (
         <div data-type="gallery">
-            <NavView {...this.props} />
-            <GalleryView.Scroller {...this.props} />
+            <NavView {...this.props} key={ navKey } />
+            <GalleryView.Scroller {...this.props} key={ scrollerKey } />
         </div>
     );
   }
@@ -42,8 +44,9 @@ var GalleryView = React.createClass({
 GalleryView.Scroller = React.createClass({
   render: function() {
     const items = ((models) => {
-        return models.map((model) => {
-            return <GalleryView.Item models={ model } />;
+        return models.map((model, indice) => {
+            const itemKey = `collection${ this.props.cid }-item${ indice }`;
+            return <GalleryView.Item models={ model } key={ itemKey } id={ itemKey } />;
         });
     })(this.props.models);
 
@@ -59,17 +62,18 @@ GalleryView.Item = React.createClass({
   render: function() {
     const models = this.props.models;
     const type = _.pluck(models, 'type')[0];
-    const items = _.map(models, (model) => {
+    const items = _.map(models, (model, indice) => {
         const className = `image ${model.format}`;
+        const subItemKey = `${ this.props.id }-subItem${ indice }`;
         return (
-            <div className={ className } 
+            <div className={ className }
+                key={ subItemKey }
                 data-cid={ model.cid } 
                 style={ model.styles }
                 dangerouslySetInnerHTML={{__html: model.content}} >
             </div>
         );
     });
-
     return (
         <div data-content={ type }>
             { items }

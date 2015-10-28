@@ -169,6 +169,7 @@ class ScrollerView extends BaseView {
         });
         
         this.trigger('update', {
+            cid: this.collection.cid,
             models: models,
             styles: this.getOffset(length, itemSize), 
         });
