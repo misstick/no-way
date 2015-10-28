@@ -32,12 +32,11 @@ class ScrollerView extends BaseView {
      *
      * @return {Number} value
      */
-    getColumns(max) {
-        const length = (this.getGrid() || []).length;
+    getColumns(length, max) {
         let column = null;
 
         for (let counter = 1; counter <= max; counter++) {
-            if (length % counter == 0) {
+            if (length % counter === 0) {
                 column = counter;
             }
         }
@@ -52,6 +51,7 @@ class ScrollerView extends BaseView {
                 }
             }
         }
+
         return column || max;
     }
 
@@ -61,7 +61,7 @@ class ScrollerView extends BaseView {
      *
      * @return {Number} value
      */
-    getOffset(item) {
+    getOffset(length, item) {
         if (!arguments.length) {
             return {
                 width: 'auto',
@@ -79,7 +79,7 @@ class ScrollerView extends BaseView {
 
         function getWidth() {
             const maxVisible = Math.ceil(screen.width * 1.5 / item.width);
-            const columns = this.getColumns(maxVisible);
+            const columns = this.getColumns(length, maxVisible);
             return columns * item.width;
         }
 
@@ -127,6 +127,9 @@ class ScrollerView extends BaseView {
         const screenSize = this.getScreenSize();
         const itemSize = this.collection.getItemSize(screenSize);
         const isPortrait = itemSize.height >= itemSize.width;
+
+        let length = grid.length;
+
         const models = grid.map((_models) => {
             return _models.map((model, index) => {
                 let styles = _.clone(itemSize);
@@ -141,6 +144,7 @@ class ScrollerView extends BaseView {
                         Object.assign(styles, {
                             width: styles.width * 2,
                         });
+                        ++length;
                     }
 
                     /*
@@ -166,7 +170,7 @@ class ScrollerView extends BaseView {
         
         this.trigger('update', {
             models: models,
-            styles: this.getOffset(itemSize), 
+            styles: this.getOffset(length, itemSize), 
         });
 
         function isFullFill(model, itemSize) {
