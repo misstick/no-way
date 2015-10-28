@@ -2,23 +2,25 @@ import GalleryView from './view/GalleryView';
 
 'use strict';
 
-// Create Gallery View
-$('[data-type=gallery]').each(function(index, item) {
-    let view = new GalleryView(item);
-    view.on('complete', () => {
-        displayLinks();
-        setEllipsis(this);
+$(document).ready(function() {
+    // Create Gallery View
+    $('[data-type=gallery]').each(function(index, item) {
+        let view = new GalleryView(item);
+        view.on('complete', () => {
+            displayLinks();
+            setEllipsis(this);
+        });
     });
-});
 
-// Write contact email
-let email =  $('footer .email');
-if (email.get(0)) {
-    const parent = email.get(0).parentNode;
-    const value = email.html().replace('[AT]', '@').replace('[DOT]', '.');
-    email.remove();
-    $(parent).html(`<a href="mailto:${value}">${$(parent).html()}</a>`);
-}
+    // Write contact email
+    let email =  $('footer .email');
+    if (email.get(0)) {
+        const parent = email.get(0).parentNode;
+        const value = email.html().replace('[AT]', '@').replace('[DOT]', '.');
+        email.remove();
+        $(parent).html(`<a href="mailto:${value}">${$(parent).html()}</a>`);
+    }
+});
 
 // Transform all gallery items into a single link
 function displayLinks() {
