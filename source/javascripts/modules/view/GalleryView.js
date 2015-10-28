@@ -131,7 +131,7 @@ class GalleryController extends BaseView {
     }
 
     render() {
-        React.render(
+        ReactDOM.render(
             <GalleryView {...this._props} />,
             this.el
         );
