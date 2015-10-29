@@ -48,10 +48,9 @@ class LoaderView extends BaseView {
      */
     render() {
         const items = Array.from($(this.el).children());
-
-        // End of prec
         const addCallback = _.after(items.length, renderComplete.bind(this));
-        this.collection.on('add', addCallback);
+
+        let models = [];
 
         // Load && process content
         this.trigger('start');
@@ -70,8 +69,8 @@ class LoaderView extends BaseView {
         }
 
         function savePicture(el, img) {
-            const data = this.getData(el, img);
-            this.collection.add(data);
+            models.push(this.getData(el, img));
+            addCallback();
         };
 
         function renderItem(el, index) {
@@ -85,7 +84,7 @@ class LoaderView extends BaseView {
         }
 
         function renderComplete() {
-            this.collection.off('add', addCallback);
+            this.collection.add(models);
             this.collection.sort();
         };
 

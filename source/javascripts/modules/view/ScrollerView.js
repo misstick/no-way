@@ -15,11 +15,7 @@ class ScrollerView extends BaseView {
     constructor(el, options = {}) {
         super(el, options);
 
-        ['_grid', '_screen'].forEach((name) => {
-            this.on(`change:${name}`, (event, changes) => {
-                this.update.call(this);
-            });
-        });
+        this.on('change:props', this.update.bind(this));
 
         $(window).on('resize', _.debounce(this.setScreenSize.bind(this), 500));
 
@@ -90,7 +86,7 @@ class ScrollerView extends BaseView {
     }
 
     setGrid(array = []) {
-        this._grid = array.map((model) => {
+        this.props.grid = array.map((model) => {
             return _.isArray(model) ? model : [model];
         });
 
@@ -98,11 +94,11 @@ class ScrollerView extends BaseView {
     }
 
     getGrid() {
-        return this._grid;
+        return this.props.grid;
     }
 
     setScreenSize() {  
-        this._screen = {
+        this.props.screen = {
             width: window.innerWidth,
             height: window.innerHeight,
         };
@@ -111,8 +107,8 @@ class ScrollerView extends BaseView {
     }
 
     getScreenSize() {
-        if (!this._screen) this.setScreenSize();
-        return this._screen;
+        if (!this.props.screen) this.setScreenSize();
+        return this.props.screen;
     }
 
     /*
@@ -167,7 +163,7 @@ class ScrollerView extends BaseView {
                 return Object.assign(_.clone(model), { styles: styles });
             });
         });
-        
+
         this.trigger('update', {
             cid: this.collection.cid,
             models: models,

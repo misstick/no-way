@@ -99,16 +99,18 @@ class GalleryController extends BaseView {
         this.collection = new GridCollection();
 
         // Dispatch events
-        this.on('change:_props', this.render.bind(this));
-        this.on('change:collection', this.update.bind(this));
+        this.on('change:props', _.debounce(this.render.bind(this), 200));
+        this.collection.on('change', this.update.bind(this));
 
         // Container
         this.scrollerView = new ScrollerView(this.el, {
             collection: this.collection
         });
         this.scrollerView.on('update', (event, response) => {
-            // Update ReactViews properties
-            this._props = response;
+            if (!_.isEqual(this.props, response)) {
+                // Update ReactViews properties
+                Object.assign(this.props, response);
+            }
         });
 
         // Save data from DOM
@@ -136,7 +138,7 @@ class GalleryController extends BaseView {
 
     render() {
         ReactDOM.render(
-            <GalleryView {...this._props} />,
+            <GalleryView {...this.props} />,
             this.el
         );
 

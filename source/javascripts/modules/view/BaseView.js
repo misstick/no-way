@@ -3,6 +3,7 @@ let view_counter = 0;
 class BaseView {
     constructor(el, options = {}) {
         this.el = el;
+        this.props = {};
 
         if (options.collection) {
             this.collection = options.collection;
@@ -11,9 +12,9 @@ class BaseView {
         this.cid = options.cid || `V${++view_counter}`;
 
         // Listen to each property/method changes
-        Object.observe(this, (changes) => {
+        Object.observe(this.props, (changes) => {
             changes.forEach((change) => {
-                this.trigger(`change:${change.name}`, change);
+                this.trigger('change:props', change);
             });
         });
 

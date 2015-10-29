@@ -12,6 +12,15 @@ class BaseCollection {
         if (data) {
             this.add(data);
         }
+
+        // Listen to each property/method changes
+        Object.observe(this, (changes) => {
+            changes.forEach((change) => {
+                if (change.name === 'models') {
+                    this.trigger('change', change);
+                }
+            });
+        });
     }
 
     add(data, options = {}) {
